@@ -46,3 +46,10 @@ The first version of work that is expected must meet the following metrics:
 - **Wireframes:** Figma (Should be mobile-friendly)
 - **Testing Framework:** Jest & Minitests
 - **Frontend:** ReactJs & Redux Toolkit (state management)
+- 
+## Members 
+
+1.Dorine Watene
+2.Austine Were : Scrum Master 
+3.Timothy Baraka 
+4.Roy Kirorei
