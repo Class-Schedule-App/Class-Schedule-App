@@ -20,6 +20,3 @@ class UserResource(Resource):
         db.session.commit()
         return user.to_dict(), 201
 
-
-api.add_resource(UserResource, '/users/')
-

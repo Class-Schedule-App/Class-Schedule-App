@@ -25,4 +25,3 @@ class TechnicalMentorResource(Resource):
         db.session.commit()
         return mentor.to_dict(), 201
     
-api.add_resource(TechnicalMentorResource, '/mentors/')   

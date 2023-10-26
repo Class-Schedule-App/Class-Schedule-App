@@ -6,8 +6,11 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, make_response, request
-from dotenv import load_dotenv
+from modules import ModulesResource
+from mentors import TechnicalMentorResource
+from users import UserResource
 
+from dotenv import load_dotenv
 load_dotenv()
 
 import cloudinary
@@ -36,6 +39,12 @@ cloudinary.config(
 @app.route('/')
 def home():
     return "Welcome to our Class Schedule API"
+
+
+## Resources
+api.add_resource(ModulesResource, '/modules/')
+api.add_resource(TechnicalMentorResource, '/mentors/')  
+api.add_resource(UserResource, '/users/')
 
 if __name__ == '__main__':
     db.create_all()
