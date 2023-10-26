@@ -1,8 +1,9 @@
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, Enum
 from config import db
+from enum import Enum as PythonEnum
 
-class UserType(enumerate):
+class UserType(PythonEnum):
     student = "student"
     technical_mentor = "technical_mentor"
 
@@ -15,13 +16,13 @@ class Users(db.Model, SerializerMixin):
     phone_number = db.Column(db.Integer(20))
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
-    user_type = db.Column(db.String, enumerate(UserType))
+    user_type = db.Column(Enum(UserType))
 
     def __init__(self, username, email, phone_number, user_type):
         self.username = username
         self.email = email
         self.phone_number = phone_number
-        self.user_type = user_type
+        self.user_type.value = user_type
 
     def __repr__(self):
         return f"<Users(id={self.id}, username='{self.username}')>"
