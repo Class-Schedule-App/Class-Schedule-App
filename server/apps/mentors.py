@@ -1,4 +1,4 @@
-from main import Resource, reqparse
+from main import Resource, reqparse, api
 from models import db, TechnicalMentor
 
 mentor_parser = reqparse.RequestParser()
@@ -25,3 +25,4 @@ class TechnicalMentorResource(Resource):
         db.session.commit()
         return mentor.to_dict(), 201
     
+api.add_resource(TechnicalMentorResource, '/mentors/')   
