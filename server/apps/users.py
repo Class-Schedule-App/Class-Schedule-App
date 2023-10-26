@@ -1,5 +1,6 @@
-from models import db, User
-from main import app, Resource, api, request
+from models.users_model import User
+from models.config import db
+from main import Resource, request
 
 
 class UserResource(Resource):

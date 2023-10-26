@@ -1,5 +1,6 @@
 from main import Resource, reqparse, api
-from models import db, TechnicalMentor
+from models.technical_mentor import TechnicalMentor
+from models.config import db
 
 mentor_parser = reqparse.RequestParser()
 mentor_parser.add_argument('username', type=str, required=True, help='Username is required')

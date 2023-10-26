@@ -4,16 +4,15 @@ import cloudinary
 import os
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
-
-app = Flask(__name__)
-
+from main import app, db
+from models.student_model import Student
 # Configuration for your PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'
+# db = SQLAlchemy(app)
 
 
-class Student(db.Model):
-   pass
+# class Student(db.Model):
+#    pass
 
 # Configure Cloudinary with your Cloudinary account details
 cloudinary.config(

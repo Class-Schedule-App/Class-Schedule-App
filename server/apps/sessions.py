@@ -1,16 +1,15 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-
-
-app = Flask(__name__)
+from main import app, db
+from models.session_model import Session
 
 # Configuration for your PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'
+# db = SQLAlchemy(app)
 
 # Define the SQLAlchemy model for the "Session" table
-class Session(db.Model):
-    pass
+# class Session(db.Model):
+#     pass
 
 # Create a route to create a new session using a POST request
 @app.route('/sessions', methods=['POST'])
