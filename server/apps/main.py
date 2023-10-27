@@ -9,6 +9,7 @@ from flask import Flask, jsonify, make_response, request
 from modules import ModulesResource
 from mentors import TechnicalMentorResource
 from users import UserResource
+from .. import create_app
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -19,16 +20,16 @@ from cloudinary.utils import cloudinary_url
 import cloudinary.api
 
 
-app = Flask(__name__)
+app = create_app()
 api = Api(app)
 bcrypt = Bcrypt(app)
 cors = CORS(app)
 migrate = Migrate(app, db)
 db.init_app(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 cloudinary.config(
     cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
