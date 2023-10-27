@@ -1,4 +1,4 @@
-from models.modules_model import ModulesForm
+from Models.modules_model import ModulesForm
 from server.app import request, Resource, api, reqparse, db
 
 module_parser = reqparse.RequestParser()

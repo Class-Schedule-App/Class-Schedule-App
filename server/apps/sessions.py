@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from server.app import app, db
-from models.session_model import Session
+from Models.session_model import Session
 
 # Configuration for your PostgreSQL database
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'

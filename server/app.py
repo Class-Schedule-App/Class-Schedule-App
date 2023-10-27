@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 import cloudinary
-from models.config import db
+from Models.config import db
 from apps.comments import comment
 from apps.mentors import mentor
 from apps.modules import module
@@ -16,12 +16,12 @@ from apps.users import user
 from apps.auth import auth
 
 
-from models.comment import Comment
-from models.technical_mentor import TechnicalMentor
-from models.module import Module
-from models.session import Session
-from models.student import Student
-from models.user import User
+from Models.comments_model import Comment
+from Models.technical_mentor import TechnicalMentor
+from Models.modules_model import Module
+from Models.session_model import Session
+from Models.student_model import Student
+from Models.users_model import User
 
 # Load environment variables from a .env file
 load_dotenv()

@@ -1,5 +1,5 @@
-from models.users_model import User
-from models.config import db
+from Models.users_model import User
+from Models.config import db
 from server.app import Resource, request
 
 
