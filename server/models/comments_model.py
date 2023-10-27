@@ -10,8 +10,17 @@ class Comments(db.Model, SerializerMixin):
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    def __init__(self, comment):
-        self.comment = comment
+    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'))
+    technical_mentor_id = db.Column(db.Integer, db.ForeignKey('technical_mentors.tm_id'))
+    session_id = db.Column(db.Integer, db.ForeignKey('sessions.session_id'))
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "comment": self.comment,
+        }
         
     def __repr__(self):
         return f"<Comments(id={self.id}, comment='{self.comment}')>"
+    
+    

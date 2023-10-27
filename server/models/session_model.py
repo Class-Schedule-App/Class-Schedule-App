@@ -11,9 +11,15 @@ class Session(db.Model, SerializerMixin):
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    def __init__(self, name, announcements):
-        self.name = name
-        self.announcements = announcements
+    comments = db.relationship('Comment', back_populates='session', lazy='dynamic')  # One-to-Many relationship
+    students = db.relationship('Student', secondary=session_student_association, back_populates='sessions')  # Many-to-Many relationship
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "announcements": self.announcements,
+        }
 
     def __repr__(self):
         return f"<Session(session_id={self.session_id}, name='{self.name}')>"

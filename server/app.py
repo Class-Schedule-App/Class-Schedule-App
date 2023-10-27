@@ -1,51 +1,71 @@
 import os
-from flask_bcrypt import Bcrypt
-from models import db
-from flask_restful import Api, Resource, reqparse
+from flask import Flask
+from flask_restful import Api
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, make_response, request
-from modules import ModulesResource
-from mentors import TechnicalMentorResource
-from users import UserResource
-
 from dotenv import load_dotenv
+import cloudinary
+from models.config import db
+from apps.comments import comment
+from apps.mentors import mentor
+from apps.modules import module
+from apps.sessions import session
+from apps.student import studentroute
+from apps.users import user
+from apps.auth import auth
+
+
+from models.comment import Comment
+from models.technical_mentor import TechnicalMentor
+from models.module import Module
+from models.session import Session
+from models.student import Student
+from models.user import User
+
+# Load environment variables from a .env file
 load_dotenv()
 
-import cloudinary
-from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_url
-import cloudinary.api
-
-
+# Initialize the Flask app
 app = Flask(__name__)
+
+# Initialize Flask extensions
 api = Api(app)
 bcrypt = Bcrypt(app)
 cors = CORS(app)
 migrate = Migrate(app, db)
-db.init_app(app)
 
+# Configure app settings
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
+# Configure Cloudinary
 cloudinary.config(
     cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
     api_key=os.environ.get("CLOUDINARY_API_KEY"),
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
 )
 
+# Define a simple welcome route
 @app.route('/')
 def home():
     return "Welcome to our Class Schedule API"
 
 
-## Resources
-api.add_resource(ModulesResource, '/modules/')
-api.add_resource(TechnicalMentorResource, '/mentors/')  
-api.add_resource(UserResource, '/users/')
+# Register blueprints for different parts of your app
+# blueprints = [
+#     (mentor, '/mentors'),
+#     (comment, '/comments'),
+#     (module, '/modules'),
+#     (session, '/sessions'),
+#     (user, '/users'),
+#     (studentroute, '/studentroute')
+# ]
+
+# for blueprint, prefix in blueprints:
+#     app.register_blueprint(blueprint, url_prefix=prefix)
+
 
 if __name__ == '__main__':
-    db.create_all()
     app.run(debug=True)

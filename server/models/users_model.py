@@ -18,11 +18,19 @@ class Users(db.Model, SerializerMixin):
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
     user_type = db.Column(Enum(UserType))
 
-    def __init__(self, username, email, phone_number, user_type):
-        self.username = username
-        self.email = email
-        self.phone_number = phone_number
-        self.user_type.value = user_type
+    student = db.relationship('Student', back_populates='user', uselist=False)  # One-to-One relationship
+    technical_mentor = db.relationship('TechnicalMentor', back_populates='user', uselist=False)  # One-to-One relationship
+
+    def to_dict(self):
+        return{
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "phone_number": self.phone_number,
+            "user_type": self.user_type.value
+        }
 
     def __repr__(self):
         return f"<Users(id={self.id}, username='{self.username}')>"
+
+    

@@ -11,10 +11,15 @@ class TechnicalMentor(db.Model, SerializerMixin):
     profile_img = db.Column(db.String)  # Assuming it's a db.String representing the image file path
     created_at = db.Column(DateTime, server_default=db.func.now())
 
-    def __init__(self, name, email, profile_img):
-        self.name = name
-        self.email = email
-        self.profile_img = profile_img
+    comments = db.relationship('Comment', back_populates='technical_mentor', lazy='dynamic')  # One-to-Many relationship
+
+    def to_dict(self):
+        return{
+            "tm_id": self.tm_id,
+            "name": self.name,
+            "email": self.email,
+            "profile_img": self.profile_img,
+        }
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"
