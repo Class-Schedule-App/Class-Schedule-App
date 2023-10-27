@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from main import app, db
+from server.app import app, db
 from models.session_model import Session
 
 # Configuration for your PostgreSQL database

@@ -1,5 +1,5 @@
 from models.modules_model import ModulesForm
-from main import request, Resource, api, reqparse, db
+from server.app import request, Resource, api, reqparse, db
 
 module_parser = reqparse.RequestParser()
 module_parser.add_argument('module_name', type=str, required=True, help='Module name is required')

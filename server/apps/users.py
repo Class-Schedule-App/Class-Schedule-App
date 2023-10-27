@@ -1,6 +1,6 @@
 from models.users_model import User
 from models.config import db
-from main import Resource, request
+from server.app import Resource, request
 
 
 class UserResource(Resource):

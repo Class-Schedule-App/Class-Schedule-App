@@ -1,4 +1,4 @@
-from main import Resource, reqparse, api
+from server.app import Resource, reqparse, api
 from models.technical_mentor import TechnicalMentor
 from models.config import db
 

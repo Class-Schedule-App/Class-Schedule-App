@@ -4,7 +4,7 @@ import cloudinary
 import os
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
-from main import app, db
+from server.app import app, db
 from models.student_model import Student
 # Configuration for your PostgreSQL database
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'
