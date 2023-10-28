@@ -1,7 +1,8 @@
 from sqlalchemy_serializer import SerializerMixin
-from config import db
+from models.Config import db
+from .Modules_TechnicalMentors import ModuleTechnicalMentorAssociation
 
-class ModulesForm(db.Model, SerializerMixin):
+class Module(db.Model, SerializerMixin):
     __tablename__ = 'modules'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -9,6 +10,13 @@ class ModulesForm(db.Model, SerializerMixin):
     date = db.Column(db.String)
     time = db.Column(db.String)
     invite_link = db.Column(db.String)
+
+    # One-to-Many relationship
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id', name='fk_student_id'))
+    sessions = db.relationship('Session', backref='module')
+
+    #Many to Many
+    technical_mentors_associated = db.relationship('TechnicalMentor', secondary=ModuleTechnicalMentorAssociation, back_populates='modules_associated')
 
     def __init__(self, module_name, date, time, invite_link):
         self.module_name = module_name
