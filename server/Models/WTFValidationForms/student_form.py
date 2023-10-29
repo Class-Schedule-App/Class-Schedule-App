@@ -7,7 +7,7 @@ class StudentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     profile_img = StringField('Profile Image', validators=[DataRequired()])
-    created_at = DateTimeField('Created At', validators=[DataRequired()])
+    created_at = DateTimeField('Created At')
 
     class Meta:
         csrf = False

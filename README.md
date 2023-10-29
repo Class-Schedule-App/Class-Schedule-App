@@ -53,3 +53,4 @@ The first version of work that is expected must meet the following metrics:
 2.Austine Were : Scrum Master 
 3.Timothy Baraka 
 4.Roy Kirorei
+5.James Mutio

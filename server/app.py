@@ -1,71 +1,48 @@
-import os
+import secrets
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
-from flask_migrate import Migrate
-from dotenv import load_dotenv
-import cloudinary
-from Models.config import db
-from apps.comments import comment
-from apps.mentors import mentor
-from apps.modules import module
-from apps.sessions import session
-from apps.student import studentroute
-from apps.users import user
-from apps.auth import auth
-
-
-from Models.comments_model import Comment
-from Models.technical_mentor import TechnicalMentor
-from Models.modules_model import Module
-from Models.session_model import Session
-from Models.student_model import Student
-from Models.users_model import User
-
-# Load environment variables from a .env file
-load_dotenv()
+from flask_jwt_extended import JWTManager
+from .models.Config import db, migrate
+# Register the blueprints for different routes in your app
+from .routes.auth import auth
+from .routes.student import cloud
+from .routes.comments import comment
+from .routes.mentors import ment
+from .routes.sessions import session
+from .routes.users import user_blue
+from .routes.modules import module
 
 # Initialize the Flask app
 app = Flask(__name__)
 
-# Initialize Flask extensions
-api = Api(app)
-bcrypt = Bcrypt(app)
-cors = CORS(app)
-migrate = Migrate(app, db)
-
-# Configure app settings
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# Configure application settings
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
-# Configure Cloudinary
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-)
+# Generate a secret key for JWT
+secret_key = secrets.token_hex(32)
 
-# Define a simple welcome route
-@app.route('/')
-def home():
-    return "Welcome to our Class Schedule API"
+# Initialize Flask extensions
+api = Api(app)  # Initialize the RESTful API
+bcrypt = Bcrypt(app)  # Initialize Bcrypt for password hashing
+cors = CORS(app)  # Enable Cross-Origin Resource Sharing (CORS)
+db.init_app(app)  # Initialize the SQLAlchemy database
+migrate.init_app(app, db)
 
-
-# Register blueprints for different parts of your app
-# blueprints = [
-#     (mentor, '/mentors'),
-#     (comment, '/comments'),
-#     (module, '/modules'),
-#     (session, '/sessions'),
-#     (user, '/users'),
-#     (studentroute, '/studentroute')
-# ]
-
-# for blueprint, prefix in blueprints:
-#     app.register_blueprint(blueprint, url_prefix=prefix)
+# Initialize JWT with the secret key
+app.config['JWT_SECRET_KEY'] = secret_key
+jwt = JWTManager(app)
 
 
+# Register the blueprints for different routes in the app
+blueprints = [auth, cloud, comment, ment, session, user_blue, module]
+
+for blueprint in blueprints:
+    app.register_blueprint(blueprint)
+
+# Run the application on port 5555 in debug mode
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5555, debug=True)
