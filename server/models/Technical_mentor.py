@@ -14,19 +14,17 @@ class TechnicalMentor(db.Model, SerializerMixin):
     # One-to-One relationship
     tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
     # One-to-Many relationship
-    students = db.relationship('Student', backref='technical_mentor')
+    students = db.relationship('Student', backref='technical_mentors')
     # Many-to-Many relationship
     modules_associated = db.relationship('Module', secondary=ModuleTechnicalMentorAssociation, back_populates='technical_mentors_associated')
 
-    comments = db.relationship('Comment', back_populates='technical_mentor', lazy='dynamic')  # One-to-Many relationship
+    comments = db.relationship('Comment', backref='technical_mentors', foreign_keys='Comment.technical_mentor_id', lazy='dynamic')  # One-to-Many relationship
 
-    def to_dict(self):
-        return{
-            "tm_id": self.tm_id,
-            "name": self.name,
-            "email": self.email,
-            "profile_img": self.profile_img,
-        }
+    def __init__(self, name, email, profile_img):
+        self.name = name
+        self.email = email
+        self.profile_img = profile_img
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"
+    

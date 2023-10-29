@@ -8,6 +8,8 @@ class Comment(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String)
+    technical_mentor_id = db.Column(db.Integer, db.ForeignKey('technical_mentors.id'))
+
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(
         DateTime, server_default=db.func.now(), onupdate=db.func.now())
