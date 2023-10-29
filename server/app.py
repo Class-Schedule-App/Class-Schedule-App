@@ -13,12 +13,13 @@ from .routes.mentors import ment
 from .routes.sessions import session
 from .routes.users import user_blue
 from .routes.modules import module
+from .utils import DATABASE_URL
 
 # Initialize the Flask app
 app = Flask(__name__)
 
 # Configure application settings
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
