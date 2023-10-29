@@ -1,4 +1,4 @@
-from models.Config import db
+from .Config import db
 
 # # Define the many-to-many association table between Session and Student
 student_session_association= db.Table('Association_Student_Session',

@@ -1,13 +1,13 @@
 import random
 from datetime import datetime
-from app import app  # Import the Flask app
-from models.Config import db
-from models.Student import Student
-from models.Technical_mentor import TechnicalMentor
-from models.User import User
-from models.Module import Module
-from models.Session import Session
-from models.Comment import Comment
+from .app import app  # Import the Flask app
+from .models.Config import db
+from .models.Student import Student
+from .models.Technical_mentor import TechnicalMentor
+from .models.User import User
+from .models.Module import Module
+from .models.Session import Session
+from .models.Comment import Comment
 
 def seed_data():
     with app.app_context():

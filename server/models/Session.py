@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime
-from models.Config import db
+from .Config import db
 from .Student_Session import student_session_association
 
 class Session(db.Model, SerializerMixin):

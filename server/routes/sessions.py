@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_restful import Api, Resource
-from models.Session import Session
-from models.Config import db
+from ..models.Session import Session
+from ..models.Config import db
 
 session = Blueprint('session', __name__)
 api = Api(session)
@@ -27,7 +27,7 @@ class Sessions(Resource):
         data = request.get_json()
         new_session = Session(
             name=data.get('name'),  # Use .get() to avoid KeyError if the key is missing
-            announcement=data.get('announcement')  # Use .get() to avoid KeyError if the key is missing
+            announcements=data.get('announcements')  # Use .get() to avoid KeyError if the key is missing
         )
         db.session.add(new_session)
         db.session.commit()

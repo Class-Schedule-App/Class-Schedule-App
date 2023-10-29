@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_restful import Resource, Api, reqparse
-from models.Module import Module
-from models.Config import db
+from ..models.Module import Module
+from ..models.Config import db
 
 module = Blueprint('module', __name__)
 api = Api(module)

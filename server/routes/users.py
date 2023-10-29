@@ -1,7 +1,7 @@
-from models.Config import db
+from ..models.Config import db
 from flask_restful import Resource, Api
 from flask import Blueprint, request, jsonify
-from models.User import User
+from ..models.User import User
 
 user_blue = Blueprint('user', __name__)
 api = Api(user_blue)
@@ -22,7 +22,8 @@ class UserResource(Resource):
             username=data['username'],
             email=data['email'],
             phone_number=data['phone_number'],
-            user_type=data['user_type']
+            user_type=data['user_type'],
+            password=data['password']
         )
         db.session.add(user)
         db.session.commit()

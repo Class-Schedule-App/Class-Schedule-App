@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime
-from models.Config import db
+from .Config import db
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'

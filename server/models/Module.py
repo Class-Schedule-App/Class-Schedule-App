@@ -1,5 +1,5 @@
 from sqlalchemy_serializer import SerializerMixin
-from models.Config import db
+from .Config import db
 from .Modules_TechnicalMentors import ModuleTechnicalMentorAssociation
 
 class Module(db.Model, SerializerMixin):

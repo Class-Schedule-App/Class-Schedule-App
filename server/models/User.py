@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime, Enum  # Import Enum from SQLAlchemy
-from models.Config import db
+from .Config import db
 
 class UserType(enum.Enum):
     student = "student"

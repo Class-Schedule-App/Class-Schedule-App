@@ -1,4 +1,4 @@
-from models.Config import db
+from .Config import db
 
 ModuleTechnicalMentorAssociation = db.Table('Association_Module_TechnicalMentor',
     db.Column('module_id', db.Integer, db.ForeignKey('modules.id', name='fk_module_id')),

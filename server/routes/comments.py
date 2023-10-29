@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_restful import Resource, Api
-from models.Config import db
-from models.Comment import Comment  # Import your Comment model
+from ..models.Config import db
+from ..models.Comment import Comment  
 
 comment = Blueprint('comment', __name__)
 api = Api(comment)

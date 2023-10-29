@@ -1,7 +1,7 @@
-from flask_restful import Api, Resource
-from models.Technical_mentor import TechnicalMentor
-from models.Config import db
 from flask import Blueprint, request
+from flask_restful import Api, Resource
+from ..models.Technical_mentor import TechnicalMentor
+from ..models.Config import db
 
 ment = Blueprint('mentor', __name__)
 api = Api(ment)

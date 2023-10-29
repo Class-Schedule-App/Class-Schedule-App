@@ -2,9 +2,8 @@ from flask import Blueprint, request
 from flask_restful import Api, Resource
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from models.Config import db
-from models.User import User
-# from app import jwt
+from ..models.Config import db
+from ..models.User import User
 
 # Blueprint for authentication routes
 auth = Blueprint('auth', __name__)
