@@ -46,4 +46,4 @@ for blueprint in blueprints:
 
 # Run the application on port 5555 in debug mode
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5000, debug=True)
