@@ -1,9 +1,8 @@
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime
 from .Config import db
 from .Student_Session import student_session_association
 
-class Session(db.Model, SerializerMixin):
+class Session(db.Model):
     __tablename__ = 'sessions'
 
     id = db.Column(db.Integer, primary_key=True)

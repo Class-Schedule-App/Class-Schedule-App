@@ -1,10 +1,10 @@
-from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
 from sqlalchemy import DateTime
 from .Config import db
 from .Student_Session import student_session_association
+from .Module import Module
 
-class Student(db.Model, SerializerMixin):
+class Student(db.Model):
     __tablename__ = 'students'
 
     id = db.Column(db.Integer, primary_key=True)

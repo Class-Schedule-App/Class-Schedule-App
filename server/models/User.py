@@ -1,5 +1,4 @@
 import enum
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime, Enum  # Import Enum from SQLAlchemy
 from .Config import db
 
@@ -7,7 +6,7 @@ class UserType(enum.Enum):
     student = "student"
     technical_mentor = "technical_mentor"
 
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)

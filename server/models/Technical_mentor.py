@@ -1,9 +1,8 @@
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import DateTime
 from .Config import db
 from .Modules_TechnicalMentors import ModuleTechnicalMentorAssociation
 
-class TechnicalMentor(db.Model, SerializerMixin):
+class TechnicalMentor(db.Model):
     __tablename__ = 'technical_mentors'
 
     id = db.Column(db.Integer, primary_key=True)

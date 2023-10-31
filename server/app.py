@@ -1,10 +1,8 @@
-import secrets
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-from .models.Config import db, migrate
+from .models.Config import db, migrate, secret_key, ma
 # Register the blueprints for different routes in your app
 from .routes.auth import auth
 from .routes.student import cloud
@@ -21,21 +19,20 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
-
-# Generate a secret key for JWT
-secret_key = secrets.token_hex(32)
+CORS(app, resources={r"/*": {"origins": "http://localhost:4000", "methods": ["GET", "POST", "DELETE", "PATCH"]}}, supports_credentials=True)
 
 # Initialize Flask extensions
 api = Api(app)  # Initialize the RESTful API
-bcrypt = Bcrypt(app)  # Initialize Bcrypt for password hashing
 cors = CORS(app)  # Enable Cross-Origin Resource Sharing (CORS)
 db.init_app(app)  # Initialize the SQLAlchemy database
 migrate.init_app(app, db)
 
+# Initialize Marshmallow with the Flask app
+ma.init_app(app)
+
 # Initialize JWT with the secret key
 app.config['JWT_SECRET_KEY'] = secret_key
 jwt = JWTManager(app)
-
 
 # Register the blueprints for different routes in the app
 blueprints = [auth, cloud, comment, ment, session, user_blue, module]
