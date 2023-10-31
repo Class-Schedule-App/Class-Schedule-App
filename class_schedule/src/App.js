@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import React, {useState} from 'react';
 import LoginPage from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
@@ -27,10 +27,10 @@ function App() {
         {/*header will be displayed here */}
         {/* handleLout and user will be passed as props to the header */}
         {user ? (
-          <Switch>
+          <Routes>
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/profile' Component={ProfilePage}/>
-          </Switch>
+          </Routes>
         ) : (
           <Route path='/login' render={() => <LoginPage onLogin={handleLogin} />} />
         )}
