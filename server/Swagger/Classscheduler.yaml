@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 2.0.0
 info:
   title: Class Scheduler API
   description: API for managing class schedules, users, comments, and more.
-  version: 3.0.0
+  version: 2.0.0
 servers:
   - url: http://127.0.0.1:5000/api/doc/
 
