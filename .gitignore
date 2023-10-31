@@ -2,3 +2,5 @@ instance
 *.pyc
 .env
 Pifile.lock
+class_schedule
+

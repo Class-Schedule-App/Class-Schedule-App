@@ -13,9 +13,9 @@ class Sessions(Resource):
 
         for session in sessions:
             session_data = {
-                'session_id': session.session_id,
+                'id': session.id,
                 'name': session.name,
-                'announcement': session.announcement,
+                'announcements': session.announcements,
                 'created_at': session.created_at.strftime('%Y-%m-%d %H:%M:%S') if session.created_at else None,
                 'updated_at': session.updated_at.strftime('%Y-%m-%d %H:%M:%S') if session.updated_at else None
             }
@@ -40,7 +40,7 @@ class SessionsId(Resource):
             session_data = {
                 'session_id': session.session_id,
                 'name': session.name,
-                'announcement': session.announcement,
+                'announcements': session.announcements,
                 'created_at': session.created_at.strftime('%Y-%m-%d %H:%M:%S') if session.created_at else None,
                 'updated_at': session.updated_at.strftime('%Y-%m-%d %H:%M:%S') if session.updated_at else None
             }
@@ -55,7 +55,7 @@ class SessionsId(Resource):
 
         data = request.get_json()
         session.name = data['name']
-        session.announcement = data['announcement']
+        session.announcements = data['announcements']
         db.session.commit()
         return jsonify(message="Session updated successfully")
 

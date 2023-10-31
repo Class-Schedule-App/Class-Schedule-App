@@ -5,14 +5,10 @@ import cloudinary
 import cloudinary.uploader
 from ..models.Student import Student
 from ..models.Config import db
+from ..utils import cloudconfig
 
 cloud = Blueprint("cloud", __name__)
 
-cloudinary.config( 
-  cloud_name = "dl0rlyylr", 
-  api_key = "136957454328149", 
-  api_secret = "cs9E-I0Ti281f4bSSQNMVNYtfB8" 
-)
 
 class StudentRoute(Resource):
     def get(self):

@@ -15,8 +15,8 @@ def seed_data():
 
         # Sample data for Users
         users = [
-            User(username="Alice", email="alice@example.com", phone_number="1234567890", user_type="student", password=5431),
-            User(username="Bob", email="bob@example.com", phone_number="9876543210", user_type="technical_mentor", password=5431),
+            User(username="Alice", email="alice@example.com", phone_number="0734567890", user_type="student", password=5431),
+            User(username="Bob", email="bob@example.com", phone_number="0776543210", user_type="technical_mentor", password=5431),
             # Add more users as needed
         ]
         db.session.add_all(users)
@@ -57,13 +57,13 @@ def seed_data():
         db.session.commit()
 
         # Sample data for Comments
-        comments = [
-            Comment(comment="Great session!"),
-            Comment(comment="Awesome content!"),
-            # Add more comments as needed
-        ]
-        db.session.add_all(comments)
-        db.session.commit()
+        # comments = [
+        #     Comment(comment="Great session!"),
+        #     Comment(comment="Awesome content!"),
+        #     # Add more comments as needed
+        # ]
+        # db.session.add_all(comments)
+        # db.session.commit()
 
         # Additional seeding for many-to-many relationships if applicable
         # e.g., relate Sessions and Students for many-to-many relationship
