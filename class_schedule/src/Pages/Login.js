@@ -1,35 +1,36 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';import '../styles/login.css'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import '../styles/login.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { setEmail, setPassword, setError, togglePasswordVisibility } from "../redux/login_redux";
 
-function Login({ updateUsername }) {
-  const [newUsername, setNewUsername] = useState("");
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(null);
+function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const dataObject = useSelector((state) => state.login);
+  const { email, password, error, showPassword } = dataObject
 
-  useEffect(() => {
-    // Perform any actions that should occur when newUsername changes here
-    console.log(`newUsername has changed to: ${newUsername}`);
-  }, [newUsername]);
-
-  const handleLogin = () => {
-    updateUsername(newUsername);
+  const handleChangeEmail = (event) => {
+    dispatch(setEmail(event.target.value));
+    dispatch(setError(null)); // Clear the error message when typing
   };
 
+  const handleChangePassword = (event) => {
+    dispatch(setPassword(event.target.value));
+    dispatch(setError(null)); // Clear the error message when typing
+  };
   const toggleVisibility = () => {
-    setShowPassword((prevState) => !prevState);
+    dispatch(togglePasswordVisibility());
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      'username': newUsername,
-      'password': password,
+      'email': dataObject.email,
+      'password': dataObject.password,
     };
     try {
-      const response = await fetch("http://127.0.0.1:5555/Login", {
+      const response = await fetch("http://127.0.0.1:5555/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,11 +46,11 @@ function Login({ updateUsername }) {
         throw new Error(`Invalid username or password! ${response.status}`);
       }
     } catch (error) {
-      setError(error.message);
+      dispatch(setError(error.message));
     } finally {
       // Clear the username and password fields regardless of success or failure
-      handleLogin("");
-      setPassword("");
+      dispatch(setEmail(''));
+      dispatch(setPassword(''));
     }
   };
 
@@ -60,20 +61,16 @@ function Login({ updateUsername }) {
       <div className="title">Welcome</div>
       <div className="subtitle">Let's Login!</div>
 
-
       <div className="input-container ic2">
         <input 
-        required =""
-        placeholder="Email" 
         name="username"
-        type="text" 
         id="email"
+        type="text"
+        required =""
+        placeholder=""      
         className="input" 
-        value={newUsername}
-        onChange={(e) => {
-          setNewUsername(e.target.value);
-          setError(null); // Clear the error message when typing
-        }} 
+        value={email}
+        onChange={handleChangeEmail} 
          />
         <div className="cut cut-short"></div>
         <label className="iLabel" htmlFor="email">Email</label>
@@ -83,17 +80,20 @@ function Login({ updateUsername }) {
         <input 
         required =""
         autoComplete="off"
-        placeholder="Password" 
+        placeholder="" 
         value={password}
         type={showPassword ? 'text' : 'password'}
         className="input" 
         id="password" 
-        onChange={(e) => {
-          setPassword(e.target.value);
-          // setError(null); 
-          // Clear the error message when typing
-        }}       
+        onChange={handleChangePassword}      
         />
+        <span 
+            onClick={toggleVisibility} 
+            className={`absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-xl ${
+                showPassword ? "" : "text-gray-400"
+              }`}        >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
         <div className="cut"></div>
         <label className="iLabel" htmlFor="firstname">Password</label>
       </div>
@@ -107,6 +107,7 @@ function Login({ updateUsername }) {
         >
           Sign in
         </button>
+        {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
         <div className="sign-up">
           Not a member? <a href="/signup">Signup now</a>
         </div>

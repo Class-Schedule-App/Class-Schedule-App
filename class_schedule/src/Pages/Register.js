@@ -186,7 +186,7 @@ fetch('http://127.0.0.1:5555/signup', {
           />
           <p className="text-white mt-4">
             Already have an account?
-            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="login">
+            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/">
               Login
             </a>
           </p>
