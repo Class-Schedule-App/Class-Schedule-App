@@ -25,17 +25,19 @@ function App() {
       <div>
         {/*header will be displayed here */}
         {/* handleLout and user will be passed as props to the header */}
-        {user ? (
-          <Routes>
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/profile" Component={ProfilePage} />
-          </Routes>
-        ) : (
-          <Route
-            path="/login"
-            render={() => <LoginPage onLogin={handleLogin} />}
-          />
-        )}
+        <Routes>
+          {user ? (
+            <>
+            <Route path="/dashboard" component={< Dashboard />} />
+              <Route path="/profile" component={< ProfilePage />} />
+            </>
+            ) : (
+              <Route
+                path="/login"
+                render={() => <LoginPage onLogin={handleLogin} />}
+              />
+          )}
+        </Routes>
       </div>
     </Router>
   );

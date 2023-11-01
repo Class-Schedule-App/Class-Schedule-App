@@ -4,7 +4,7 @@ import SessionList from '../Components/SessionList';
 import AnnouncementList from '../Components/AnnouncementList';
 import ModuleListPage from '../Pages/ModuleListPage';
 import ModuleManagementPage from '../Pages/ModuleManagementPage';
-//import getUserRole from '../Pages/Login';
+import getUserRole from '../Pages/Login';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircleRounded'
 import { Link } from 'react-router-dom';
