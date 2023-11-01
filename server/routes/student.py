@@ -2,7 +2,7 @@ import json
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource
 import cloudinary.uploader
-from ..utils import cloudconfig
+# from ..utils import cloudconfig
 from ..models.Student import Student
 from ..models.Config import db
 

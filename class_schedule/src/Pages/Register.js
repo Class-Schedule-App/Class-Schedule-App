@@ -1,75 +1,74 @@
 import '../styles/signup.css'
-import React, { useState } from 'react';
+import React from 'react';
 import {  useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  updateUserField,
+  togglePasswordVisibility,
+  toggleConfPasswordVisibility,
+  setMismatchedPasswords,
+  setError,
+} from '../redux/register_redux';
+
 
 function Register() {
-const [dataObject, setdataObject ]=useState({ 
-    firstname:"",
-    lastname:"",
-    password:"",
-    email:"",
-    confirmPassword:"",
-    user_type:""
-    })
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfPassword, setShowConPassword] = useState(false);
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    function handleChange(event){
-    setdataObject(
-        {
-            ...dataObject,
-            [event.target.name]: event.target.value
-        }
-    )
-    }
-    const toggleVisibility = () => {
-    setShowPassword((prevState) => !prevState);
-    };
-    const toggleConfirmVisibility = () => {
-    setShowConPassword((prevState) => !prevState);
-    };
-    function handleSubmit(e) {
-    e.preventDefault();
-        // Check if passwords match
-        if (dataObject.password !== dataObject.confirmPassword) {
-        setPasswordsMatch(false);
-        return; // Exit the function if passwords don't match
-    }
-    const formData = {
-        name: `${dataObject.firstname} ${dataObject.lastname}`,
-        password: dataObject.password,
-        email: dataObject.email,
-        user_type: dataObject.user_type,
-        phone_number:dataObject.phone_number
-        };
-    
-        fetch("http://127.0.0.1:5555/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-    })
-        .then((r) => {
-            // Log the response body content
-            return r.json().then(responseData => {
-                console.log(responseData);
-                if (r.ok) {
-                    navigate("/");
-                } else {
-                    throw new Error(`Oops! Invalid details or try again later!"
-                    : ${r.status};`);
-                }
-            });
-        })
-        .catch((error) => {
-            setError(error.message);
-        })
-    }
+const navigate = useNavigate();
+const dispatch = useDispatch();
+const dataObject = useSelector((state) => state.user);
+const { showPassword, showConfPassword, passwordsMatch, error } = dataObject;
 
+const handleChange = (event) => {
+  const { name, value } = event.target;
+  dispatch(updateUserField({ field: name, value }));
+};
+
+
+const toggleVisibility = () => {
+  dispatch(togglePasswordVisibility());
+};
+
+const toggleConfirmVisibility = () => {
+  dispatch(toggleConfPasswordVisibility());
+};
+function handleSubmit(e) {
+  e.preventDefault();
+  // Check if passwords match
+  if (dataObject.password !== dataObject.confirmPassword) {
+    dispatch(setMismatchedPasswords(false)); // Dispatch the action with payload false
+    return;
+  }
+
+const formData = {
+  username: `${dataObject.firstname} ${dataObject.lastname}`,
+  password: dataObject.password,
+  email: dataObject.email,
+  user_type: dataObject.user_type,
+  phone_number: dataObject.phone_number,
+};
+
+fetch('http://127.0.0.1:5555/signup', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(formData),
+})
+  .then((r) => {
+    // Log the response body content
+    return r.json().then((responseData) => {
+      console.log(responseData, formData);
+      if (r.ok) {
+        navigate('/');
+      } else {
+        throw new Error(`Oops! Invalid details or try again later! : ${r.status};`);
+      }
+    });
+  })
+  .catch((error) => {
+    setError(error.message);
+  });
+}
   return (
     <div className="flex flex-col items-center justify-center h-screen dark">
       <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
@@ -109,11 +108,11 @@ const [dataObject, setdataObject ]=useState({
             value={dataObject.email}
             onChange={handleChange}
           />
-          {/* <input
+          <input
             placeholder="Confirm Email"
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
             type="email"
-          /> */}
+          />
            <label className="relative">
             <input
               placeholder="Password"
@@ -164,11 +163,14 @@ const [dataObject, setdataObject ]=useState({
           </label>
           <select
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-            id="gender"
+            name="user_type"
+            value={dataObject.user_type}
+            onChange={handleChange}
           >
-            <option value="student">Student</option>
-            <option value="tm">TechnicalMentors</option>
-            <option value="other">Other</option>
+            <option  value="">Select User Type</option>
+            <option  value="student">Student</option>
+            <option  value="technical_mentor">TechnicalMentors</option>
+            <option  value="other">Other</option>
           </select>
           <label className="text-sm mb-2 text-gray-200 cursor-pointer" htmlFor="tel">
             Phone Number
@@ -177,8 +179,9 @@ const [dataObject, setdataObject ]=useState({
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2"
             id="phone_number"
             type="tel"
+            name='phone_number'
             required
-            value={dataObject.username}
+            value={dataObject.phone_number}
             onChange={handleChange}
           />
           <p className="text-white mt-4">
