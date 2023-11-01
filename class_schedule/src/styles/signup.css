@@ -1,0 +1,27 @@
+.title {
+    font-size: 28px;
+    color: royalblue;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+  }
+.register{
+    border-radius: 20px;
+}
+.message {
+    color: rgba(236, 230, 230, 0.822);
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+.form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+    color: rgba(88, 87, 87, 0.822);
+  }

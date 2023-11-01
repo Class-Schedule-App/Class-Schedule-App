@@ -1,9 +1,10 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import LoginPage from "./Pages/Login";
+import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
+import Register from './Pages/Register';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -33,14 +34,14 @@ function App() {
             </>
             ) : (
               <Route
-                path="/login"
-                render={() => <LoginPage onLogin={handleLogin} />}
+                path="/"
+                render={() => <Login onLogin={handleLogin} />}
               />
           )}
+          <Route path='/signup' element={<Register/>} />
         </Routes>
       </div>
     </Router>
   );
 }
 
-export default App;
