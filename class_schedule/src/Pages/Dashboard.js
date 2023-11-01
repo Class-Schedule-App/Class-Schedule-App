@@ -17,7 +17,7 @@ export default function Dashboard() {
     <div>
         <div style={{ position: 'absolute', top: '10px', right: '10px' }} >
           <IconButton component={Link} to="/profile" color="primary" >
-            Profile
+            <AccountCircleIcon />
           </IconButton>
         </div>
         <h1>Dashboard</h1>
