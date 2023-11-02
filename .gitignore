@@ -1,2 +1,4 @@
 instance
 *.pyc
+package-lock.json
+package.json
