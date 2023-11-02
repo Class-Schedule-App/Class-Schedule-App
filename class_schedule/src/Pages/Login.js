@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../styles/login.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setPassword, setError, togglePasswordVisibility } from "../redux/login_redux";
+import { setUserType } from "../redux/userType_redux";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ function Login() {
     dispatch(setEmail(event.target.value));
     dispatch(setError(null)); // Clear the error message when typing
   };
+  const handleUserTypeSelect = (userType) => {
+    dispatch(setUserType(userType));
+  }
 
   const handleChangePassword = (event) => {
     dispatch(setPassword(event.target.value));

@@ -6,7 +6,11 @@ import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
 import Register from './Pages/Register';
 import NotificationsList from './Pages/NotificationsList';
-function App() {
+import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
+import Header from "./Components/Header";
+
+
+export default function App() {
   const [user, setUser] = useState(null);
   // const [userRole, setUserRole] = useState(null);
 
@@ -24,12 +28,11 @@ function App() {
   return (
     <Router>
       <div>
-        {/*header will be displayed here */}
-        {/* handleLout and user will be passed as props to the header */}
+        <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
         <Routes>
           {user ? (
             <>
-            <Route path="/dashboard" component={< Dashboard />} />
+              <Route path="/dashboard" component={< Dashboard />} />
               <Route path="/profile" component={< ProfilePage />} />
             </>
             ) : (
@@ -39,8 +42,9 @@ function App() {
               />
           )}
           <Route path="/notifications" component={< NotificationsList />} />
-        
+          <Route path="/notificationsettings" component={< NotificationSettingsPage/>} />        
           <Route path='/signup' element={<Register/>} />
+          <Route path='/profile' element={<ProfilePage />} />
         </Routes>
       </div>
     </Router>

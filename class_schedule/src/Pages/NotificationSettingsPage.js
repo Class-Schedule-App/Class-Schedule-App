@@ -1,5 +1,5 @@
 // Design a page for users to manage their notification settingsimport React from "react";
-import NotificationSettings from "../components/NotificationSettings";
+import NotificationSettings from "../Components/NotificationSettings";
 
 const NotificationSettingsPage = () => {
   return (

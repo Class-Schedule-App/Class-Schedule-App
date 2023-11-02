@@ -4,15 +4,17 @@ import SessionList from "../Components/SessionList";
 import AnnouncementList from "../Components/AnnouncementList";
 import ModuleListPage from "../Pages/ModuleListPage";
 import ModuleManagementPage from "../Pages/ModuleManagementPage";
-import getUserRole from "../Pages/Login";
+
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import NotificationSettingsPage from "./NotificationSettingsPage";
+import {useSelector } from 'react-redux';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+
 
 export default function Dashboard() {
-  const userRole = getUserRole();
+  const userRole = useSelector((state) => state.userType.userType);
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
