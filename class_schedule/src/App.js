@@ -1,9 +1,12 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, {useState } from "react";
 import LoginPage from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
+import { Routes, Route } from 'react-router-dom';
+import AnnouncementFormPage from './Pages/AnnouncementFormPage';
+import AnnouncementPage from "./Pages/AnnouncementPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,12 +19,13 @@ function App() {
 
   // a function to handle user logout.
 
-  const handleLogout = () => {
-    setUser(null);
-  };
+  // const handleLogout = () => {
+  //   setUser(null);
+  // };
 
   return (
-    <Router>
+    <>
+    {/* <Router> */}
       <div>
         {/*header will be displayed here */}
         {/* handleLout and user will be passed as props to the header */}
@@ -37,9 +41,13 @@ function App() {
                 render={() => <LoginPage onLogin={handleLogin} />}
               />
           )}
+          <Route path="/post" element={<AnnouncementFormPage />} />
+          <Route path="/display" element={<AnnouncementPage />} />
         </Routes>
       </div>
-    </Router>
+    {/* </Router> */}
+
+    </>
   );
 }
 
