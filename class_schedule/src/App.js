@@ -5,7 +5,7 @@ import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
 import Register from './Pages/Register';
-
+import NotificationsList from './Pages/NotificationsList';
 function App() {
   const [user, setUser] = useState(null);
   // const [userRole, setUserRole] = useState(null);
@@ -38,6 +38,8 @@ function App() {
                 render={() => <Login onLogin={handleLogin} />}
               />
           )}
+          <Route path="/notifications" component={< NotificationsList />} />
+        
           <Route path='/signup' element={<Register/>} />
         </Routes>
       </div>
