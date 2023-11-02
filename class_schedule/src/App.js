@@ -32,7 +32,7 @@ export default function App() {
         <Routes>
           {user ? (
             <>
-              <Route path="/dashboard" component={< Dashboard />} />
+              <Route path="/" component={< Dashboard />} />
               <Route path="/profile" component={< ProfilePage />} />
             </>
             ) : (

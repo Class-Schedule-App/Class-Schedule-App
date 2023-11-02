@@ -29,16 +29,16 @@ const Header = ({ user, onLogin, onLogout }) => {
   return (
     <AppBar
       position="fixed"
-      // style={{ backgroundColor: "grey", display: "flex" }}
-      style={{
-        width: "100%",
-        backgroundImage: `url(${process.env.PUBLIC_URL}/Images/header.jpg`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
+      style={{ backgroundColor: "grey", display: "flex" }}
+      // style={{
+      //   width: "100%",
+      //   backgroundImage: `url(${process.env.PUBLIC_URL}/Images/header.jpg`,
+      //   backgroundSize: "cover",
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundPosition: "center",
+      //   display: "flex",
+      //   justifyContent: "space-between",
+      // }}
     >
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
@@ -57,7 +57,7 @@ const Header = ({ user, onLogin, onLogout }) => {
           style={{
             display: "flex",
             alignItems: "center",
-            border: "2px solid black",
+            border: "2px solid white",
             borderRadius: "10px",
             margin: "0 10px",
             marginLeft: "auto",
@@ -104,8 +104,8 @@ const Header = ({ user, onLogin, onLogout }) => {
             onClick={onLogin}
             style={{
               marginLeft: "auto",
-              color: "white",
-              backgroundColor: "lightgreen",
+              color: "grey",
+              backgroundColor: "white",
             }}
           >
             Login/Signup
@@ -120,19 +120,19 @@ const Header = ({ user, onLogin, onLogout }) => {
             style={{ display: "flex", marginLeft: "auto" }}
           >
             <Grid item style={{ margin: "0 10px " }}>
-              <span style={{ color: "limegreen" }}>Monday</span>
+              <span >Monday</span>
             </Grid>
             <Grid item style={{ margin: "0 10px" }}>
-              <span style={{ color: "limegreen" }}>Tuesday</span>
+              <span >Tuesday</span>
             </Grid>
             <Grid item style={{ margin: "0 10px" }}>
-              <span style={{ color: "limegreen" }}>Wednesday</span>
+              <span >Wednesday</span>
             </Grid>
             <Grid item style={{ margin: "0 10px" }}>
-              <span style={{ color: "limegreen" }}>Thursday</span>
+              <span>Thursday</span>
             </Grid>
             <Grid item style={{ margin: "0 10px" }}>
-              <span style={{ color: "limegreen" }}>Friday</span>
+              <span>Friday</span>
             </Grid>
           </Grid>
         </div>
