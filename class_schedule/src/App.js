@@ -1,10 +1,17 @@
-import './App.css';
+import React from 'react';
+import UserProfile from './Components/UserProfile'
 
 function App() {
+  const user = {
+    username: 'SampleUser',
+    email: 'sampleuser@example.com',
+   
+  };
+
   return (
-    <div className="">
-      <h1>Class Schedule App</h1>
-    </div>
+    <>
+      <UserProfile user={user} />
+    </>
   );
 }
 
