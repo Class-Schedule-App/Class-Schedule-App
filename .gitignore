@@ -2,3 +2,7 @@ instance
 *.pyc
 package-lock.json
 package.json
+.env
+Pifile.lock
+class_schedule
+

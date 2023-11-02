@@ -13,9 +13,11 @@ class TechnicalMentor(db.Model):
     # One-to-One relationship
     tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
     # One-to-Many relationship
-    students = db.relationship('Student', backref='technical_mentor')
+    students = db.relationship('Student', backref='technical_mentors')
     # Many-to-Many relationship
     modules_associated = db.relationship('Module', secondary=ModuleTechnicalMentorAssociation, back_populates='technical_mentors_associated')
+
+    comments = db.relationship('Comment', backref='technical_mentors', foreign_keys='Comment.technical_mentor_id', lazy='dynamic')  # One-to-Many relationship
 
     def __init__(self, name, email, profile_img):
         self.name = name
@@ -24,3 +26,4 @@ class TechnicalMentor(db.Model):
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"
+    

@@ -12,17 +12,10 @@ import Header from "./Components/Header";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  // const [userRole, setUserRole] = useState(null);
 
   // a function to handle user login
   const handleLogin = (user) => {
     setUser(user);
-  };
-
-  // a function to handle user logout.
-
-  const handleLogout = () => {
-    setUser(null);
   };
 
   return (
@@ -32,14 +25,14 @@ export default function App() {
         <Routes>
           {user ? (
             <>
-              <Route path="/" component={< Dashboard />} />
-              <Route path="/profile" component={< ProfilePage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
+              <Route path="/modules" element={<ModuleListPage />} />
+              <Route path="/module-management" element={<ModuleManagementPage />} />
             </>
-            ) : (
-              <Route
-                path="/"
-                render={() => <Login onLogin={handleLogin} />}
-              />
+          ) : (
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           )}
           <Route path="/notifications" component={< NotificationsList />} />
           <Route path="/notificationsettings" component={< NotificationSettingsPage/>} />        

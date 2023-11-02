@@ -16,7 +16,10 @@ class User(db.Model):
     password = db.Column(db.String(80))
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
-    user_type = db.Column(db.String(200), Enum(UserType), nullable=False)  
+    user_type = db.Column(db.String(200), Enum(UserType), nullable=False)
+
+    student = db.relationship('Student', back_populates='user', uselist=False)  # One-to-One relationship
+    technical_mentor = db.relationship('TechnicalMentor', back_populates='user', uselist=False)  # One-to-One relationship
 
     # Parent Class: One-to-One relationship
     student = db.relationship('Student', backref='user', uselist=False) 
@@ -28,6 +31,8 @@ class User(db.Model):
         self.phone_number = phone_number
         self.user_type = user_type
         self.password = password
-
+        
     def __repr__(self):
         return f"<Users(id={self.id}, username='{self.username}')>"
+
+    

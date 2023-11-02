@@ -11,12 +11,13 @@ from .routes.mentors import ment
 from .routes.sessions import session
 from .routes.users import user_blue
 from .routes.modules import module
+from .utils import DATABASE_URL
 
 # Initialize the Flask app
 app = Flask(__name__)
 
 # Configure application settings
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 CORS(app, resources={r"/*": {"origins": "http://localhost:4000", "methods": ["GET", "POST", "DELETE", "PATCH"]}}, supports_credentials=True)
@@ -42,4 +43,4 @@ for blueprint in blueprints:
 
 # Run the application on port 5555 in debug mode
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5000, debug=True)

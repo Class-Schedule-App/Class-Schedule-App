@@ -6,16 +6,20 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String)
+    technical_mentor_id = db.Column(db.Integer, db.ForeignKey('technical_mentors.id'))
+
     created_at = db.Column(DateTime, server_default=db.func.now())
-    updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
+    updated_at = db.Column(
+        DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
     # One-to-Many relationship
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id', name='fk_student_id'))
-    session_id = db.Column(db.Integer, db.ForeignKey('sessions.id', name='fk_session_id'))
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.id', name='fk_student_id'))
+    session_id = db.Column(db.Integer, db.ForeignKey(
+        'sessions.id', name='fk_session_id'))
 
     def __init__(self, comment):
         self.comment = comment
-        
+
     def __repr__(self):
         return f"<Comments(id={self.id}, comment='{self.comment}')>"
-    

@@ -11,16 +11,19 @@ class Module(db.Model):
     invite_link = db.Column(db.String)
 
     # One-to-Many relationship
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id', name='fk_student_id'))
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.id', name='fk_student_id'))
     sessions = db.relationship('Session', backref='module')
 
-    #Many to Many
-    technical_mentors_associated = db.relationship('TechnicalMentor', secondary=ModuleTechnicalMentorAssociation, back_populates='modules_associated')
+    # Many to Many
+    technical_mentors_associated = db.relationship(
+        'TechnicalMentor', secondary=ModuleTechnicalMentorAssociation, back_populates='modules_associated')
 
     def __init__(self, module_name, date, time, invite_link):
         self.module_name = module_name
         self.date = date
         self.time = time
         self.invite_link = invite_link
+
     def __repr__(self):
         return f"<Module(id={self.id}, module_name='{self.module_name}')>"
