@@ -1,16 +1,17 @@
 import "./App.css";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, {useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
 import LoginPage from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
-import { Routes, Route } from 'react-router-dom';
+import ModuleDetailPage from "./Pages/ModuleDetailPage";
+import ModuleListPage from "./Pages/ModuleListPage";
+import ModuleManagementPage from "./Pages/ModuleManagementPage";
 import AnnouncementFormPage from './Pages/AnnouncementFormPage';
 import AnnouncementPage from "./Pages/AnnouncementPage";
 
 function App() {
   const [user, setUser] = useState(null);
-  // const [userRole, setUserRole] = useState(null);
 
   // a function to handle user login
   const handleLogin = (user) => {
@@ -27,19 +28,19 @@ function App() {
     <>
     {/* <Router> */}
       <div>
-        {/*header will be displayed here */}
-        {/* handleLout and user will be passed as props to the header */}
+        {/* Header will be displayed here */}
+        {/* handleLogout and user will be passed as props to the header */}
         <Routes>
           {user ? (
             <>
-            <Route path="/dashboard" component={< Dashboard />} />
-              <Route path="/profile" component={< ProfilePage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
+              <Route path="/modules" element={<ModuleListPage />} />
+              <Route path="/module-management" element={<ModuleManagementPage />} />
             </>
-            ) : (
-              <Route
-                path="/login"
-                render={() => <LoginPage onLogin={handleLogin} />}
-              />
+          ) : (
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           )}
           <Route path="/post" element={<AnnouncementFormPage />} />
           <Route path="/display" element={<AnnouncementPage />} />
