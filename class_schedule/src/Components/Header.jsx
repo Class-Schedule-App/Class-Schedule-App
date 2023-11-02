@@ -29,7 +29,16 @@ const Header = ({ user, onLogin, onLogout }) => {
   return (
     <AppBar
       position="fixed"
-      style={{ backgroundColor: "grey", display: "flex" }}
+      // style={{ backgroundColor: "grey", display: "flex" }}
+      style={{
+        width: "100%",
+        backgroundImage: `url(${process.env.PUBLIC_URL}/Images/header.jpg`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
@@ -48,9 +57,10 @@ const Header = ({ user, onLogin, onLogout }) => {
           style={{
             display: "flex",
             alignItems: "center",
-            // border: "2px solid black",
+            border: "2px solid black",
             borderRadius: "10px",
             margin: "0 10px",
+            marginLeft: "auto",
           }}
         >
           <div className="search-icon" style={{ margin: "0 15px" }}>
@@ -70,6 +80,7 @@ const Header = ({ user, onLogin, onLogout }) => {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              style={{ marginLeft: "auto" }}
             >
               <AccountCircle />
             </IconButton>
@@ -83,37 +94,45 @@ const Header = ({ user, onLogin, onLogout }) => {
               onClose={handleProfileMenuClose}
             >
               <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-              <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
+              <MenuItem onClick={handleProfileMenuClose}>My Modules</MenuItem>
               <MenuItem onClick={onLogout}>Logout</MenuItem>
             </Menu>
           </>
         ) : (
-          <Button color="inherit" onClick={onLogin}>
+          <Button
+            color="inherit"
+            onClick={onLogin}
+            style={{
+              marginLeft: "auto",
+              color: "white",
+              backgroundColor: "lightgreen",
+            }}
+          >
             Login/Signup
           </Button>
         )}
       </Toolbar>
-      <Toolbar style={{ display: "flex", width: "100%" }}>
+      <Toolbar style={{ display: "flex", width: "100%", marginLeft: "auto" }}>
         <div>
           <Grid
             container
             justifyContent="space-between"
-            style={{ display: "flex" }}
+            style={{ display: "flex", marginLeft: "auto" }}
           >
-            <Grid item style={{ margin: "0 10px " }} md={2} lg={3}>
-              <span>Monday</span>
+            <Grid item style={{ margin: "0 10px " }}>
+              <span style={{ color: "limegreen" }}>Monday</span>
             </Grid>
-            <Grid item style={{ margin: "0 10px" }} md={2} lg={3}>
-              <span>Tuesday</span>
+            <Grid item style={{ margin: "0 10px" }}>
+              <span style={{ color: "limegreen" }}>Tuesday</span>
             </Grid>
-            <Grid item style={{ margin: "0 10px" }} md={2} lg={3}>
-              <span>Wednesday</span>
+            <Grid item style={{ margin: "0 10px" }}>
+              <span style={{ color: "limegreen" }}>Wednesday</span>
             </Grid>
-            <Grid item style={{ margin: "0 10px" }} md={2} lg={3}>
-              <span>Thursday</span>
+            <Grid item style={{ margin: "0 10px" }}>
+              <span style={{ color: "limegreen" }}>Thursday</span>
             </Grid>
-            <Grid item style={{ margin: "0 10px" }} md={2} lg={3}>
-              <span>Friday</span>
+            <Grid item style={{ margin: "0 10px" }}>
+              <span style={{ color: "limegreen" }}>Friday</span>
             </Grid>
           </Grid>
         </div>
