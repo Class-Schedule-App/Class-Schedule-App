@@ -108,11 +108,11 @@ fetch('http://127.0.0.1:5555/signup', {
             value={dataObject.email}
             onChange={handleChange}
           />
-          <input
+          {/* <input
             placeholder="Confirm Email"
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
             type="email"
-          />
+          /> */}
            <label className="relative">
             <input
               placeholder="Password"
@@ -186,7 +186,7 @@ fetch('http://127.0.0.1:5555/signup', {
           />
           <p className="text-white mt-4">
             Already have an account?
-            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/">
+            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/login">
               Login
             </a>
           </p>

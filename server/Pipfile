@@ -25,6 +25,7 @@ importlib-metadata = "*"
 flask-login = "*"
 flask-bcrypt = "*"
 flask-jwt-extended = "*"
+flask-mail = "*"
 
 [dev-packages]
 

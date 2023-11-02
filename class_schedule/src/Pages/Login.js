@@ -39,7 +39,15 @@ function Login() {
       });
 
       if (response.ok) {
-        console.log(formData);
+        const data = await response.json();
+  
+        // Assuming the token is included in the response body after successful authentication
+        const token = data.token;
+  
+        // Store the token in local storage
+        localStorage.setItem('token', token);
+  
+        // Redirect or perform actions upon successful login
         navigate("/history");
       } else {
         console.log(formData);
