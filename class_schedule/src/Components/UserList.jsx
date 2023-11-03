@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const API_URL = 'http://localhost/users'
 
   useEffect(() => {
-    // Fetch the list of users from your Flask API
-    fetch(API_URL)
+    // Fetch the list of users from your JSON API (http://localhost:3000/users)
+    fetch('http://localhost:3000/users')
       .then((response) => response.json())
       .then((data) => setUsers(data.users))
       .catch((error) => console.error('Error fetching user data:', error));
@@ -16,14 +15,27 @@ const UserList = () => {
   return (
     <div>
       <h2>User List</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.username}
-            {/* Display other user information here */}
-          </li>
-        ))}
-      </ul>
+      {users.length > 0 ? ( // Check if users array is not empty
+        <ul>
+          {users.map((user) => (
+            <li key={user.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <img
+                src={user.profileImg}
+                alt={`${user.username}'s profile`}
+                style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }}
+              />
+              <div>
+                <p style={{ fontWeight: 'bold' }}>{user.username}</p>
+                <p>Email: {user.email}</p>
+                <p>Phone: {user.phone}</p>
+                {/* Display other user information here */}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
