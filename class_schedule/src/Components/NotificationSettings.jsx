@@ -29,7 +29,7 @@ const NotificationSettings = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Notification Settings</h2>
+      <h2 className="mt-10 text-justify-center text-lg font-semibold">Notification Settings</h2>
       <FormGroup>
         <FormControlLabel
           control={

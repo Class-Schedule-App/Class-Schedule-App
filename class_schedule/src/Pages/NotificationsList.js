@@ -26,12 +26,12 @@ const NotificationsList = () => {
   }, []);
 
   return (
-    <div>
-      <Typography variant="h4">Announcements</Typography>
+    <div className="mt-20 p-10 bg-white">
+      <Typography variant="h5">Announcements:</Typography>
       {loading ? (
         <p>Loading announcements...</p>
       ) : announcements.length === 0 ? (
-        <p>No announcements.</p>
+        <p className=" text-red-500">No announcements today.</p>
       ) : (
         <AnnouncementList announcements={announcements} />
       )}

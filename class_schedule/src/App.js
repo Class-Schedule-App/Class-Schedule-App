@@ -11,30 +11,35 @@ import Header from "./Components/Header";
 import ModuleDetailPage from "./Pages/ModuleDetailPage";
 import ModuleListPage from "./Pages/ModuleListPage";
 import ModuleManagementPage from "./Pages/ModuleManagementPage";
+import { setUserType } from "./redux/userType_redux";
 
 
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState("student");
 
   // a function to handle user login
-  const handleLogin = (user) => {
+  const handleLogin = (user, userType) => {
     setUser(user);
+    setUserRole(userType);
   };
   
   const handleLogout = () => {
     setUser(null);
   }
 
+
   return (
     <Router>
       <div>
         <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
+        <NotificationsList />
         <Routes>
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           {user ? (
             <>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard userRole={userRole} onLogin={handleLogin}/>} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
               <Route path="/modules" element={<ModuleListPage />} />
@@ -43,8 +48,8 @@ export default function App() {
           ) : (
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
           )}
-          <Route path="/notifications" component={< NotificationsList />} />
-          <Route path="/notificationsettings" component={< NotificationSettingsPage/>} />        
+          <Route path="/notifications" element={< NotificationsList />} />
+          <Route path="/notificationsettings" element={< NotificationSettingsPage/>} />        
           <Route path='/signup' element={<Register/>} />
           <Route path='/profile' element={<ProfilePage />} />
         </Routes>

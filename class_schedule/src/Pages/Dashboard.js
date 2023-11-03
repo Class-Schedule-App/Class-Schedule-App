@@ -13,8 +13,9 @@ import {useSelector } from 'react-redux';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 
-export default function Dashboard() {
-  const userRole = useSelector((state) => state.userType.userType);
+export default function Dashboard({userRole, onLogin}) {
+  // const userRole = useSelector((state) => state.userType.userType);
+
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
