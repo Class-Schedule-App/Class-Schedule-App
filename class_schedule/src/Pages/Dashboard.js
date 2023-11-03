@@ -4,6 +4,7 @@ import SessionList from "../Components/SessionList";
 import AnnouncementList from "../Components/AnnouncementList";
 import ModuleListPage from "../Pages/ModuleListPage";
 import ModuleManagementPage from "../Pages/ModuleManagementPage";
+import Grid from "@mui/material/Grid";
 
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircleRounded";
@@ -52,8 +53,23 @@ function Dashboard() {
           <AccountCircleIcon />
         </IconButton>
       </div> */}
-      <h1 className="mt-20 p-10">Dashboard</h1>
+      <div className="flex mt-20 p-10" >
+        <div className="w-1/2 pr-2">
+          <h2 className="text-xl font-semibold ">Sessions</h2>
+          <div className="mt-5 mb-5 items-center w-50%">
 
+          </div>
+
+          <h2 className="text-xl font-semibold">
+            Annoucements:
+          </h2>
+        </div>
+        <div className="w-1/2 pl-2">
+          <h2 className="text-xl font-semibold">Modules</h2>
+
+        </div>
+
+      </div>
     </div>
   );
 }
