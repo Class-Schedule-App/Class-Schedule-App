@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="/modules" element={<ModuleListPage />} />
-        <Route path="/module-management" element={<ModuleManagementPage />} />
+        <Route path="/modulemanagement" element={<ModuleManagementPage />} />
         <Route path="/notifications" element={<NotificationsList />} />
         <Route
           path="/notificationsettings"
