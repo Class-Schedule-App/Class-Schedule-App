@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api
 from flask import Blueprint
-from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import jwt_required
 from ..models.User import User
 from ..models.MarshmallowSchemas.UserSchema import UserSchema
 
@@ -8,7 +8,7 @@ user_blue = Blueprint('user', __name__)
 api = Api(user_blue)
 
 class UserResource(Resource):
-    @jwt_required()
+    # @jwt_required()
     def get(self):
         users = User.query.all()
         user_list = []

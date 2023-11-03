@@ -24,3 +24,12 @@ class Module(db.Model):
         self.invite_link = invite_link
     def __repr__(self):
         return f"<Module(id={self.id}, module_name='{self.module_name}')>"
+    def to_dict(self):
+        return {
+            'module_id': self.id,
+            'module_name': self.module_name,
+            'date': self.date,
+            'time': self.time,
+            'invite_link': self.invite_link,
+            # Add other fields as needed
+        }

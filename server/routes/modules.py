@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from flask_restful import Resource, Api, reqparse
+# from flask_jwt_extended import jwt_required
 from ..models.Module import Module
 from ..models.Config import db
 
@@ -13,6 +14,7 @@ module_parser.add_argument('time', type=str, required=True, help='Time is requir
 module_parser.add_argument('invite_link', type=str, required=True, help='Invite link is required')
 
 class ModulesResource(Resource):
+    # @jwt_required()
     def get(self):
         modules = Module.query.all()
         module_list = [module.to_dict() for module in modules]

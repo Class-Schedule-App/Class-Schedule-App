@@ -24,3 +24,11 @@ class TechnicalMentor(db.Model):
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"
+    def to_dict(self):
+        return {
+            'mentor_id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'profile_img': self.profile_img,
+            # Add other fields as needed
+        }
