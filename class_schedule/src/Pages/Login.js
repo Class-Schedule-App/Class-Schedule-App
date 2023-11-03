@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../styles/login.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setPassword, setError, togglePasswordVisibility } from "../redux/login_redux";
-import { setUserType } from "../redux/userType_redux";
+
 
 function Login({onLogin}) {
   const navigate = useNavigate();

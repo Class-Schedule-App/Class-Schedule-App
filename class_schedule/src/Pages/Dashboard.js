@@ -11,10 +11,25 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import {useSelector } from 'react-redux';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import Header from "../Components/Header";
+import { useState } from "react";
 
 
-export default function Dashboard({userRole, onLogin}) {
+function Dashboard() {
   // const userRole = useSelector((state) => state.userType.userType);
+  const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState("student");
+
+  // a function to handle user login
+  const handleLogin = (user, userType) => {
+    setUser(user);
+    setUserRole(userType);
+  };
+  
+  const handleLogout = () => {
+    setUser(null);
+  }
+
 
 
   // Check the notification settings in localStorage
@@ -29,43 +44,18 @@ export default function Dashboard({userRole, onLogin}) {
 
   return (
     <div>
-      <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+      <div className="mb-5 p-2">
+      <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />  
+      </div>
+      {/* <div style={{ position: "absolute", top: "10px", right: "10px" }}>
         <IconButton component={Link} to="/profile" color="primary">
           <AccountCircleIcon />
         </IconButton>
-      </div>
-      <h1>Dashboard</h1>
-      {userRole === "mentor" ? <ModuleManagementPage /> : <ModuleListPage />}
+      </div> */}
+      <h1 className="mt-20 p-10">Dashboard</h1>
 
-      <h2>Sessions</h2>
-      <SessionList />
-
-      <h2>Announcements </h2>
-      <AnnouncementList />
-      {userRole === "student" && (
-        <>
-          {hasNewNotifications ? (
-            <IconButton color="warning">
-              {" "}
-              {/* Display yellow icon when there are new notifications */}
-              <NotificationsIcon />
-            </IconButton>
-          ) : (
-            <IconButton color="inherit">
-              {" "}
-              {/* Display white icon when no new notifications */}
-              <NotificationsIcon />
-            </IconButton>
-          )}
-        </>
-      )}
-      {userRole === "student" && (
-        <Link to="/notificationsettings">
-          <Button variant="outlined" color="primary">
-            Manage Notification Settings
-          </Button>
-        </Link>
-      )}
     </div>
   );
 }
+
+export default Dashboard;

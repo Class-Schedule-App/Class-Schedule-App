@@ -29,9 +29,9 @@ const Header = ({ user, onLogin, onLogout }) => {
     setAnchorEl(null);
   };
 
-  const hideAppBar = !["/login", "/signup"].includes(location.pathname);
+  // const hideAppBar = !["/login", "/signup"].includes(location.pathname);
 
-  return hideAppBar ? (
+  return (
     <AppBar
       // position="fixed"
       style={{ backgroundColor: "grey", display: "flex" }}
@@ -143,7 +143,7 @@ const Header = ({ user, onLogin, onLogout }) => {
         </div>
       </Toolbar>
     </AppBar>
-  ) : null;
+  );
 };
 
 export default Header;
