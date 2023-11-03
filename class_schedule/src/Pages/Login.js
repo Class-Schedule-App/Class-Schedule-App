@@ -47,7 +47,7 @@ function Login({onLogin}) {
       if (response.ok) {
         console.log(formData);
         onLogin(userType);
-        navigate("/dashboard");
+        navigate("/");
       } else {
         console.log(formData);
         throw new Error(`Invalid username or password! ${response.status}`);
