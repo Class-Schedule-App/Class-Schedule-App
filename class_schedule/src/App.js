@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Login from "./Pages/Login";
+import React, {useState } from "react";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
 import Register from "./Pages/Register";
