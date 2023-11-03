@@ -16,7 +16,7 @@ from .routes.modules import module
 app = Flask(__name__)
 
 # Configure application settings
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://kilonzo:lQ1pDUVlYqjTnG2s1pUHAir9W6NryLp9@dpg-ckbcgj6smu8c7398dbhg-a.frankfurt-postgres.render.com/new_branch_render'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 CORS(app, resources={r"/*": {"origins": "http://localhost:4000", "methods": ["GET", "POST", "DELETE", "PATCH"]}}, supports_credentials=True)

@@ -1,8 +1,8 @@
-"""Resolved Relationships
+"""initial migration
 
-Revision ID: 5f9e5b4dff45
+Revision ID: ff19cc5993c3
 Revises: 
-Create Date: 2023-10-28 22:11:51.318030
+Create Date: 2023-11-03 13:42:16.677109
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5f9e5b4dff45'
+revision = 'ff19cc5993c3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,10 +22,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=100), nullable=True),
     sa.Column('email', sa.String(length=200), nullable=True),
-    sa.Column('phone_number', sa.Integer(), nullable=True),
+    sa.Column('phone_number', sa.String(length=20), nullable=True),
     sa.Column('password', sa.String(length=80), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('user_type', sa.String(length=200), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -34,7 +34,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('profile_img', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('tm_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['tm_id'], ['users.id'], name='fk_tm_id'),
     sa.PrimaryKeyConstraint('id')
@@ -71,8 +71,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=True),
     sa.Column('announcements', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('module_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['module_id'], ['modules.id'], name='fk_module_id'),
     sa.PrimaryKeyConstraint('id')
@@ -86,8 +86,8 @@ def upgrade():
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('student_id', sa.Integer(), nullable=True),
     sa.Column('session_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['session_id'], ['sessions.id'], name='fk_session_id'),
