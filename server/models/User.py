@@ -17,6 +17,7 @@ class User(db.Model):
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
     user_type = db.Column(db.String(200), Enum(UserType), nullable=False)  
+    email_confirmed = db.Column(db.Boolean, default=False)
 
     # Parent Class: One-to-One relationship
     student = db.relationship('Student', backref='user', uselist=False) 

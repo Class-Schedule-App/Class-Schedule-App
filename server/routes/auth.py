@@ -2,13 +2,16 @@ import datetime
 from flask_restful import Api, Resource
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import jwt_required, create_access_token
-from flask import Blueprint, request, jsonify, make_response
-from ..models.Config import db
+from flask import Blueprint, request, jsonify, make_response, url_for
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from ..models.Config import db, mail
 from ..models.User import User
 
 # Blueprint for authentication routes
 auth = Blueprint('auth', __name__)
 api = Api(auth)
+s = URLSafeTimedSerializer('Thisisasecret!')
 
 # Define a simple welcome route
 class Home(Resource):
@@ -28,17 +31,40 @@ class SignUp(Resource):
         email = data['email']
         phone_number = data['phone_number']
         user_type = data.get('user_type', 'student') 
-        password = data['password']  # Default to 'job seeker'
+        password = data['password']
 
-        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+        if User.query.filter_by(email=email).first():
             return {"Error": "Username or Email Already Exists"}, 401
         else:
             hashed_password = generate_password_hash(password, method='pbkdf2:sha256:29000')
             new_user = User( username=username, email=email, phone_number=phone_number, user_type=user_type, password=hashed_password )
             db.session.add(new_user)
             db.session.commit()
-            return {"Message": "User registered successfully!!"}, 201
 
+            # Generate email confirmation token and send confirmation email
+            token = s.dumps(email, salt='email-confirmation')
+            link = url_for('auth.confirmemail', token=token, _external=True)
+            msg = Message(
+            subject= 'Confirmation Email.',
+            sender='jay.kilonzo@gmail.com', recipients=[email],
+            body='Your confirmation link: {link}'.format(link=link)
+            )
+            mail.send(msg)
+            return {"Message": "User registered successfully. Confirmation email sent!"}, 201
+class ConfirmEmail(Resource):
+    def get(self, token):
+        try:
+            email = s.loads(token, salt='email-confirmation', max_age=3600)
+        except SignatureExpired:
+            return {'message': 'The token is expired!'}, 400  # Return 400 for expired token
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            return {'message': 'User not found!'}, 400
+
+        user.email_confirmed = True
+        db.session.commit()
+
+        return {'message': 'Email confirmed successfully!'}, 200
 class Login(Resource):
     def post(self):
         auth_data = request.get_json()
@@ -88,10 +114,11 @@ class ResetPassword(Resource):
                 return {"message": "User not found"}, 404
         else:
             return {"message": "Email not provided in the request"}, 400
-    
+
 # Define routes and link them to resources
 api.add_resource(Home, '/')
 api.add_resource(SignUp, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(ResetPassword, '/resetpassword')
+api.add_resource(ConfirmEmail, '/confirm_email/<token>')
