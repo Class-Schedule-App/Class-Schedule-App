@@ -71,23 +71,22 @@ class Login(Resource):
         email = auth_data['email']
         password = auth_data['password']
        
-        if not auth_data or not email or not password:
-            return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
+        if not email or not password:
+            return make_response('Invalid email or password', 401)
 
         user = User.query.filter_by(email=email).first()
 
-        if not user:
-            return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
+        if not user or not check_password_hash(user.password, password):
+            return make_response('Invalid email or password', 401)
+        if not user.email_confirmed:
+            return make_response('Email not confirmed!', 401)
 
-        if check_password_hash(user.password, password):
-            # token = jwt.encode({'user_id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, secret_key)
-            token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
-            # Serialize the response object to a JSON string
-            json_response = {"Message": "Login Successful!!", 'token': token}
+        # token = jwt.encode({'user_id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, secret_key)
+        token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
+        # Serialize the response object to a JSON string
+        json_response = {"Message": "Login Successful!!", 'token': token}
 
-            return json_response
-
-        return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
+        return json_response
 
 class Logout(Resource):
     @jwt_required()
