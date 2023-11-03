@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const API_URL = 'http://localhost/users'
+  const API_URL = 'https://class-schedule-pp4h.onrender.com/users'
 
   useEffect(() => {
     // Fetch the list of users from your Flask API

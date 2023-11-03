@@ -14,11 +14,11 @@ const Module = ({ moduleId }) => {
     // Fetch module details and sessions 
     const fetchModuleDetails = async () => {
       try {
-        const moduleResponse = await axios.get(` http://127.0.0.1:5555/modules/${moduleId}`);
+        const moduleResponse = await axios.get(` https://class-schedule-pp4h.onrender.com/modules/${moduleId}`);
         setModule(moduleResponse.data);
 
         //  fetching sessions within the module
-        const sessionsResponse = await axios.get(` http://127.0.0.1:5555/modules/${moduleId}/sessions`);
+        const sessionsResponse = await axios.get(` https://class-schedule-pp4h.onrender.com/modules/${moduleId}/sessions`);
         setSessions(sessionsResponse.data);
       } catch (error) {
         console.error('Error fetching module details:', error);
@@ -31,7 +31,7 @@ const Module = ({ moduleId }) => {
   const handleInviteStudents = async () => {
     try {
       // endpoint for inviting students to the module
-      await axios.post(` http://127.0.0.1:5555/modules/${moduleId}/invite`, { inviteLink });
+      await axios.post(` https://class-schedule-pp4h.onrender.com/modules/${moduleId}`, { inviteLink });
       // Handle success or show a confirmation message
       console.log('Students invited successfully!');
     } catch (error) {

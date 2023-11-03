@@ -15,7 +15,7 @@ const AnnouncementForm = ({ onAnnouncementSubmit }) => {
     e.preventDefault();
     if (title.trim() !== '' && announcementText.trim() !== '') {
       // BACKEND
-      fetch('http://127.0.0.1:5555/announcements', {
+      fetch('https://class-schedule-pp4h.onrender.com/sessions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

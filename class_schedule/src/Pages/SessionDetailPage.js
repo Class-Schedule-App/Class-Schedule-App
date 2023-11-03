@@ -4,7 +4,7 @@ const SessionDetailPage = ({ sessionID }) => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    const apiUrl = 'http://127.0.0.1:5555/api/sessions/' + sessionID;
+    const apiUrl = 'https://class-schedule-pp4h.onrender.com/sessions/' + sessionID;
 
     fetch(apiUrl)
       .then((response) => response.json())

@@ -3,8 +3,6 @@ import React from "react";
 import SessionList from "../Components/SessionList";
 import AnnouncementList from "../Components/AnnouncementList";
 import ModuleListPage from "../Pages/ModuleListPage";
-import ModuleManagementPage from "../Pages/ModuleManagementPage";
-import Grid from "@mui/material/Grid";
 
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircleRounded";
@@ -53,9 +51,12 @@ function Dashboard() {
       <div className="flex mt-20 p-10">
         <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
-          <div className="mt-5 mb-5 items-center w-50%"></div>
+          <div className="mt-5 mb-5 items-center w-50%">
+            {/* <SessionList /> */}
+          </div>
 
           <h2 className="text-xl font-semibold">Annoucements:</h2>
+          <AnnouncementList />
         </div>
         <div className="w-1/2 pl-2 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>

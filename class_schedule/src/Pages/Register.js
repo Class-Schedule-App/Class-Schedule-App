@@ -47,7 +47,7 @@ const formData = {
   phone_number: dataObject.phone_number,
 };
 
-fetch('http://127.0.0.1:5555/signup', {
+fetch('https://class-schedule-pp4h.onrender.com/signup', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
