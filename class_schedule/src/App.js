@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Login from "./Pages/Login";
-import React, {useState } from "react";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
 import Register from "./Pages/Register";
@@ -11,12 +10,14 @@ import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
 import ModuleDetailPage from "./Pages/ModuleDetailPage";
 import ModuleListPage from "./Pages/ModuleListPage";
 import ModuleManagementPage from "./Pages/ModuleManagementPage";
+import AnnouncementPage from "./Pages/AnnouncementPage";
+import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
@@ -28,6 +29,8 @@ export default function App() {
           element={<NotificationSettingsPage />}
         />
         <Route path="/signup" element={<Register />} />
+        <Route path="/announcementpage" element={<AnnouncementPage />} />
+        <Route path="/announcementform" element={<AnnouncementFormPage />} />
       </Routes>
     </BrowserRouter>
   );

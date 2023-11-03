@@ -2,7 +2,7 @@
 
 import React from 'react';
 import AnnouncementForm from '../Components/AnnouncementForm';
-import Navbar from '../Components/Navbar';
+import Header from '../Components/Header';
 import { Box, Container, Card, CardContent } from '@mui/material';
 
 const centerContent = {
@@ -26,7 +26,7 @@ const cardContentStyle = {
 const AnnouncementFormPage = ({ onAnnouncementSubmit }) => {
   return (
     <div>
-      <Navbar />
+      <Header />
       <Container style={centerContent}>
         <Box sx={cardStyle}>
           <Card variant="outlined">

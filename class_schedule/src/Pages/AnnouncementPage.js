@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AnnouncementList from '../Components/AnnouncementList';
-import MuiNavbar from '../Components/MuiNavbar';
+import Header from '../Components/Header';
 // import { Link } from 'react-router-dom';
 
 const AnnouncementPage = () => {
@@ -34,7 +34,7 @@ const AnnouncementPage = () => {
 
   return (
     <div>
-      <MuiNavbar />
+      <Header />
       {/* <h2>Announcements</h2> */}
       <AnnouncementList
         announcements={announcements}
