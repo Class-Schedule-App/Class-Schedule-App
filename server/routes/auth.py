@@ -67,9 +67,31 @@ class Logout(Resource):
     @jwt_required()
     def delete(self):
         return {"Message": "You have been Logged out Successfully!"}
+class ResetPassword(Resource):
+    def patch(self):
+        data = request.get_json()
+        email = data.get('email')
+        new_password = data.get('password')
+
+        if email:
+            user = User.query.filter_by(email=email).first()
+            if user:
+                try:
+                    hashed_password = generate_password_hash(new_password, method='pbkdf2:sha256:29000')
+                    user.password = hashed_password
+                    db.session.commit()
+                    return {"message": "Password updated successfully"}, 200
+                except Exception as e:
+                    db.session.rollback()
+                    return {"message": "Error updating password", "error": str(e)}, 500
+            else:
+                return {"message": "User not found"}, 404
+        else:
+            return {"message": "Email not provided in the request"}, 400
     
 # Define routes and link them to resources
 api.add_resource(Home, '/')
 api.add_resource(SignUp, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
+api.add_resource(ResetPassword, '/resetpassword')

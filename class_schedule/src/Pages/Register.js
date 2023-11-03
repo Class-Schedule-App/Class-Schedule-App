@@ -112,6 +112,9 @@ fetch('http://127.0.0.1:5555/signup', {
             placeholder="Confirm Email"
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
             type="email"
+            required
+            value={dataObject.email}
+            onChange={handleChange}
           /> */}
            <label className="relative">
             <input
@@ -138,10 +141,10 @@ fetch('http://127.0.0.1:5555/signup', {
               placeholder="Confirm Password"
               className="w-full bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               required
-              minLength={8}
-              type={showConfPassword ? 'text' : 'password'}
               name="confirmPassword"
-              value={dataObject.username}
+              type={showConfPassword ? 'text' : 'password'}
+              value={dataObject.confirmPassword}
+              minLength={8}
               onChange={handleChange}    
             />
            {/* <span>Confirm password</span> */}

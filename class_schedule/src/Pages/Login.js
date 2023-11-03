@@ -106,17 +106,11 @@ function Login() {
         <label className="iLabel" htmlFor="firstname">Password</label>
       </div>
       <button className="submit" type="text">Submit</button>
-      <div className="forgot-pass">
-              Forgot Password?
+      <div className="forgot-pass m-2">
+          <a href="/resetpassword"> Forgot Password?</a>
       </div>
-        <button 
-        type="submit"
-        className="button"
-        >
-          Sign in
-        </button>
         {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
-        <div className="sign-up">
+        <div className="sign-up m-2">
           Not a member? <a href="/signup">Signup now</a>
         </div>
       </form>
