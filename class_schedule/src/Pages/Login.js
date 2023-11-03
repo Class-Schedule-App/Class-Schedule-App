@@ -5,19 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setPassword, setError, togglePasswordVisibility } from "../redux/login_redux";
 import { setUserType } from "../redux/userType_redux";
 
-function Login() {
+function Login({onLogin}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const dataObject = useSelector((state) => state.login);
   const { email, password, error, showPassword } = dataObject
 
+  const userType = useSelector((state) => state.userType.userType);
+
   const handleChangeEmail = (event) => {
     dispatch(setEmail(event.target.value));
     dispatch(setError(null)); // Clear the error message when typing
   };
-  const handleUserTypeSelect = (userType) => {
-    dispatch(setUserType(userType));
-  }
+  // const handleUserTypeSelect = (userType) => {
+  //   dispatch(setUserType(userType));
+  // }
 
   const handleChangePassword = (event) => {
     dispatch(setPassword(event.target.value));
@@ -44,7 +46,8 @@ function Login() {
 
       if (response.ok) {
         console.log(formData);
-        navigate("/");
+        onLogin(userType);
+        navigate("/dashboard");
       } else {
         console.log(formData);
         throw new Error(`Invalid username or password! ${response.status}`);

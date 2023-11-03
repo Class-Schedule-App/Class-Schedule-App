@@ -8,6 +8,10 @@ import Register from './Pages/Register';
 import NotificationsList from './Pages/NotificationsList';
 import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
 import Header from "./Components/Header";
+import ModuleDetailPage from "./Pages/ModuleDetailPage";
+import ModuleListPage from "./Pages/ModuleListPage";
+import ModuleManagementPage from "./Pages/ModuleManagementPage";
+
 
 
 export default function App() {
@@ -17,12 +21,17 @@ export default function App() {
   const handleLogin = (user) => {
     setUser(user);
   };
+  
+  const handleLogout = () => {
+    setUser(null);
+  }
 
   return (
     <Router>
       <div>
         <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
         <Routes>
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
           {user ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -32,7 +41,7 @@ export default function App() {
               <Route path="/module-management" element={<ModuleManagementPage />} />
             </>
           ) : (
-            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
           )}
           <Route path="/notifications" component={< NotificationsList />} />
           <Route path="/notificationsettings" component={< NotificationSettingsPage/>} />        

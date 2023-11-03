@@ -13,10 +13,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = ({ user, onLogin, onLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,9 +29,11 @@ const Header = ({ user, onLogin, onLogout }) => {
     setAnchorEl(null);
   };
 
-  return (
+  const hideAppBar = !["/login", "/signup"].includes(location.pathname);
+
+  return hideAppBar ? (
     <AppBar
-      position="fixed"
+      // position="fixed"
       style={{ backgroundColor: "grey", display: "flex" }}
       // style={{
       //   width: "100%",
@@ -101,7 +106,7 @@ const Header = ({ user, onLogin, onLogout }) => {
         ) : (
           <Button
             color="inherit"
-            onClick={onLogin}
+            onClick={() => navigate("/login")}
             style={{
               marginLeft: "auto",
               color: "grey",
@@ -138,7 +143,7 @@ const Header = ({ user, onLogin, onLogout }) => {
         </div>
       </Toolbar>
     </AppBar>
-  );
+  ) : null;
 };
 
 export default Header;
