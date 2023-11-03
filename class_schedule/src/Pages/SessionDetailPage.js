@@ -1,1 +1,31 @@
-// Build a page for displaying session details. Users can access this page by clicking on a session from the SessionList.
+import React, { useState, useEffect } from 'react';
+
+const SessionDetailPage = ({ sessionID }) => {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    const apiUrl = 'http://127.0.0.1:5555/api/sessions/' + sessionID;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => setSession(data))
+      .catch((error) => console.error('Error:', error));
+  }, [sessionID]);
+
+  if (!session) {
+    return <div>Loading session details...</div>;
+  }
+
+  return (
+    <div>
+      <h2>{session.session_name}</h2>
+      <p>Time: {session.session_time}</p>
+      <p>Description: {session.description}</p>
+
+      {/* You can include additional details or components here */}
+    </div>
+  );
+};
+
+export default SessionDetailPage;
+
