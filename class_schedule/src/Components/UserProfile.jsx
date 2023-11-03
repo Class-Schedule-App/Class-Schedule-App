@@ -6,17 +6,29 @@ const UserProfile = () => {
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
-    // Fetch user data from your JSON API (http://localhost:3000/users)
+    
     fetch('http://localhost:3000/users/1')
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error('Error fetching user profile:', error));
   }, []);
 
-  const handleUpdateField = (field) => {
-    // You can implement the update logic here, similar to your original code
+  const handleUpdateField = () => {
+   
+    fetch('http://localhost:3000/users/1', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+        setEditing(false);
+      })
+      .catch((error) => console.error('Error updating user profile:', error));
   };
-
   const styles = {
     userProfile: {
       backgroundColor: '#f5f5f5',
