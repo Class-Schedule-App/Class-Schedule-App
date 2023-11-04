@@ -1,11 +1,29 @@
+import os
+from dotenv import load_dotenv
+import cloudinary.uploader
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource
 # from flask_jwt_extended import jwt_required
-import cloudinary.uploader
-from ..utils import cloudconfig
 from ..models.Student import Student
 from ..models.Config import db
 
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env.cloudinary')
+loaded = load_dotenv(dotenv_path)
+print(f"Dotenv Loaded: {loaded}")
+
+# Access Cloudinary credentials
+cloudinary_api_key = os.getenv("CLOUDINARY_API_KEY")
+cloudinary_api_secret = os.getenv("CLOUDINARY_API_SECRET")
+cloudinary_cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME")
+# Configure Cloudinary
+cloudinary.config(
+    cloud_name=cloudinary_cloud_name,
+    api_key=cloudinary_api_key,
+    api_secret=cloudinary_api_secret
+)
+print(cloudinary_api_key)
+print(cloudinary_api_secret)
+print(cloudinary_cloud_name)
 cloud = Blueprint("cloud", __name__)
 api = Api(cloud)
 
