@@ -19,4 +19,4 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
             raise ValidationError(f"Email {email} already exists.")
     class Meta:
         model = User
-        exclude = ["id"]
+        exclude = ["id", "password", "created_at", "updated_at"]
