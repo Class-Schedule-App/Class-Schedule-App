@@ -41,16 +41,21 @@ function Dashboard() {
   const hasNewNotifications = hasModuleInvites || hasSessionInvites;
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="mb-5 p-2">
+    <div className="flex flex-col h-screen relative">
+      <div className="mb-4 p-2">
         <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
       </div>
-      {/* <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-        <IconButton component={Link} to="/profile" color="primary">
-          <AccountCircleIcon />
-        </IconButton>
-      </div> */}
-      <div className="flex mt-20 p-10 flex-grow">
+      <div className="flex mt-20 p-6 flex-grow">
+        <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
+          <Link to="/notifications">
+            <IconButton
+              color="primary"
+              className="text-white bg-blue-300 rounded-full hover:bg-blue-600 focus:bg-blue-800 duration-150"
+            >
+              <NotificationsIcon className="text-blue" />
+            </IconButton>
+          </Link>
+        </div>
         <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
@@ -77,7 +82,7 @@ function Dashboard() {
           </Link>
         </div>
       </div>
-      <div className="bg-red-400 h-20 flex items-center">
+      <div className="bg-red-400 h-20 flex items-center mt-0">
         <div className="w-1/2">
           <div className="text-center pl-4">
             <h3 className="text-white">Contact Support</h3>
