@@ -3,7 +3,7 @@ import NotificationSettings from "../Components/NotificationSettings";
 
 const NotificationSettingsPage = () => {
   return (
-    <div className="bg-white mt-20 p-10">
+    <div className="bg-white mt-5 p-3 justify-items-center content-center">
       <NotificationSettings />
     </div>
   );

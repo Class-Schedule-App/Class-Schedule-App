@@ -4,8 +4,12 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const NotificationSettings = () => {
+  const navigate = useNavigate();
   // State to manage notification settings
   const [notificationSettings, setNotificationSettings] = useState({
     moduleInvites: false,
@@ -24,6 +28,12 @@ const NotificationSettings = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem("notificationSettings", JSON.stringify(notificationSettings));
+    toast.success(<div className="fixed bottom-10 right-10 bg-blue-500 text-white text-center px-4 py-2 rounded-md">Settings saved successfully</div>, {
+      autoClose: 3000,
+      draggable: false,
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
+    navigate('/')
 
   };
 
