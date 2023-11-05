@@ -20,8 +20,8 @@ class User(db.Model):
     email_confirmed = db.Column(db.Boolean, default=False)
 
     # Parent Class: One-to-One relationship
-    student = db.relationship('Student', backref='user', uselist=False) 
-    technical_mentor = db.relationship('TechnicalMentor', backref='user', uselist=False) 
+    student = db.relationship('Student', back_populates='user', uselist=False) 
+    technical_mentor = db.relationship('TechnicalMentor', back_populates='user', uselist=False) 
 
     def __init__(self, username, email, phone_number, user_type, password):
         self.username = username

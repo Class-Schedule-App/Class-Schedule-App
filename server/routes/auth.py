@@ -46,8 +46,8 @@ class SignUp(Resource):
             link = url_for('auth.confirmemail', token=token, _external=True)
             msg = Message(
             subject= 'Confirmation Email.',
-            sender='jay.kilonzo@gmail.com', recipients=[email],
-            body='Your confirmation link: {link}'.format(link=link)
+            sender='james.mutio@student.moringaschool.com', recipients=[email],
+            body = f'Your confirmation link: {link}'
             )
             mail.send(msg)
             return {"Message": "User registered successfully. Confirmation email sent!"}, 201

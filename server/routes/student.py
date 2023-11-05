@@ -21,9 +21,7 @@ cloudinary.config(
     api_key=cloudinary_api_key,
     api_secret=cloudinary_api_secret
 )
-print(cloudinary_api_key)
-print(cloudinary_api_secret)
-print(cloudinary_cloud_name)
+
 cloud = Blueprint("cloud", __name__)
 api = Api(cloud)
 
