@@ -6,7 +6,7 @@ const UserList = () => {
 
   useEffect(() => {
     // Fetch the list of users from your JSON API (http://localhost:3000/users)
-    fetch('http://localhost:3000/users')
+    fetch('http://localhost:3001/users')
       .then((response) => response.json())
       .then((data) => setUsers(data.users))
       .catch((error) => console.error('Error fetching user data:', error));
