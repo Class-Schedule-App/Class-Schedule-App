@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 # from flask_jwt_extended import jwt_required
 from ..models.Module import Module
 from ..models.Config import db
+from ..models.MarshmallowSchemas.ModuleSchema import ModuleSchema
 
 module = Blueprint('module', __name__)
 api = Api(module)
@@ -44,5 +45,13 @@ class ModulesResource(Resource):
 
         db.session.commit()
         return module.to_dict()
+class ModuleId(Resource):
+    # @jwt_required()
+    def get(self, id):
+        mod = Module.query.get_or_404(id)
+        schema = ModuleSchema()
 
+        return {"user": schema.dump(mod)}
+    
 api.add_resource(ModulesResource, '/modules')   
+api.add_resource(ModuleId, '/modules/<int:id>')

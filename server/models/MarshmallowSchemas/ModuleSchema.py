@@ -10,3 +10,4 @@ class ModuleSchema(ma.SQLAlchemyAutoSchema):
 
     class Meta:
         model = Module
+        exclude = ["id"]
