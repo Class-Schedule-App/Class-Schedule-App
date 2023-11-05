@@ -41,7 +41,7 @@ function Dashboard() {
   const hasNewNotifications = hasModuleInvites || hasSessionInvites;
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <div className="mb-5 p-2">
         <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
       </div>
@@ -50,7 +50,7 @@ function Dashboard() {
           <AccountCircleIcon />
         </IconButton>
       </div> */}
-      <div className="flex mt-20 p-10">
+      <div className="flex mt-20 p-10 flex-grow">
         <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
@@ -75,6 +75,42 @@ function Dashboard() {
               Manage Modules
             </Button>
           </Link>
+        </div>
+      </div>
+      <div className="bg-red-400 h-20 flex items-center">
+        <div className="w-1/2">
+          <div className="text-center pl-4">
+            <h3 className="text-white">Contact Support</h3>
+            <p className="text-black hover:text-blue-300 focus:text-blue-700 duration-150">
+              Email: support@moringaschool.com
+            </p>
+            <p className="text-black hover:text-blue-300 focus:text-blue-700 duration-150">
+              Phone: +254 70000000
+            </p>
+          </div>
+        </div>
+        <div className="w-1/2">
+          <div className="text-center pr-4">
+            <h3 className=" text-white">Follow Us</h3>
+            <a
+              href="https://www.facebook.com"
+              className="text-black mr-4 hover:text-blue-300 focus:text-blue-700 duration-150"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.twitter.com"
+              className="text-black mr-4 hover:text-blue-300 focus:text-blue-700 duration-150"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://www.instagram.com"
+              className="text-black hover:text-blue-300 focus:text-blue-700 duration-150"
+            >
+              Instagram
+            </a>
+          </div>
         </div>
       </div>
     </div>
