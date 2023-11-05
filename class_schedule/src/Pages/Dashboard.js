@@ -59,7 +59,13 @@ function Dashboard() {
         <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
-            <SessionList />
+            <Link to="/session">
+              <img
+                src={process.env.PUBLIC_URL + "/Images/Session.jpg"}
+                alt="Session"
+                className="rounded-md w-full h-full object-cover transform scale-100 hover:scale-110 focus:scale-110 transition-transform duration-150"
+              />
+            </Link>
           </div>
 
           <h2 className="text-xl font-semibold">Session Description:</h2>
@@ -67,7 +73,15 @@ function Dashboard() {
         </div>
         <div className="w-1/2 pl-2 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
-          <ModuleListPage />
+          <div className="mt-5 mb-5 items-center w-50%">
+            <Link to="/modules">
+              <img
+                src={process.env.PUBLIC_URL + "/Images/Modules.jpg"}
+                alt="Module"
+                className="rounded-md w-full h-full object-cover transform scale-100 hover:scale-110 focus:scale-110 transition-transform duration-150"
+              />
+            </Link>
+          </div>
           <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
           <ModuleDetailPage />
 

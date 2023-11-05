@@ -12,6 +12,7 @@ import ModuleListPage from "./Pages/ModuleListPage";
 import ModuleManagementPage from "./Pages/ModuleManagementPage";
 import AnnouncementPage from "./Pages/AnnouncementPage";
 import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
+import SessionList from "./Components/SessionList";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/signup" element={<Register />} />
         <Route path="/announcementpage" element={<AnnouncementPage />} />
         <Route path="/announcementform" element={<AnnouncementFormPage />} />
+        <Route path="/session" element={<SessionList />} />
       </Routes>
     </BrowserRouter>
   );
