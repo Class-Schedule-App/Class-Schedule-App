@@ -30,14 +30,13 @@ class SignUp(Resource):
         user_type = data.get('user_type', 'student') 
         password = data['password']  # Default to 'job seeker'
 
-        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+        if User.query.filter_by(email=email).first():
             return {"Error": "Username or Email Already Exists"}, 401
         else:
             hashed_password = generate_password_hash(password, method='pbkdf2:sha256:29000')
             new_user = User( username=username, email=email, phone_number=phone_number, user_type=user_type, password=hashed_password )
             db.session.add(new_user)
             db.session.commit()
-            return {"Message": "User registered successfully!!"}, 201
 
 class Login(Resource):
     def post(self):
