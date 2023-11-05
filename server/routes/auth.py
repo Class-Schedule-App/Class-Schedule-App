@@ -2,11 +2,12 @@ import datetime
 from flask_restful import Api, Resource
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import jwt_required, create_access_token
-from flask import Blueprint, request, jsonify, make_response, url_for
+from flask import Blueprint, request, make_response, url_for
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from ..models.Config import db, mail
 from ..models.User import User
+from ..models.MarshmallowSchemas.UserSchema import UserSchema
 
 # Blueprint for authentication routes
 auth = Blueprint('auth', __name__)
@@ -20,37 +21,27 @@ class Home(Resource):
 
 class SignUp(Resource):
     def post(self):
-        data = request.get_json()
-
-        # Checking if required keys are present
-        required_keys = ['username', 'email', 'phone_number', 'user_type', 'password']
-        if not all(key in data for key in required_keys):
-            return jsonify({'error': 'Missing required fields'}), 400
+        # Checking if required keys are present    
         
-        username = data['username']
-        email = data['email']
-        phone_number = data['phone_number']
-        user_type = data.get('user_type', 'student') 
-        password = data['password']
+        userschema = UserSchema()
+        validated_data = userschema.load(request.json)
 
-        if User.query.filter_by(email=email).first():
-            return {"Error": "Email Already Exists"}, 401
-        else:
-            hashed_password = generate_password_hash(password, method='pbkdf2:sha256:29000')
-            new_user = User( username=username, email=email, phone_number=phone_number, user_type=user_type, password=hashed_password )
-            db.session.add(new_user)
-            db.session.commit()
+        new_user = User( **validated_data )
+        db.session.add(new_user)
+        db.session.commit()
 
-            # Generate email confirmation token and send confirmation email
-            token = s.dumps(email, salt='email-confirmation')
-            link = url_for('auth.confirmemail', token=token, _external=True)
-            msg = Message(
+        # Generate email confirmation token and send confirmation email
+        token = s.dumps(new_user.email, salt='email-confirmation')
+        link = url_for('auth.confirmemail', token=token, _external=True)
+        msg = Message(
             subject= 'Confirmation Email.',
-            sender='james.mutio@student.moringaschool.com', recipients=[email],
+            sender='james.mutio@student.moringaschool.com',
+            recipients=[new_user.email],
             body = f'Your confirmation link: {link}'
-            )
-            mail.send(msg)
-            return {"Message": "User registered successfully. Confirmation email sent!"}, 201
+        )
+        mail.send(msg)
+
+        return {"Message": "User registered successfully. Confirmation email sent!"}, 201
 class ConfirmEmail(Resource):
     def get(self, token):
         try:
