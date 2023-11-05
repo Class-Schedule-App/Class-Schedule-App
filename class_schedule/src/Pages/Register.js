@@ -59,7 +59,7 @@ fetch('http://127.0.0.1:5555/signup', {
     return r.json().then((responseData) => {
       console.log(responseData, formData);
       if (r.ok) {
-        navigate('/');
+        navigate('/login');
       } else {
         throw new Error(`Oops! Invalid details or try again later! : ${r.status};`);
       }

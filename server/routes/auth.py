@@ -3,11 +3,12 @@ from flask_restful import Api, Resource
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import jwt_required, create_access_token
 from flask import Blueprint, request, make_response, url_for
-from flask_mail import Message
+# from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from ..models.Config import db, mail
 from ..models.User import User
 from ..models.MarshmallowSchemas.UserSchema import UserSchema
+from marshmallow import ValidationError
 
 # Blueprint for authentication routes
 auth = Blueprint('auth', __name__)
@@ -21,27 +22,29 @@ class Home(Resource):
 
 class SignUp(Resource):
     def post(self):
-        # Checking if required keys are present    
-        
-        userschema = UserSchema()
-        validated_data = userschema.load(request.json)
+        try:
+            user_schema = UserSchema()
+            validated_data = user_schema.load(request.json)
 
-        new_user = User( **validated_data )
-        db.session.add(new_user)
-        db.session.commit()
+            new_user = User( **validated_data )
+            db.session.add(new_user)
+            db.session.commit()
+            return {"Message": "User registered successfully. Confirmation email sent!"}, 201
 
-        # Generate email confirmation token and send confirmation email
-        token = s.dumps(new_user.email, salt='email-confirmation')
-        link = url_for('auth.confirmemail', token=token, _external=True)
-        msg = Message(
-            subject= 'Confirmation Email.',
-            sender='james.mutio@student.moringaschool.com',
-            recipients=[new_user.email],
-            body = f'Your confirmation link: {link}'
-        )
-        mail.send(msg)
+        except ValidationError as e:
+            return handle_marshmallow_error(e)       
 
-        return {"Message": "User registered successfully. Confirmation email sent!"}, 201
+        # # Generate email confirmation token and send confirmation email
+        # token = s.dumps(new_user.email, salt='email-confirmation')
+        # link = url_for('auth.confirmemail', token=token, _external=True)
+        # msg = Message(
+        #     subject= 'Confirmation Email.',
+        #     sender='james.mutio@student.moringaschool.com',
+        #     recipients=[new_user.email],
+        #     body = f'Your confirmation link: {link}'
+        # )
+        # mail.send(msg)
+
 class ConfirmEmail(Resource):
     def get(self, token):
         try:
@@ -112,3 +115,7 @@ api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(ResetPassword, '/resetpassword')
 api.add_resource(ConfirmEmail, '/confirm_email/<token>')
+
+@auth.errorhandler(ValidationError)
+def handle_marshmallow_error(e):
+    return (e.messages), 400

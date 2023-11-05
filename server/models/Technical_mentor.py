@@ -12,7 +12,7 @@ class TechnicalMentor(db.Model):
     created_at = db.Column(DateTime, server_default=db.func.now())
     # One-to-One relationship
     tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
-    user = db.relationship('User', back_populates='technical_mentor')
+
 
     # One-to-Many relationship
     students = db.relationship('Student', backref='technical_mentor')

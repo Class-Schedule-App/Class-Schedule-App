@@ -14,7 +14,7 @@ class Student(db.Model):
     created_at = db.Column(DateTime, default=datetime.utcnow)
     # One-to-One relationship    # Child Class
     student_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_student_id'))
-    user = db.relationship('User', back_populates='student')
+
 
     # One-to-Many relationship
     modules = db.relationship('Module', backref='student')
