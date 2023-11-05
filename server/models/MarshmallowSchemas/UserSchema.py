@@ -1,5 +1,4 @@
-import os
-import hashlib
+from werkzeug.security import generate_password_hash
 from sqlalchemy import or_
 from marshmallow import fields, validate, validates_schema, ValidationError
 from ..User import User
@@ -16,11 +15,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
     @staticmethod
     def generate_password_hash(password):
-        salt = hashlib.sha256(os.urandom(64)).hexdigest()
-        pw_hash = hashlib.pbkdf2_hmac(
-            'sha256', password.encode('utf-8'), salt.encode('utf-8'), 100000
-        )
-        return pw_hash.decode('utf-8')
+        return generate_password_hash(password, method='pbkdf2:sha256')
 
     @validates_schema
     def validate_password(self, data, **kwargs):
