@@ -10,7 +10,7 @@ const AnnouncementPage = () => {
 
   useEffect(() => {
     // BACKEND
-    fetch('http://127.0.0.1:5555/announcements')
+    fetch('https://class-schedule-pp4h.onrender.com/sessions') 
       .then((response) => response.json())
       .then((data) => {
         setAnnouncements(data);
