@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required, create_access_token
 from flask import Blueprint, request, make_response, url_for
 # from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from ..models.Config import db, mail
+from ..models.Config import db
 from ..models.User import User
 from ..models.MarshmallowSchemas.UserSchema import UserSchema
 from marshmallow import ValidationError
