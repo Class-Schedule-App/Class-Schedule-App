@@ -59,7 +59,7 @@ function Dashboard() {
         <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
-            {/* <SessionList /> */}
+            <SessionList />
           </div>
 
           <h2 className="text-xl font-semibold">Session Description:</h2>
