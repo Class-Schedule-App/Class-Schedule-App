@@ -31,6 +31,23 @@ const Header = ({ user, onLogin, onLogout }) => {
 
   // const hideAppBar = !["/login", "/signup"].includes(location.pathname);
 
+  const getDayOfWeek = () => {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const currentDate = new Date();
+    const currentDayIndex = currentDate.getDay();
+    return daysOfWeek[currentDayIndex];
+  };
+
+  const currentDayOfWeek = getDayOfWeek();
+
   return (
     <AppBar
       // position="fixed"
@@ -124,21 +141,17 @@ const Header = ({ user, onLogin, onLogout }) => {
             justifyContent="space-between"
             style={{ display: "flex", marginLeft: "auto" }}
           >
-            <Grid item style={{ margin: "0 10px " }}>
-              <span >Monday</span>
-            </Grid>
-            <Grid item style={{ margin: "0 10px" }}>
-              <span >Tuesday</span>
-            </Grid>
-            <Grid item style={{ margin: "0 10px" }}>
-              <span >Wednesday</span>
-            </Grid>
-            <Grid item style={{ margin: "0 10px" }}>
-              <span>Thursday</span>
-            </Grid>
-            <Grid item style={{ margin: "0 10px" }}>
-              <span>Friday</span>
-            </Grid>
+            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
+              (day) => (
+                <Grid item key={day} style={{ margin: "0 10px" }}>
+                  <span
+                    className={day === currentDayOfWeek ? "text-red-500" : ""}
+                  >
+                    {day}
+                  </span>
+                </Grid>
+              )
+            )}
           </Grid>
         </div>
       </Toolbar>
