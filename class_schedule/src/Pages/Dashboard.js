@@ -12,16 +12,18 @@ import { useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
 import { useState } from "react";
+import SessionDetailPage from "./SessionDetailPage";
+import ModuleDetailPage from "./ModuleDetailPage";
 
 function Dashboard() {
-  // const userRole = useSelector((state) => state.userType.userType);
+  const userRole = useSelector((state) => state.userType.userType);
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState("student");
+  // const [userRole, setUserRole] = useState("student");
 
   // a function to handle user login
   const handleLogin = (user, userType) => {
     setUser(user);
-    setUserRole(userType);
+    //setUserRole(userType);
   };
 
   const handleLogout = () => {
@@ -55,12 +57,14 @@ function Dashboard() {
             {/* <SessionList /> */}
           </div>
 
-          <h2 className="text-xl font-semibold">Annoucements:</h2>
-          <AnnouncementList />
+          <h2 className="text-xl font-semibold">Session Description:</h2>
+          <SessionDetailPage />
         </div>
         <div className="w-1/2 pl-2 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
           <ModuleListPage />
+          <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
+          <ModuleDetailPage />
 
           <h3 className="text-sm font-semibold">
             Manage Modules?{" "}
