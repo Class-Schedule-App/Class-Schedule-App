@@ -30,3 +30,4 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
     class Meta:
         model = User
+        exclude = ["created_at", "updated_at"]
