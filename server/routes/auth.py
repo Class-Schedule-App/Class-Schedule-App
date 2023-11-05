@@ -34,7 +34,7 @@ class SignUp(Resource):
         password = data['password']
 
         if User.query.filter_by(email=email).first():
-            return {"Error": "Username or Email Already Exists"}, 401
+            return {"Error": "Email Already Exists"}, 401
         else:
             hashed_password = generate_password_hash(password, method='pbkdf2:sha256:29000')
             new_user = User( username=username, email=email, phone_number=phone_number, user_type=user_type, password=hashed_password )

@@ -26,7 +26,7 @@ class Module(db.Model):
         return f"<Module(id={self.id}, module_name='{self.module_name}')>"
     def to_dict(self):
         return {
-            'module_id': self.id,
+            'id': self.id,
             'module_name': self.module_name,
             'date': self.date,
             'time': self.time,

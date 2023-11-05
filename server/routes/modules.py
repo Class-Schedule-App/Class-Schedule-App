@@ -51,7 +51,7 @@ class ModuleId(Resource):
         mod = Module.query.get_or_404(id)
         schema = ModuleSchema()
 
-        return {"user": schema.dump(mod)}
+        return schema.dump(mod)
     
 api.add_resource(ModulesResource, '/modules')   
 api.add_resource(ModuleId, '/modules/<int:id>')
