@@ -7,7 +7,7 @@ from flask_restful import Api, Resource
 from ..models.Student import Student
 from ..models.Config import db
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env.cloudinary')
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.cloudinary')
 loaded = load_dotenv(dotenv_path)
 print(f"Dotenv Loaded: {loaded}")
 
