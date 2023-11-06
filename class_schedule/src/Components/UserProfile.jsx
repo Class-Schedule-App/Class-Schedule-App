@@ -1,49 +1,142 @@
 // Design a user profile component where students and TMs can view and update their profile information.
 import React, { useState, useEffect } from 'react';
+import { Paper,Typography,TextField,Button,Avatar,} from '@mui/material';
 
-const UserProfile = ({ user, userType }) => {
-  const [profileData, setProfileData] = useState(user);
+const UserProfile = () => {
+  const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
-  const API_URL = 'http://localhost/profile';
 
-  // Function to handle profile updates
-  const handleUpdateProfile = () => {
-    // Make an API request to update the user's profile
-    fetch(API_URL, {
-      method: 'PATCH',
+  useEffect(() => {
+    
+    fetch('http://localhost:3000/users/1')
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error('Error fetching user profile:', error));
+  }, []);
+
+  const handleUpdateField = () => {
+   
+    fetch('http://localhost:3000/users/1', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(profileData),
+      body: JSON.stringify(user),
     })
       .then((response) => response.json())
-      .then((data) => setProfileData(data))
+      .then((data) => {
+        setUser(data);
+        setEditing(false);
+      })
       .catch((error) => console.error('Error updating user profile:', error));
   };
-
-  return (
-    <div>
-      <h2>User Profile</h2>
-      <button onClick={() => setEditing(!editing)}>Edit Profile</button>
-      {editing ? (
+   return (
+    <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
+      <Typography variant="h4" gutterBottom>
+        Profile
+      </Typography>
+      {user ? (
         <div>
-          {/* Form to update profile information */}
-          <input
-            type="text"
-            value={profileData.username}
-            onChange={(e) => setProfileData({ ...profileData, username: e.target.value })}
-          />
-          {/* Add input fields for other profile information */}
-          <button onClick={handleUpdateProfile}>Save</button>
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="subtitle1">Username:</Typography>
+            {editing ? (
+              <TextField
+                variant="outlined"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                fullWidth
+              />
+            ) : (
+              <Typography variant="body1">{user.username}</Typography>
+            )}
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="subtitle1">Email:</Typography>
+            {editing ? (
+              <TextField
+                variant="outlined"
+                type="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                fullWidth
+              />
+            ) : (
+              <Typography variant="body1">{user.email}</Typography>
+            )}
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="subtitle1">Phone Number:</Typography>
+            {editing ? (
+              <TextField
+                variant="outlined"
+                type="tel"
+                value={user.phone}
+                onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                fullWidth
+              />
+            ) : (
+              <Typography variant="body1">{user.phone}</Typography>
+            )}
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="subtitle1">Profile Picture:</Typography>
+            {editing ? (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  // Handle file upload and update profile picture
+                }}
+              />
+            ) : (
+              <div>
+                <Avatar
+                  src={user.profileImg}
+                  alt="Profile"
+                  sx={{ width: 100, height: 100 }}
+                />
+              </div>
+            )}
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="subtitle1">Password:</Typography>
+            {editing ? (
+              <div>
+                <TextField
+                  variant="outlined"
+                  type="password"
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  fullWidth
+                />
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleUpdateField}
+                  style={{ marginTop: '10px' }}
+                >
+                  Save
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <Typography variant="body1">********</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setEditing(true)}
+                  style={{ marginTop: '10px' }}
+                >
+                  Edit
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
-        <div>
-          {/* Display user information here */}
-          <p>Username: {profileData.username}</p>
-          {/* Display other user information here */}
-        </div>
+        <div>Loading user profile...</div>
       )}
-    </div>
+    </Paper>
   );
 };
 
