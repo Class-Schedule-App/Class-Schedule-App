@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
-import ProfilePage from "./Pages/ProfilePage";
 import Register from "./Pages/Register";
 import NotificationsList from "./Pages/NotificationsList";
 import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
@@ -13,6 +12,7 @@ import ModuleManagementPage from "./Pages/ModuleManagementPage";
 import AnnouncementPage from "./Pages/AnnouncementPage";
 import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
 import SessionList from "./Components/SessionList";
+import UserProfile from "./Components/UserProfile";
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="/modules" element={<ModuleListPage />} />
         <Route path="/modulemanagement" element={<ModuleManagementPage />} />

@@ -1,11 +1,6 @@
 // Develop the main dashboard page where users can see the list of sessions, announcements, and navigate to their profile.
 import React from "react";
-import SessionList from "../Components/SessionList";
-import AnnouncementList from "../Components/AnnouncementList";
-import ModuleListPage from "../Pages/ModuleListPage";
-
 import IconButton from "@mui/material/IconButton";
-import AccountCircleIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
