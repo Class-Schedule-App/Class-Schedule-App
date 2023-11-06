@@ -18,7 +18,7 @@ import SessionList from "./Components/SessionList";
 import UserProfile from "./Components/UserProfile";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("mentor");
   const handleLogin = (userData) => {
     setUser(userData);
   };

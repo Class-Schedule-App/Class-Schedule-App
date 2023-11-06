@@ -52,7 +52,7 @@ function Login({onLogin}) {
         onLogin(data.user);
   
         // Redirect or perform actions upon successful login
-        // navigate("/");
+        navigate("/");
       } else {
         console.log(formData);
         throw new Error(await response.text());

@@ -115,8 +115,8 @@ const Header = ({ user, onLogout }) => {
               open={open}
               onClose={handleProfileMenuClose}
             >
-              <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-              <MenuItem onClick={handleProfileMenuClose}>My Modules</MenuItem>
+              <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/profile"); }}>Profile</MenuItem>
+              <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/modules"); }}>My Modules</MenuItem>
               <MenuItem onClick={onLogout}>Logout</MenuItem>
             </Menu>
           </>
