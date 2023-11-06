@@ -1,23 +1,32 @@
 // Design a user profile component where students and 
 //TMs can view and update their profile information.
 import React, { useState, useEffect } from 'react';
-import { Paper,Typography,TextField,Button,Avatar,} from '@mui/material';
+import {
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Avatar,
+  Switch,
+  FormControlLabel,
+} from '@mui/material';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [notificationEnabled, setNotificationEnabled] = useState(true); // State for notification setting
 
-  useEffect(() => {
+useEffect(() => {
     
-    fetch('http://localhost:3000/users/1')
+    fetch('http://localhost:3000/users/2')
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error('Error fetching user profile:', error));
   }, []);
 
-  const handleUpdateField = () => {
+const handleUpdateField = () => {
    
-    fetch('http://localhost:3000/users/1', {
+    fetch('http://localhost:3000/users/2', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -31,15 +40,48 @@ const UserProfile = () => {
       })
       .catch((error) => console.error('Error updating user profile:', error));
   };
-   return (
-    <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-      <Typography variant="h4" gutterBottom>
-        Profile
-      </Typography>
+
+  const handleNotificationToggle = () => {
+    setNotificationEnabled(!notificationEnabled);
+  };
+
+  const containerStyle = {
+    padding: '20px',
+    maxWidth: '800px',
+    margin: '0 auto',
+    backgroundColor: 'white',
+    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)',
+    borderRadius: '10px',
+  };
+
+  return (
+    <Paper elevation={3} style={containerStyle}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h4" style={{ fontWeight: 'bold' }}>
+          User Profile
+        </Typography>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={notificationEnabled}
+              onChange={handleNotificationToggle}
+              color="primary"
+            />
+          }
+          label="Enable Notifications"
+        />
+      </div>
       {user ? (
-        <div>
-          <div style={{ marginBottom: '15px' }}>
-            <Typography variant="subtitle1">Username:</Typography>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Avatar
+            src={user.profileImg}
+            alt="Profile"
+            sx={{ width: 100, height: 100, marginTop: '20px', marginBottom: '10px' }}
+          />
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Username:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
@@ -51,8 +93,10 @@ const UserProfile = () => {
               <Typography variant="body1">{user.username}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: '15px' }}>
-            <Typography variant="subtitle1">Email:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Email:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
@@ -65,8 +109,10 @@ const UserProfile = () => {
               <Typography variant="body1">{user.email}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: '15px' }}>
-            <Typography variant="subtitle1">Phone Number:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Phone Number:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
@@ -79,28 +125,10 @@ const UserProfile = () => {
               <Typography variant="body1">{user.phone}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: '15px' }}>
-            <Typography variant="subtitle1">Profile Picture:</Typography>
-            {editing ? (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  // Handle file upload and update profile picture
-                }}
-              />
-            ) : (
-              <div>
-                <Avatar
-                  src={user.profileImg}
-                  alt="Profile"
-                  sx={{ width: 100, height: 100 }}
-                />
-              </div>
-            )}
-          </div>
-          <div style={{ marginBottom: '15px' }}>
-            <Typography variant="subtitle1">Password:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Password:
+            </Typography>
             {editing ? (
               <div>
                 <TextField
@@ -112,7 +140,7 @@ const UserProfile = () => {
                 />
                 <Button
                   variant="contained"
-                  color="success"
+                  color="primary"
                   onClick={handleUpdateField}
                   style={{ marginTop: '10px' }}
                 >
@@ -121,7 +149,9 @@ const UserProfile = () => {
               </div>
             ) : (
               <div>
-                <Typography variant="body1">********</Typography>
+                <Typography variant="body1" style={{ fontWeight: 'bold' }}>
+                  ********
+                </Typography>
                 <Button
                   variant="contained"
                   color="primary"
