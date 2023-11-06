@@ -1,9 +1,10 @@
 // Create a component to display a list of users within a module. TMs can use this to invite students to modules.
 import React, { useEffect, useState } from "react";
-import { Paper, Typography, Avatar, Button, Card, CardContent, CardActions } from '@mui/material';
+import { Paper, Typography, Avatar, Button, Card, CardContent, CardActions, TextField } from '@mui/material';
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3000/users')
@@ -24,13 +25,32 @@ const UserList = () => {
     console.log(`Added ${user.username} to a session.`);
   };
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredUserList = userList.filter((user) => {
+    const username = user.username.toLowerCase();
+    const email = user.email.toLowerCase();
+    return username.includes(searchQuery.toLowerCase()) || email.includes(searchQuery.toLowerCase());
+  });
+
   return (
     <Paper elevation={2} style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <Typography variant="h4" gutterBottom>
-       Students List
+        Students List
       </Typography>
 
-      {userList.map((user) => (
+      <TextField
+        label="Search"
+        variant="outlined"
+        fullWidth
+        value={searchQuery}
+        onChange={handleSearch}
+        style={{ marginBottom: '20px' }}
+      />
+
+      {filteredUserList.map((user) => (
         <Card
           key={user.id}
           style={{ marginBottom: '20px', border: '1px solid #e0e0e0', transition: 'background-color 0.3s' }}
@@ -63,4 +83,3 @@ const UserList = () => {
 };
 
 export default UserList;
-
