@@ -8,15 +8,15 @@ const UserProfile = () => {
 
   useEffect(() => {
     
-    fetch('http://localhost:3000/users/1')
+    fetch('https://class-schedule-pp4h.onrender.com/users')
       .then((response) => response.json())
-      .then((data) => setUser(data))
+      .then((data) => setUser(data.results[4]))
       .catch((error) => console.error('Error fetching user profile:', error));
   }, []);
 
   const handleUpdateField = () => {
    
-    fetch('http://localhost:3000/users/1', {
+    fetch('https://class-schedule-pp4h.onrender.com/users/', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const UserProfile = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUser(data);
+        setUser(data.result[4]);
         setEditing(false);
       })
       .catch((error) => console.error('Error updating user profile:', error));
