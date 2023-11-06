@@ -22,8 +22,8 @@ const ModuleListPage = () => {
 
   return (
     <div className="module-list-page">
-      <Typography variant="h4" gutterBottom>
-        Available Modules
+      <Typography variant="h6" gutterBottom>
+        Available Modules:
       </Typography>
       <List>
         {modules.map((module) => (

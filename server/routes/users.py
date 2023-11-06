@@ -1,33 +1,34 @@
-from ..models.Config import db
 from flask_restful import Resource, Api
-from flask import Blueprint, request, jsonify
+from flask import Blueprint
+from flask_jwt_extended import jwt_required
 from ..models.User import User
+from ..models.MarshmallowSchemas.UserSchema import UserSchema
 
 user_blue = Blueprint('user', __name__)
 api = Api(user_blue)
 
 class UserResource(Resource):
+    @jwt_required()
     def get(self):
-        # Query all users from the database
-        users = User.query.all()      
-        # Use SerializerMixin to convert the user objects to a dictionary
-        user_list = [user.to_dict() for user in users]
+        users = User.query.all()
+        user_list = []
 
-        # Return the list of users as JSON response
-        return jsonify(users=user_list)
-    
-    def post(self):
-        data = request.get_json()
-        user = User(
-            username=data['username'],
-            email=data['email'],
-            phone_number=data['phone_number'],
-            user_type=data['user_type'],
-            password=data['password']
-        )
-        db.session.add(user)
-        db.session.commit()
-        return user.to_dict(), 201
+        for user in users:
+            user_data = {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "phone_number": user.phone_number,
+                "user_type": user.user_type,
+                # Add other fields as needed
+            }
+            user_list.append(user_data)
 
+        user_schema = UserSchema(many=True)
+        # Serialize the user list to a JSON string
+        json_string = user_schema.dump(user_list)
+
+        # Return the JSON string directly
+        return json_string
+        
 api.add_resource(UserResource, '/users')
-

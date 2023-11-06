@@ -13,7 +13,7 @@ class Sessions(Resource):
 
         for session in sessions:
             session_data = {
-                'id': session.id,
+                'session_id': session.id,
                 'name': session.name,
                 'announcements': session.announcements,
                 'created_at': session.created_at.strftime('%Y-%m-%d %H:%M:%S') if session.created_at else None,

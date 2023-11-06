@@ -1,9 +1,7 @@
-from sqlalchemy_serializer import SerializerMixin
 from .Config import db
 from .Modules_TechnicalMentors import ModuleTechnicalMentorAssociation
 
-
-class Module(db.Model, SerializerMixin):
+class Module(db.Model):
     __tablename__ = 'modules'
 
     id = db.Column(db.Integer, primary_key=True)

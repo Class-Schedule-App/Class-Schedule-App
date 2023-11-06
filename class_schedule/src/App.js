@@ -1,42 +1,39 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState } from "react";
-import LoginPage from "./Pages/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
+import Register from "./Pages/Register";
+import NotificationsList from "./Pages/NotificationsList";
+import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
 import ModuleDetailPage from "./Pages/ModuleDetailPage";
 import ModuleListPage from "./Pages/ModuleListPage";
 import ModuleManagementPage from "./Pages/ModuleManagementPage";
+import AnnouncementPage from "./Pages/AnnouncementPage";
+import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
+import SessionList from "./Components/SessionList";
 
-function App() {
-  const [user, setUser] = useState(null);
-
-  // a function to handle user login
-  const handleLogin = (user) => {
-    setUser(user);
-  };
-
+export default function App() {
   return (
-    <Router>
-      <div>
-        {/* Header will be displayed here */}
-        {/* handleLogout and user will be passed as props to the header */}
-        <Routes>
-          {user ? (
-            <>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
-              <Route path="/modules" element={<ModuleListPage />} />
-              <Route path="/module-management" element={<ModuleManagementPage />} />
-            </>
-          ) : (
-            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-          )}
-        </Routes>
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
+        <Route path="/modules" element={<ModuleListPage />} />
+        <Route path="/modulemanagement" element={<ModuleManagementPage />} />
+        <Route path="/notifications" element={<NotificationsList />} />
+        <Route
+          path="/notificationsettings"
+          element={<NotificationSettingsPage />}
+        />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/announcementpage" element={<AnnouncementPage />} />
+        <Route path="/announcementform" element={<AnnouncementFormPage />} />
+        <Route path="/session" element={<SessionList />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

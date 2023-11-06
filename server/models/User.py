@@ -1,19 +1,18 @@
 import enum
-from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy import DateTime, Enum
+from sqlalchemy import DateTime, Enum  # Import Enum from SQLAlchemy
 from .Config import db
 
 class UserType(enum.Enum):
     student = "student"
     technical_mentor = "technical_mentor"
 
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
     email = db.Column(db.String(200))
-    phone_number = db.Column(db.Integer())
+    phone_number = db.Column(db.String(20))
     password = db.Column(db.String(80))
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
