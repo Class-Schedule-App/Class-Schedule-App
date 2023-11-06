@@ -27,3 +27,12 @@ class Module(db.Model):
 
     def __repr__(self):
         return f"<Module(id={self.id}, module_name='{self.module_name}')>"
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'module_name': self.module_name,
+            'date': self.date,
+            'time': self.time,
+            'invite_link': self.invite_link,
+            # Add other fields as needed
+        }

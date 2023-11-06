@@ -12,6 +12,8 @@ class TechnicalMentor(db.Model):
     created_at = db.Column(DateTime, server_default=db.func.now())
     # One-to-One relationship
     tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
+
+
     # One-to-Many relationship
     students = db.relationship('Student', backref='technical_mentors')
     # Many-to-Many relationship
@@ -26,4 +28,11 @@ class TechnicalMentor(db.Model):
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"
-    
+    def to_dict(self):
+        return {
+            'mentor_id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'profile_img': self.profile_img,
+            # Add other fields as needed
+        }

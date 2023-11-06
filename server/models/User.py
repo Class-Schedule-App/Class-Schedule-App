@@ -16,14 +16,15 @@ class User(db.Model):
     password = db.Column(db.String())
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
-    user_type = db.Column(db.String(200), Enum(UserType), nullable=False)
-
+    user_type = db.Column(db.String(200), Enum(UserType), nullable=False)  
+    email_confirmed = db.Column(db.Boolean, default=False)
+    
     student = db.relationship('Student', back_populates='user', uselist=False)  # One-to-One relationship
     technical_mentor = db.relationship('TechnicalMentor', back_populates='user', uselist=False)  # One-to-One relationship
 
     # Parent Class: One-to-One relationship
-    student = db.relationship('Student', backref='user', uselist=False) 
-    technical_mentor = db.relationship('TechnicalMentor', backref='user', uselist=False) 
+    # student = db.relationship('Student', backref='user', uselist=False) 
+    # technical_mentor = db.relationship('TechnicalMentor', backref='user', uselist=False)  
 
     def __init__(self, username, email, phone_number, user_type, password):
         self.username = username

@@ -58,7 +58,7 @@ const SessionList = () => {
           Go Back to Dashboard?
         </Link>
       </p>
-    </div>
+t    </div>
   );
 };
 

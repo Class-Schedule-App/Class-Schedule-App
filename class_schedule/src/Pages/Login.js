@@ -41,11 +41,19 @@ function Login({onLogin}) {
       });
 
       if (response.ok) {
-        console.log(formData);
+        const data = await response.json();
+  
+        // Assuming the token is included in the response body after successful authentication
+        const token = data.token;
+  
+        // Store the token in local storage
+        localStorage.setItem('token', token);
+  
+        // Redirect or perform actions upon successful login
         navigate("/");
       } else {
         console.log(formData);
-        throw new Error(`Invalid username or password! ${response.status}`);
+        throw new Error(await response.text());
       }
     } catch (error) {
       dispatch(setError(error.message));
@@ -100,19 +108,16 @@ function Login({onLogin}) {
         <label className="iLabel" htmlFor="firstname">Password</label>
       </div>
       <button className="submit" type="text">Submit</button>
-      <div className="forgot-pass">
-              Forgot Password?
+      <div className="forgot-pass m-2">
+          <a href="/resetpassword" className="text-blue-500"> Forgot Password?</a>
       </div>
-        <button 
-        type="submit"
-        className="button"
-        >
-          Sign in
-        </button>
-        {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
-        <div className="sign-up">
-          Not a member? <a href="/signup">Signup now</a>
-        </div>
+      {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+      <div className="sign-up m-2">
+        Not a member? <a href="/signup" className="text-blue-500">Signup now</a>
+      </div>
+      <div className=" m-2">
+          <a href="/confirm_email/<token>" className="text-blue-500"> Confirm Email</a>
+      </div>
       </form>
     </div>
   </div>

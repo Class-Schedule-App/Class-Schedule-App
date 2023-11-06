@@ -1,7 +1,9 @@
 from flask import Blueprint, request
 from flask_restful import Resource, Api, reqparse
+# from flask_jwt_extended import jwt_required
 from ..models.Module import Module
 from ..models.Config import db
+from ..models.MarshmallowSchemas.ModuleSchema import ModuleSchema
 
 module = Blueprint('module', __name__)
 api = Api(module)
@@ -13,6 +15,7 @@ module_parser.add_argument('time', type=str, required=True, help='Time is requir
 module_parser.add_argument('invite_link', type=str, required=True, help='Invite link is required')
 
 class ModulesResource(Resource):
+    # @jwt_required()
     def get(self):
         modules = Module.query.all()
         module_list = [module.to_dict() for module in modules]
@@ -42,5 +45,13 @@ class ModulesResource(Resource):
 
         db.session.commit()
         return module.to_dict()
+class ModuleId(Resource):
+    # @jwt_required()
+    def get(self, id):
+        mod = Module.query.get_or_404(id)
+        schema = ModuleSchema()
 
+        return schema.dump(mod)
+    
 api.add_resource(ModulesResource, '/modules')   
+api.add_resource(ModuleId, '/modules/<int:id>')

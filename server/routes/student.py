@@ -1,4 +1,6 @@
-import json
+import os
+from dotenv import load_dotenv
+import cloudinary.uploader
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource
 import cloudinary
@@ -10,8 +12,10 @@ from ..utils import cloudconfig
 
 cloud = Blueprint("cloud", __name__)
 
+api = Api(cloud)
 
 class StudentRoute(Resource):
+    # @jwt_required
     def get(self):
         students = Student.query.all()
         student_list = []
@@ -53,33 +57,25 @@ def allowed_file(filename):
 
 class Upload(Resource):
     def post(self, id): 
-        if id is None:
-            return jsonify({'message': 'No ID provided'}), 400
-
+        # Retrieve the user
         student = Student.query.get(id)
         if student is None:
-            return jsonify({'message': 'Student not found'}), 40
+            return {'message': 'Student not found'}, 40
         
         # Check if the 'file' key exists in the request.files
         if 'file' not in request.files:
-            return jsonify({'message': 'No file part'}), 400
+            return {'message': 'No file part'}, 400
 
         file = request.files['file']
-
-        # Check if a file was uploaded
-        if file.filename == '':
-            return jsonify({'message': 'No image selected for uploading'}), 400
+        
         # Validate the file type
         if not allowed_file(file.filename):
-            return jsonify({'message': 'Invalid file type. Supported types are: png, jpg, jpeg, gif'}), 400
+            return {'message': 'Invalid file type. Supported types are: png, jpg, jpeg, gif'}, 400
 
         # Upload the image to Cloudinary
         try:
             result = cloudinary.uploader.upload(file)
             image_url = result['secure_url']
-
-            # Retrieve the user
-            student = Student.query.get(id)
 
             # Update the user's profile picture URL
             student.profile_img = image_url
@@ -90,10 +86,9 @@ class Upload(Resource):
                 'url': image_url
             }
 
-            return json.dumps(response_data), 200
+            return response_data, 200
         except Exception as e:
-            return jsonify({'message': f'Error uploading image: {str(e)}'}), 500
+            return {'message': f'Error uploading image: {str(e)}'}, 500
     
-api = Api(cloud)
 api.add_resource(Upload, '/upload-profile-picture/<int:id>')  # Make sure to specify the type of the ID
 api.add_resource(StudentRoute, '/students')

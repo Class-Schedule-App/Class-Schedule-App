@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from .models.Config import db, migrate, secret_key, ma
+from .models.Config import db, migrate, ma, secret_key, mail
 # Register the blueprints for different routes in your app
 from .routes.auth import auth
 from .routes.student import cloud
@@ -22,6 +22,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 CORS(app, resources={r"/*": {"origins": "http://localhost:4000", "methods": ["GET", "POST", "DELETE", "PATCH"]}}, supports_credentials=True)
 
+app.config.from_pyfile('config.cfg')
+mail.init_app(app)
 # Initialize Flask extensions
 api = Api(app)  # Initialize the RESTful API
 cors = CORS(app)  # Enable Cross-Origin Resource Sharing (CORS)

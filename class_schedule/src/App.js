@@ -2,6 +2,9 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Login from "./Pages/Login";
+import ResetPassword from "./Pages/ResetPassword";
+import ModuleDetails from "./Pages/Main/ModuleDetails";
+import ModPage from "./Pages/Main/ModPage";
 import Dashboard from "./Pages/Dashboard";
 import Register from "./Pages/Register";
 import NotificationsList from "./Pages/NotificationsList";
@@ -33,6 +36,9 @@ export default function App() {
         <Route path="/announcementpage" element={<AnnouncementPage />} />
         <Route path="/announcementform" element={<AnnouncementFormPage />} />
         <Route path="/session" element={<SessionList />} />
+        <Route path='/resetpassword' element={<ResetPassword/>} /> 
+        <Route path="/mod" element={ <ModPage /> }/>
+        <Route path="/mod/:modId" element={ <ModuleDetails /> }/>
       </Routes>
     </BrowserRouter>
   );

@@ -15,6 +15,7 @@ class Student(db.Model):
     # One-to-One relationship    # Child Class
     student_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_student_id'))
 
+
     # One-to-Many relationship
     modules = db.relationship('Module', backref='student')
     tm_id = db.Column(db.Integer, db.ForeignKey('technical_mentors.id', name='fk_tm_id'))
