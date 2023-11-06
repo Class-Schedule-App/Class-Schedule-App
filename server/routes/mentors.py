@@ -6,6 +6,8 @@ from flask_restful import Api, Resource
 # from flask_jwt_extended import jwt_required
 from ..models.Technical_mentor import TechnicalMentor
 from ..models.Config import db
+from ..models.MarshmallowSchemas.TechnicalMentorSchema import TechnicalMentorSchema
+from marshmallow import ValidationError
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env.cloudinary')
 loaded = load_dotenv(dotenv_path)
@@ -23,29 +25,36 @@ cloudinary.config(
 ment = Blueprint('mentor', __name__)
 api = Api(ment)
 
-class TechnicalMentorResource(Resource):
-    # @jwt_required()
-    def get(self):
-        mentors = TechnicalMentor.query.all()
-        mentor_list = [mentor.to_dict() for mentor in mentors]
-        return mentor_list
-    
-    def post(self):
-        data = request.get_json()
-        mentor = TechnicalMentor(
-            name=data.get('name'),
-            email=data.get('email'),
-            profile_img=data.get('profile_img'),
-        )
-        db.session.add(mentor)
-        db.session.commit()
-        return mentor.to_dict(), 201
-    
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+class TechnicalMentorResource(Resource):
+    # @jwt_required()
+    def get(self):
+            mentors = TechnicalMentor.query.all()
+            schema = TechnicalMentorSchema(many=True)
+            return schema.dump(mentors)
+
+    def post(self):
+        schema = TechnicalMentorSchema()
+        validated_data = schema.load(request.json)
+        # Upload the image to Cloudinary
+        # image_url = Upload().post()
+        # # Check if the image URL is None
+        # if not image_url:
+        #     return {'message': 'No file part'}, 400
+        # validated_data['profile_img'] = image_url
+        try:            
+            new_tm = TechnicalMentor(**validated_data)
+            db.session.add(new_tm)
+            db.session.commit()
+            return {"Message": "You have been successfully registered!!"}, 201
+        except ValidationError as e:
+            return (e.messages), 400
+        
 class Upload(Resource):
     def post(self, id): 
         # Retrieve the tm
