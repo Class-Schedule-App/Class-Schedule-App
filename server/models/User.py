@@ -13,7 +13,7 @@ class User(db.Model):
     username = db.Column(db.String(100))
     email = db.Column(db.String(200))
     phone_number = db.Column(db.String(20))
-    password = db.Column(db.String(80))
+    password = db.Column(db.String())
     created_at = db.Column(DateTime, server_default=db.func.now())
     updated_at = db.Column(DateTime, server_default=db.func.now(), onupdate=db.func.now())
     user_type = db.Column(db.String(200), Enum(UserType), nullable=False)

@@ -168,8 +168,8 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
             onChange={handleChange}
           >
             <option  value="">Select User Type</option>
-            <option  value="student">Student</option>
-            <option  value="technical_mentor">TechnicalMentors</option>
+            <option  value="student">student</option>
+            <option  value="technical_mentor">technical_mentor</option>
             <option  value="other">Other</option>
           </select>
           <label className="text-sm mb-2 text-gray-200 cursor-pointer" htmlFor="tel">

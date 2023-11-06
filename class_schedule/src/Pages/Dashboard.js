@@ -56,7 +56,7 @@ function Dashboard() {
             </IconButton>
           </Link>
         </div>
-        <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
+        <div className="w-1/2 pr-6 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/session">
@@ -71,7 +71,7 @@ function Dashboard() {
           <h2 className="text-xl font-semibold">Session Description:</h2>
           <SessionDetailPage />
         </div>
-        <div className="w-1/2 pl-2 border rounded border-gray-400 p-4 ml-2">
+        <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/modules">

@@ -10,7 +10,7 @@ const ModuleListPage = () => {
     // Fetch modules data for students
     const fetchModules = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5555/modules');
+        const response = await axios.get('https://class-schedule-pp4h.onrender.com/modules');
         setModules(response.data);
       } catch (error) {
         console.error('Error fetching modules:', error);
