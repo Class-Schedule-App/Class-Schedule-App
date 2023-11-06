@@ -10,11 +10,11 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
+    phone_number = db.Column(db.String(20))
     profile_img = db.Column(db.String)  # Assuming it's a db.String representing the image file path
     created_at = db.Column(DateTime, default=datetime.utcnow)
     # One-to-One relationship    # Child Class
     student_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_student_id'))
-
 
     # One-to-Many relationship
     modules = db.relationship('Module', backref='student')
@@ -23,8 +23,7 @@ class Student(db.Model):
     # Many-to-Many relationship
     following = db.relationship('Session', secondary=student_session_association, back_populates='followers') 
 
-    def __init__(self, name, email, profile_img, student_id=student_id):
+    def __init__(self, name, email, phone_number=phone_number):
         self.name = name
         self.email = email
-        self.profile_img = profile_img
-        self.student_id = student_id
+        self.phone_number = phone_number
