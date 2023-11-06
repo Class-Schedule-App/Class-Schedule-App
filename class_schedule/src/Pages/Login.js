@@ -48,9 +48,11 @@ function Login({onLogin}) {
   
         // Store the token in local storage
         localStorage.setItem('token', token);
+
+        onLogin(data.user);
   
         // Redirect or perform actions upon successful login
-        navigate("/");
+        // navigate("/");
       } else {
         console.log(formData);
         throw new Error(await response.text());

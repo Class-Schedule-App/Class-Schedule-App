@@ -18,11 +18,19 @@ import SessionList from "./Components/SessionList";
 import UserProfile from "./Components/UserProfile";
 
 export default function App() {
+  const [user, setUser] = useState(null);
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Dashboard user={user} onLogin={handleLogin} onLogout={handleLogout}/>} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="/modules" element={<ModuleListPage />} />
@@ -36,9 +44,9 @@ export default function App() {
         <Route path="/announcementpage" element={<AnnouncementPage />} />
         <Route path="/announcementform" element={<AnnouncementFormPage />} />
         <Route path="/session" element={<SessionList />} />
-        <Route path='/resetpassword' element={<ResetPassword/>} /> 
-        <Route path="/mod" element={ <ModPage /> }/>
-        <Route path="/mod/:modId" element={ <ModuleDetails /> }/>
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/mod" element={<ModPage />} />
+        <Route path="/mod/:modId" element={<ModuleDetails />} />
       </Routes>
     </BrowserRouter>
   );

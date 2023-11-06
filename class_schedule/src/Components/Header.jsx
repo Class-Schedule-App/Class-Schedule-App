@@ -15,11 +15,11 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Header = ({ user, onLogin, onLogout }) => {
+const Header = ({ user, onLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const location = useLocation();
+  //const location = useLocation();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -130,7 +130,7 @@ const Header = ({ user, onLogin, onLogout }) => {
               backgroundColor: "white",
             }}
           >
-            Login/Signup
+            Login
           </Button>
         )}
       </Toolbar>

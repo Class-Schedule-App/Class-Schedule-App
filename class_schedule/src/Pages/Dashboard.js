@@ -10,20 +10,19 @@ import { useState } from "react";
 import SessionDetailPage from "./SessionDetailPage";
 import ModuleDetailPage from "./ModuleDetailPage";
 
-function Dashboard() {
+function Dashboard({ user, onLogin, onLogout }) {
   const userRole = useSelector((state) => state.userType.userType);
-  const [user, setUser] = useState(null);
-  // const [userRole, setUserRole] = useState("student");
+  // const [user, setUser] = useState(null);
+  // // const [userRole, setUserRole] = useState("student");
 
-  // a function to handle user login
-  const handleLogin = (user, userType) => {
-    setUser(user);
-    //setUserRole(userType);
-  };
+  // // a function to handle user login
+  // const handleLogin = (userData) => {
+  //   setUser(userData);
+  // };
 
-  const handleLogout = () => {
-    setUser(null);
-  };
+  // const handleLogout = () => {
+  //   setUser(null);
+  // };
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
@@ -38,7 +37,7 @@ function Dashboard() {
   return (
     <div className="flex flex-col h-screen relative">
       <div className="mb-4 p-2">
-        <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
+        <Header user={user} onLogout={onLogout} />
       </div>
       <div className="flex mt-20 p-6 flex-grow">
         <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
