@@ -1,4 +1,5 @@
-// Design a user profile component where students and TMs can view and update their profile information.
+// Design a user profile component where students and 
+//TMs can view and update their profile information.
 import React, { useState, useEffect } from 'react';
 import { Paper,Typography,TextField,Button,Avatar,} from '@mui/material';
 
