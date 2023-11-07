@@ -81,20 +81,20 @@ function Login() {
         id="email"
         type="text"
         required =""
-        placeholder=""      
+        placeholder="Email"      
         className="input" 
         value={email}
         onChange={handleChangeEmail} 
          />
         <div className="cut cut-short"></div>
-        <label className="iLabel" htmlFor="email">Email</label>
+        {/* <label className="iLabel" htmlFor="email"></label> */}
       </div>
 
       <div className="input-container ic1">
         <input 
         required =""
         autoComplete="off"
-        placeholder="" 
+        placeholder="Password" 
         value={password}
         type={showPassword ? 'text' : 'password'}
         className="input" 
@@ -109,18 +109,18 @@ function Login() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
         <div className="cut"></div>
-        <label className="iLabel" htmlFor="firstname">Password</label>
+        {/* <label className="iLabel" htmlFor="firstname">Password</label> */}
       </div>
       <button className="submit" type="text">Submit</button>
       <div className="forgot-pass m-2">
-          <a href="/resetpassword" className="text-blue-500"> Forgot Password?</a>
+          <a href="/resetpassword" className="text-blue-400 "> Forgot Password?</a>
       </div>
       {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
       <div className="sign-up m-2">
-        Not a member? <a href="/signup" className="text-blue-500">Signup now</a>
+        Not a member? <a href="/signup" className="font-bold italic text-blue-400">Signup now</a>
       </div>
       <div className=" m-2">
-          <a href="/confirm_email/<token>" className="text-blue-500"> Confirm Email</a>
+          <a href="/confirm_email/<token>" className="text-blue-400"> Confirm Email</a>
       </div>
       </form>
     </div>
