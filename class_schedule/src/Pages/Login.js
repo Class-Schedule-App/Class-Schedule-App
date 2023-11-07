@@ -55,18 +55,20 @@ function Login() {
 
         // Store the token in local storage
         localStorage.setItem('token', token);
+        navigate("/");
   
         // Checking user type
-        if (data.user_type === "technical_mentor") {
-          navigate("/mod"); // Navigate to the "/login" route for a technical mentor
-        } 
-        else if (data.user_type === "student") {
-          navigate("/dashboard"); 
-        } 
-        else {
-        console.log(formData);
-        throw new Error(await response.text());
-      }}
+        // if (data.user_type === "technical_mentor") {
+        //   navigate("/mod"); // Navigate to the "/login" route for a technical mentor
+        // } 
+        // else if (data.user_type === "student") {
+        //   navigate("/"); 
+        // } 
+        // else {
+        // console.log(formData);
+        // throw new Error("Login failed");
+      // }
+    }
     } catch (error) {
       dispatch(setError(error.message));
     } finally {

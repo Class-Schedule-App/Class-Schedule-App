@@ -13,13 +13,18 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const Header = ({ user, onLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+<<<<<<< HEAD
   // const location = useLocation();
+=======
+  //const location = useLocation();
+  
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +34,10 @@ const Header = ({ user, onLogout }) => {
     setAnchorEl(null);
   };
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
   const getDayOfWeek = () => {
     const daysOfWeek = [
       "Sunday",
@@ -60,7 +69,14 @@ const Header = ({ user, onLogout }) => {
   };
 
   return (
+<<<<<<< HEAD
     <AppBar style={{ backgroundColor: "grey", display: "flex" }}>
+=======
+    <AppBar
+      // position="fixed"
+      style={{ backgroundColor: "grey", display: "flex" }}
+    >
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
           <img
@@ -126,6 +142,7 @@ const Header = ({ user, onLogout }) => {
               open={open}
               onClose={handleProfileMenuClose}
             >
+<<<<<<< HEAD
               <MenuItem
                 onClick={() => {
                   handleProfileMenuClose();
@@ -143,6 +160,11 @@ const Header = ({ user, onLogout }) => {
                 My Modules
               </MenuItem>
               <MenuItem onClick={onLogout}>Logout</MenuItem>
+=======
+              <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/profile"); }}>Profile</MenuItem>
+              <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/modules"); }}>My Modules</MenuItem>
+              <MenuItem onClick={() => { handleProfileMenuClose(); navigate("/login"); }}>Logout</MenuItem>
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
             </Menu>
           </>
         ) : (

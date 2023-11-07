@@ -47,6 +47,10 @@ const formData = {
   phone_number: dataObject.phone_number,
 };
 
+dispatch(updateUserField({ field: 'firstname', value: dataObject.firstname }));
+dispatch(updateUserField({ field: 'lastname', value: dataObject.lastname }));
+dispatch(updateUserField({ field: 'user_type', value: dataObject.user_type }));
+
 fetch('https://class-schedule-pp4h.onrender.com/signup', {
   method: 'POST',
   headers: {
@@ -59,7 +63,7 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
     return r.json().then((responseData) => {
       console.log(responseData, formData);
       if (r.ok) {
-        navigate('/login');
+        navigate('/');
       } else {
         throw new Error(`Oops! Invalid details or try again later! : ${r.status};`);
       }
