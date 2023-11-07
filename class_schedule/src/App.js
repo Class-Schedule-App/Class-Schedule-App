@@ -18,19 +18,11 @@ import SessionList from "./Components/SessionList";
 import UserProfile from "./Components/UserProfile";
 
 export default function App() {
-  const [user, setUser] = useState("mentor");
-  const handleLogin = (userData) => {
-    setUser(userData);
-  };
-  const handleLogout = () => {
-    setUser(null);
-  };
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard user={user} onLogin={handleLogin} onLogout={handleLogout}/>} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="/modules" element={<ModuleListPage />} />

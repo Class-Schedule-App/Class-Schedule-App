@@ -1,6 +1,7 @@
 // Create a component to display a list of available sessions. Each session can be a card with details like date, time, title, and description.
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserList from "./UserList";
 
 const SessionList = () => {
   // State to store the list of sessions

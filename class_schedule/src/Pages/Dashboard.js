@@ -9,20 +9,22 @@ import Header from "../Components/Header";
 import { useState } from "react";
 import SessionDetailPage from "./SessionDetailPage";
 import ModuleDetailPage from "./ModuleDetailPage";
+import SessionForm from "../Components/SessionForm";
 
-function Dashboard({ user, onLogin, onLogout }) {
-  const userRole = useSelector((state) => state.userType.userType);
-  // const [user, setUser] = useState(null);
-  // // const [userRole, setUserRole] = useState("student");
+function Dashboard() {
+  // const userRole = useSelector((state) => state.userType.userType);
+  const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState("mentor");
 
-  // // a function to handle user login
-  // const handleLogin = (userData) => {
-  //   setUser(userData);
-  // };
+  // a function to handle user login
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
 
-  // const handleLogout = () => {
-  //   setUser(null);
-  // };
+  const handleLogout = () => {
+    setUser(null);
+  };
+  
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
@@ -37,7 +39,7 @@ function Dashboard({ user, onLogin, onLogout }) {
   return (
     <div className="flex flex-col h-screen relative">
       <div className="mb-4 p-2">
-        <Header user={user} onLogout={onLogout} />
+        <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
       </div>
       <div className="flex mt-20 p-6 flex-grow">
         <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
