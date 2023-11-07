@@ -1,24 +1,34 @@
 // Develop the main dashboard page where users can see the list of sessions, announcements, and navigate to their profile.
 import React from "react";
+import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
-import { useState } from "react";
-import SessionDetailPage from "./SessionDetailPage";
-import ModuleDetailPage from "./ModuleDetailPage";
-import SessionForm from "../Components/SessionForm";
 import { logoutUser } from "../redux/authActions";
 function Dashboard() {
-  const userRole = useSelector((state) => state.user.user_type);
+  //const userRole = useSelector((state) => state.user.user_type);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logoutUser());
-  }
+  };
 
+  // State for search query and results
+  
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Function to update search results
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+    
+  };
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
+  };
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
@@ -33,9 +43,32 @@ function Dashboard() {
   return (
     <div className="flex flex-col h-screen relative">
       <div className="mb-4 p-2">
-        <Header user={user} onLogout={handleLogout}/>
+        <Header
+          user={user}
+          onLogout={handleLogout}
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+          searchResults={searchResults}
+          setSearchResults={handleSearchResults}
+        />
       </div>
-
+      <div >
+        {/* Display search results */}
+        {searchResults.length > 0 && (
+          <div className="flex mt-20 p-6 flex-grow">
+            <ul>
+              {searchResults.map((result, index) => (
+                <li key={index}>
+                  <strong>{result.name}</strong>
+                  <br />
+                  {/* Display session announcements */}
+                  {result.announcements}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
       <div className="flex mt-20 p-6 flex-grow">
         <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
           <Link to="/notifications">
