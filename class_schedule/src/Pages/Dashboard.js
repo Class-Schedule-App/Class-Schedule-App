@@ -2,7 +2,6 @@
 import React from "react";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
@@ -59,9 +58,9 @@ function Dashboard() {
               />
             </Link>
           </div>
-          
-          <h2 className="text-xl font-semibold">Session Description:</h2>
-          <SessionDetailPage />
+          <p>Click the image to view sessions </p>
+          {/* <h2 className="text-xl font-semibold">Session Description:</h2>
+          <SessionDetailPage /> */}
         </div>
         <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
@@ -75,8 +74,9 @@ function Dashboard() {
               />
             </Link>
           </div>
-          <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
-          <ModuleDetailPage />
+          <p>Click the image to view Modules </p>
+          {/* <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
+          <ModuleDetailPage /> */}
 
           {/* <h3 className="text-sm font-semibold">
             Manage Modules?{" "}
