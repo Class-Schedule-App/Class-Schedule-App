@@ -48,25 +48,25 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
 
         // Assuming the token is included in the response body after successful authentication
         const token = data.token;
 
         // Store the token in local storage
-        localStorage.setItem("token", token);
-
-        //onLogin(data.user);
+        localStorage.setItem('token', token);
+  
+        // Checking user type
         if (data.user_type === "technical_mentor") {
           navigate("/mod"); // Navigate to the "/login" route for a technical mentor
-        } else if (data.user_type === "student") {
-          navigate("/");
-        }
-
-        // Redirect or perform actions upon successful login
-      } else {
+        } 
+        else if (data.user_type === "student") {
+          navigate("/dashboard"); 
+        } 
+        else {
         console.log(formData);
         throw new Error(await response.text());
-      }
+      }}
     } catch (error) {
       dispatch(setError(error.message));
     } finally {
@@ -74,7 +74,7 @@ function Login() {
       dispatch(setEmail(""));
       dispatch(setPassword(""));
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen dark">

@@ -72,13 +72,13 @@ class Login(Resource):
 
         if not user or not check_password_hash(user.password, password):
             return make_response('Invalid email or password', 401)
-        if not user.email_confirmed:
-            return make_response('Email not confirmed!', 401)
+        # if not user.email_confirmed:
+        #     return make_response('Email not confirmed!', 401)
 
         # token = jwt.encode({'user_id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, secret_key)
         token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
         # Serialize the response object to a JSON string
-        json_response = {"Message": "Login Successful!!", 'token': token}
+        json_response = {"Message": "Login Successful!!", 'token': token, "user_type": user.user_type}
 
         return json_response
 
