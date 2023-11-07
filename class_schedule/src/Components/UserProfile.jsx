@@ -18,7 +18,7 @@ const UserProfile = () => {
 
 useEffect(() => {
     
-    fetch('http://localhost:3000/users/2')
+    fetch('http://127.0.0.1:5000/users/1')
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error('Error fetching user profile:', error));
@@ -26,7 +26,7 @@ useEffect(() => {
 
 const handleUpdateField = () => {
    
-    fetch('http://localhost:3000/users/2', {
+    fetch('http://127.0.0.1:5000/users/1', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

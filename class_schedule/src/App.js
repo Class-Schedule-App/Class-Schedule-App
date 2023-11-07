@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css'
 import UserProfile from './Components/UserProfile'
-import UserList from './Components/UserList';
+import Module from './Components/Module';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
      <div className="user-profile">
         <UserProfile />
       </div>
-     <UserList/>
+      <Module/>
      
   </>
 )
