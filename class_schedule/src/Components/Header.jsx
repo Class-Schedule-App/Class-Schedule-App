@@ -18,8 +18,12 @@ const Header = ({ user, onLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+<<<<<<< HEAD
+  // const location = useLocation();
+=======
   //const location = useLocation();
   
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,7 +33,10 @@ const Header = ({ user, onLogout }) => {
     setAnchorEl(null);
   };
 
+<<<<<<< HEAD
+=======
   
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
   const getDayOfWeek = () => {
     const daysOfWeek = [
       "Sunday",
@@ -47,11 +54,28 @@ const Header = ({ user, onLogout }) => {
 
   const currentDayOfWeek = getDayOfWeek();
 
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchResults, setSearchResults] = useState([]); 
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    const filteredResults = data.filter((item) =>
+      item.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+  };
+
   return (
+<<<<<<< HEAD
+    <AppBar style={{ backgroundColor: "grey", display: "flex" }}>
+=======
     <AppBar
       // position="fixed"
       style={{ backgroundColor: "grey", display: "flex" }}
     >
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
           <img
@@ -81,9 +105,21 @@ const Header = ({ user, onLogout }) => {
           <InputBase
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
+            value={searchQuery}
+            onChange={handleSearchChange} // Attach the search input handler
             style={{ flex: 1, padding: "10px" }}
           />
         </div>
+        {/* Display search results */}
+        {searchResults.length > 0 && (
+          <div>
+            <ul>
+              {searchResults.map((result, index) => (
+                <li key={index}>{result}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         {user ? (
           <>
             <IconButton
@@ -105,9 +141,29 @@ const Header = ({ user, onLogout }) => {
               open={open}
               onClose={handleProfileMenuClose}
             >
+<<<<<<< HEAD
+              <MenuItem
+                onClick={() => {
+                  handleProfileMenuClose();
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleProfileMenuClose();
+                  navigate("/modules");
+                }}
+              >
+                My Modules
+              </MenuItem>
+              <MenuItem onClick={onLogout}>Logout</MenuItem>
+=======
               <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/profile"); }}>Profile</MenuItem>
               <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/modules"); }}>My Modules</MenuItem>
               <MenuItem onClick={() => { handleProfileMenuClose(); navigate("/login"); }}>Logout</MenuItem>
+>>>>>>> f8b4622474e1a24b4ab0641d4517cf4d5bd11b6b
             </Menu>
           </>
         ) : (
@@ -150,3 +206,4 @@ const Header = ({ user, onLogout }) => {
 };
 
 export default Header;
+
