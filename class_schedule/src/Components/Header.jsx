@@ -13,13 +13,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const Header = ({ user, onLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   //const location = useLocation();
+  
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,8 +30,7 @@ const Header = ({ user, onLogout }) => {
     setAnchorEl(null);
   };
 
-  // const hideAppBar = !["/login", "/signup"].includes(location.pathname);
-
+  
   const getDayOfWeek = () => {
     const daysOfWeek = [
       "Sunday",
@@ -52,15 +52,6 @@ const Header = ({ user, onLogout }) => {
     <AppBar
       // position="fixed"
       style={{ backgroundColor: "grey", display: "flex" }}
-      // style={{
-      //   width: "100%",
-      //   backgroundImage: `url(${process.env.PUBLIC_URL}/Images/header.jpg`,
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center",
-      //   display: "flex",
-      //   justifyContent: "space-between",
-      // }}
     >
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
@@ -117,7 +108,7 @@ const Header = ({ user, onLogout }) => {
             >
               <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/profile"); }}>Profile</MenuItem>
               <MenuItem onClick={() => {handleProfileMenuClose(); navigate("/modules"); }}>My Modules</MenuItem>
-              <MenuItem onClick={onLogout}>Logout</MenuItem>
+              <MenuItem onClick={() => { handleProfileMenuClose(); navigate("/login"); }}>Logout</MenuItem>
             </Menu>
           </>
         ) : (

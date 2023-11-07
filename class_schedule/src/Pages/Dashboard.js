@@ -3,28 +3,23 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
 import { useState } from "react";
 import SessionDetailPage from "./SessionDetailPage";
 import ModuleDetailPage from "./ModuleDetailPage";
 import SessionForm from "../Components/SessionForm";
-
+import { logoutUser } from "../redux/authActions";
 function Dashboard() {
-  // const userRole = useSelector((state) => state.userType.userType);
-  const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState("mentor");
-
-  // a function to handle user login
-  const handleLogin = (userData) => {
-    setUser(userData);
-  };
+  const userRole = useSelector((state) => state.user.user_type);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    setUser(null);
-  };
-  
+    dispatch(logoutUser());
+  }
+
 
   // Check the notification settings in localStorage
   const savedSettings = JSON.parse(
@@ -39,8 +34,9 @@ function Dashboard() {
   return (
     <div className="flex flex-col h-screen relative">
       <div className="mb-4 p-2">
-        <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
+        <Header user={user} onLogout={handleLogout}/>
       </div>
+
       <div className="flex mt-20 p-6 flex-grow">
         <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
           <Link to="/notifications">
@@ -63,12 +59,13 @@ function Dashboard() {
               />
             </Link>
           </div>
-
+          
           <h2 className="text-xl font-semibold">Session Description:</h2>
           <SessionDetailPage />
         </div>
         <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
+          <h1>Welcome, {user.firstname}!</h1>
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/modules">
               <img
@@ -81,7 +78,7 @@ function Dashboard() {
           <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
           <ModuleDetailPage />
 
-          <h3 className="text-sm font-semibold">
+          {/* <h3 className="text-sm font-semibold">
             Manage Modules?{" "}
             <span className="text-sm text-red-300"> for mentors </span>{" "}
           </h3>
@@ -89,7 +86,7 @@ function Dashboard() {
             <Button variant="outlined" color="primary">
               Manage Modules
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="bg-red-400 h-20 flex items-center mt-0">
