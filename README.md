@@ -30,14 +30,17 @@ The first version of work that is expected must meet the following metrics:
 - Students can update profile: A student can update his profile settings and his profile picture. He can also change the notification settings.
 - Students can add comments: A student can add comments about a session and thus start a discussion. Others can like the comment and write follow-up comments.
 
-## Technical Objectives
-
-- All commits must be descriptive
-- Before a commit is accepted, it must be reviewed by 2 members and the project lead
-- Each feature must have its own branch
-- All feature branches are to be deleted once the pull request is accepted.
-- The project must have unit tests, UI tests, and must maintain a test coverage of above 85% for both UI and Unit tests.
-- The code should be in a modular format such that if one module of the project fails, it does not affect other modules that are not related to it.
+## Project Setup
+- Clone this repo into your local machine.
+- cd into the server directory.
+- Run pipenv install to get the flask dependencies installed
+- Run pipenv shell to get into the virtual env
+- Run flask run to start your backend server
+### Frontend Setup
+- To setup your frontend,cd into class_shedule directory
+- run npm install
+- run npm start
+- You can then view your react app on browser
 
 ## Technologies
 
