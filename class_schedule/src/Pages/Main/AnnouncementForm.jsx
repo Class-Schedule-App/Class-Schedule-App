@@ -24,22 +24,21 @@ const AnnouncementForm = ({ onAnnouncementSubmit }) => {
         announcements: announcementText,
       }),
     })
-      .then((r) => {
-        if (r.status === 201) {
-          alert('Announcement created successfully!');
-          return r.json();
-        } else {
-          console.error(r);
-          throw new Error('Failed to create announcement');
-        }
-      })
-      .then((data) => {
-        handleInputChange(data);
-        setTitle('');
-        setAnnouncementText('');
-      })
-      .catch((error) => console.error(error));
-  }
+    .then((r) => {
+      if (r.status === 201) {
+        alert('Announcement created successfully!');
+        return r.json();
+      } else {
+        console.error(r);
+        throw new Error('Failed to create announcement');
+      }
+    })
+    .then(() => {
+      setTitle('');
+      setAnnouncementText('');
+    })
+    .catch((error) => console.error(error));
+}
   
 
   const labelStyle = {

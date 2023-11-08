@@ -62,13 +62,14 @@ fetch('http://127.0.0.1:5555/signup', {
       alert(`${responseData.username}, you've been registered successfully!`);
       navigate('/login');
     } else {
-      throw new Error(`Oops! Invalid details or try again later! : ${r.status}`); 
+      // Extract the error message from the response data
+      const errorMessage = responseData._schema[0];
+      dispatch(setError(errorMessage));
     }
   });
 })
 .catch((error) => {
-  setError(error.message);
-  // dispatch(setError(error.message));
+  dispatch(setError(error.message));
 })
 .finally(() => {
   // Clear the form fields regardless of success or failure
@@ -165,7 +166,6 @@ fetch('http://127.0.0.1:5555/signup', {
           {!passwordsMatch && (
               <p className="text-red-500">Passwords do not match. Please try again.</p>
             )}
-          {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
 
           <label className="text-sm mb-2 text-gray-200 cursor-pointer" htmlFor="user_type">
             User_Type

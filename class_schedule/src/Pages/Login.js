@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../styles/login.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setPassword, setError, togglePasswordVisibility } from "../redux/login_redux";
+import { setUser } from '../redux/userSlice'
 
 function Login() {
   const navigate = useNavigate();
@@ -43,16 +44,18 @@ function Login() {
         alert(`Logged in ${data.username} successfully!`); 
         // Assuming the token is included in the response body after successful authentication
         const token = data.token;
-  
         // Store the token in local storage
         localStorage.setItem('token', token);
-  
+
+        // Dispatch the action to update the state with the user_id
+        dispatch(setUser({ user_id: data.user_id }));
+        console.log('User ID:', data.user_id);
         // Checking user type
         if (data.user_type === "technical_mentor") {
           navigate("/mod"); // Navigate to the "/login" route for a technical mentor
         } 
         else if (data.user_type === "student") {
-          navigate("/dashboard"); 
+          navigate("/"); 
         } 
         else {
         console.log(formData);

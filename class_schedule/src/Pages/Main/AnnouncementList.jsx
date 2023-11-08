@@ -17,19 +17,19 @@ const AnnouncementList = ({ announcements, setAnnouncements}) => {
       }
     })
       .then((response) => {
-        // if (response.ok) {
-        //   const deletedAnnouncementDiv = document.querySelector(`#transaction-${announcementId}`);
-        //   if (deletedAnnouncementDiv) {
-        //     deletedAnnouncementDiv.remove();
-        //   } else {
-        //     console.warn(`Announcement div with ID ${announcementId} not found.`);
-        //   }
-        //   setAnnouncements(announcements.filter((announcement) => announcement.id !== announcementId));
-        // } else {
-        //   return response.json().then((errorData) => {
-        //     throw new Error(`Error deleting announcement: ${response.status}. Error message: ${errorData.message}`);
-        //   });
-        // }
+        if (response.ok) {
+          const deletedAnnouncementDiv = document.querySelector(`#transaction-${announcementId}`);
+          if (deletedAnnouncementDiv) {
+            deletedAnnouncementDiv.remove();
+          } else {
+            console.warn(`Announcement div with ID ${announcementId} not found.`);
+          }
+          setAnnouncements(announcements.filter((announcement) => announcement.id !== announcementId));
+        } else {
+          return response.json().then((errorData) => {
+            throw new Error(`Error deleting announcement: ${response.status}. Error message: ${errorData.message}`);
+          });
+        }
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -32,7 +32,7 @@ function ModuleDetails() {
         {live ? "In Session" : "Postponed"}
       </button>
       <Link to="/mod" className="nav-link">Back to Modules Page</Link>
-      <Link to={`/userlist/${modId}`} className="nav-link">Student List</Link>
+      <Link to={`/userlist/${modId}`} className="nav-link">Session attendees</Link>
     </div>
   );
 }

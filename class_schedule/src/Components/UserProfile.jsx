@@ -9,14 +9,19 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import UploadFileForm from './Upload';
+import { useSelector } from 'react-redux';
 
 const UserProfile = () => {
   const [student, setStudent] = useState(null);
   const [editing, setEditing] = useState(false);
   const [notificationEnabled, setNotificationEnabled] = useState(true);
+  const userId = useSelector(state => state.userID.user_id);
+  // Adjust this line based on your Redux store structure
+
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/students/1')
+    // Wait for the userId to be loaded before making the fetch request
+    userId && fetch(`/students/${userId}`)
       .then((response) => response.json())
       .then((data) => setStudent(data))
       .catch((error) => console.error('Error fetching user profile:', error));
@@ -24,7 +29,7 @@ const UserProfile = () => {
 
   const handleUpdateField = () => {
     const { profileImg, ...sent_user } = student;
-    fetch('http://127.0.0.1:5555/students/1', {
+    fetch(`/students/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

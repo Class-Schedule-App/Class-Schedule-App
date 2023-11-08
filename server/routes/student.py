@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import cloudinary.uploader
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource
-# from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
 from ..models.Student import Student
 from ..models.Config import db
@@ -99,7 +99,10 @@ class StudentId(Resource):
         studentx = Student.query.get_or_404(id)
         schema = StudentSchema()
         return schema.dump(studentx)
+    
+    # @jwt_required
     def put(self, id):
+        # user_id = get_jwt_identity()
         studentx = Student.query.get_or_404(id)
         schema = StudentSchema(partial=True)
         validated_data = schema.load(request.json, instance=studentx)
@@ -123,3 +126,8 @@ class StudentId(Resource):
 api.add_resource(Upload, '/upload-profile-picture/<int:id>')  # Make sure to specify the type of the ID
 api.add_resource(StudentRoute, '/students')
 api.add_resource(StudentId, '/students/<int:id>')
+
+
+@cloud.errorhandler(ValidationError)
+def handle_marshmallow_error(e):
+    return jsonify(e.messages), 400

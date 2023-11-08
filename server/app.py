@@ -1,3 +1,4 @@
+# import os
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
@@ -31,6 +32,15 @@ migrate.init_app(app, db)
 
 # Initialize Marshmallow with the Flask app
 ma.init_app(app)
+
+# app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
+# app.config["MAIL_PORT"] = os.getenv("MAIL_PORT")
+# app.config["MAIL_USE_SSL"] = False
+# app.config["MAIL_USE_TLS"] = True
+# app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+# app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+# app.config["SECURITY_CONFIRMABLE"] = True
+# mail.init_app(app)
 
 # Initialize JWT with the secret key
 app.config['JWT_SECRET_KEY'] = secret_key
