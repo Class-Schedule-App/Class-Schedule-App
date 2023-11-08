@@ -40,8 +40,7 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-
+        alert(`Logged in ${data.username} successfully!`); 
         // Assuming the token is included in the response body after successful authentication
         const token = data.token;
   

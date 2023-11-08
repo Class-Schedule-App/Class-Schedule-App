@@ -54,20 +54,26 @@ fetch('http://127.0.0.1:5555/signup', {
   },
   body: JSON.stringify(formData),
 })
-  .then((r) => {
-    // Log the response body content
-    return r.json().then((responseData) => {
-      console.log(responseData, formData);
-      if (r.ok) {
-        navigate('/login');
-      } else {
-        throw new Error(`Oops! Invalid details or try again later! : ${r.status};`);
-      }
-    });
-  })
-  .catch((error) => {
-    setError(error.message);
+.then((r) => {
+  // Log the response body content
+  return r.json().then((responseData) => {
+    console.log(responseData, formData);
+    if (r.ok) {
+      alert(`${responseData.username}, you've been registered successfully!`);
+      navigate('/login');
+    } else {
+      throw new Error(`Oops! Invalid details or try again later! : ${r.status}`); 
+    }
   });
+})
+.catch((error) => {
+  setError(error.message);
+  // dispatch(setError(error.message));
+})
+.finally(() => {
+  // Clear the form fields regardless of success or failure
+  
+});
 }
   return (
     <div className="flex flex-col items-center justify-center h-screen dark">
@@ -190,9 +196,10 @@ fetch('http://127.0.0.1:5555/signup', {
           <p className="text-white mt-4">
             Already have an account?
             <a className="text-sm text-blue-400 -200 hover:underline mt-4" href="/login">
-              Login
+              Login 
             </a>
           </p>
+          {dataObject.error && <p className="text-red-500">{dataObject.error}</p>} {/* Display error message */}
           <button
             className="bg-blue-400 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
             type="submit"

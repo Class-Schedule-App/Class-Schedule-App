@@ -8,3 +8,7 @@ body{
 DIV[data-lastpass-icon-root] {
   display: none !important; /* This disables LastPass */
 }
+.active {
+  color: red;
+  cursor: pointer;
+}

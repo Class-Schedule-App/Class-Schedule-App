@@ -3,6 +3,8 @@ from flask_restful import Api, Resource
 # from flask_jwt_extended import jwt_required
 from ..models.Session import Session
 from ..models.Config import db
+from ..models.MarshmallowSchemas.SessionSchema import SessionSchema
+from marshmallow import ValidationError
 
 session = Blueprint('session', __name__)
 api = Api(session)
@@ -11,27 +13,21 @@ class Sessions(Resource):
     # @jwt_required()
     def get(self):
         sessions = Session.query.all()
-        sessions_list = []
-
-        for sess in sessions:
-            session_data = {
-                'session_id': sess.id,
-                'name': sess.name,
-                'announcements': sess.announcements,                
-            }
-            sessions_list.append(session_data)
-
-        return jsonify(sessions=sessions_list)
+        schema = SessionSchema(many=True)
+        return schema.dump(sessions)
 
     def post(self):
-        data = request.get_json()
-        new_session = Session(
-            name=data.get('name'),  # Use .get() to avoid KeyError if the key is missing
-            announcements=data.get('announcements')  # Use .get() to avoid KeyError if the key is missing
-        )
-        db.session.add(new_session)
-        db.session.commit()
-        return jsonify(message="Session created successfully"), 201
+        try:
+            sessions_schema = SessionSchema()
+            validated_data = sessions_schema.load(request.json)
+
+            new_session = Session( **validated_data )
+            db.session.add(new_session)
+            db.session.commit()
+            return {"Message": "Session created successfully"}, 201
+
+        except ValidationError as e:
+            return handle_marshmallow_error(e), 400
 
 class SessionsId(Resource):
     # @jwt_required()
@@ -72,13 +68,14 @@ class SessionsId(Resource):
         sessionx = Session.query.get(id)
         if not sessionx:
             return jsonify(message="Session not found"), 404
-        data = request.get_json()
-        if 'id' in data:
-            sessionx.id = data['id']
-
+      
         db.session.delete(sessionx)
         db.session.commit()
         return jsonify(message="Session deleted successfully")
 
 api.add_resource(Sessions, '/sessions')
 api.add_resource(SessionsId, '/sessions/<int:id>')
+
+@session.errorhandler(ValidationError)
+def handle_marshmallow_error(e):
+    return (e.messages), 400

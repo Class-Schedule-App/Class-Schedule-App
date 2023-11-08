@@ -29,7 +29,8 @@ class SignUp(Resource):
             new_user = User( **validated_data )
             db.session.add(new_user)
             db.session.commit()
-            return {"Message": "User registered successfully. Confirmation email sent!"}, 201
+
+            return {"Message": "User registered successfully. Confirmation email sent!", "username": new_user.username}, 201
 
         except ValidationError as e:
             return handle_marshmallow_error(e)       
@@ -78,7 +79,7 @@ class Login(Resource):
         # token = jwt.encode({'user_id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, secret_key)
         token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(hours=1))
         # Serialize the response object to a JSON string
-        json_response = {"Message": "Login Successful!!", 'token': token, "user_type": user.user_type}
+        json_response = {"Message": "Login Successful!!", 'token': token, "user_type": user.user_type, "username": user.username}
 
         return json_response
 

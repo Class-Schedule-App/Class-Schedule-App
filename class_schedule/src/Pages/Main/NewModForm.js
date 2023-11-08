@@ -20,15 +20,23 @@ function NewBirdForm({ onAddBird }) {
         invite_link: invite_link
       }),
     })
-      .then((r) => r.json())
+    .then((r) => {
+      if (r.status === 201) {
+        alert('Schedule created successfully!');
+        return r.json();
+      } else {
+        console.error(r);
+        throw new Error('Failed to create announcement');
+      }
+    })
       .then((module) => onAddBird(module));
       setDate('');setLink('');setTime('');setModule('');
   }
 
   return (
-    <div className="new-bird-form">
-      <h2>New Module</h2>
-      <form onSubmit={handleSubmit}>
+    <div id="login" className="w-1/2 h-100 bg-opacity-100 bg-grey-100 rounded shadow flex flex-col justify-between p-3">
+      <h2>Add New Schedule</h2>
+      <form onSubmit={handleSubmit} className="gap-4">
         <input
           type="text"
           name="module_name"
@@ -57,7 +65,7 @@ function NewBirdForm({ onAddBird }) {
           value={invite_link}
           onChange={(e) => setLink(e.target.value)}
         />
-        <button type="submit">Add Module</button>
+        <button className="w-full mt-8 rounded text-zinc-900 p-2 text-center bg-white font-bold hover:bg-blue-400" type="submit">Add Schedule</button>
       </form>
     </div>
   );
