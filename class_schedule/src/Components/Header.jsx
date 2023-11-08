@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,15 +11,14 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ user, onLogin, onLogout }) => {
+const Header = ({ user, onLogout, searchQuery, onSearchChange, setSearchResults }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,8 +27,6 @@ const Header = ({ user, onLogin, onLogout }) => {
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
   };
-
-  // const hideAppBar = !["/login", "/signup"].includes(location.pathname);
 
   const getDayOfWeek = () => {
     const daysOfWeek = [
@@ -48,20 +45,40 @@ const Header = ({ user, onLogin, onLogout }) => {
 
   const currentDayOfWeek = getDayOfWeek();
 
+  
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from your API and set it to the 'data' state
+    const apiUrl = "https://class-schedule-pp4h.onrender.com/sessions";
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    onSearchChange(query);
+
+    if (Array.isArray(data.sessions)) {
+      const filteredResults = data.sessions.filter((session) =>
+        session.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filteredResults);
+    } else {
+      console.error("Data is not in the expected format");
+      setSearchResults([]); // Clear the search results
+    }
+  };
+
   return (
-    <AppBar
-      // position="fixed"
-      style={{ backgroundColor: "grey", display: "flex" }}
-      // style={{
-      //   width: "100%",
-      //   backgroundImage: `url(${process.env.PUBLIC_URL}/Images/header.jpg`,
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center",
-      //   display: "flex",
-      //   justifyContent: "space-between",
-      // }}
-    >
+    <AppBar style={{ backgroundColor: "grey", display: "flex" }}>
       <Toolbar style={{ width: "100%" }}>
         <Typography variant="h6" component="div">
           <img
@@ -91,9 +108,12 @@ const Header = ({ user, onLogin, onLogout }) => {
           <InputBase
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
+            value={searchQuery}
+            onChange={handleSearchChange}
             style={{ flex: 1, padding: "10px" }}
           />
         </div>
+        
         {user ? (
           <>
             <IconButton
@@ -115,8 +135,22 @@ const Header = ({ user, onLogin, onLogout }) => {
               open={open}
               onClose={handleProfileMenuClose}
             >
-              <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-              <MenuItem onClick={handleProfileMenuClose}>My Modules</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleProfileMenuClose();
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleProfileMenuClose();
+                  navigate("/modules");
+                }}
+              >
+                My Modules
+              </MenuItem>
               <MenuItem onClick={onLogout}>Logout</MenuItem>
             </Menu>
           </>
@@ -130,7 +164,7 @@ const Header = ({ user, onLogin, onLogout }) => {
               backgroundColor: "white",
             }}
           >
-            Login/Signup
+            Login
           </Button>
         )}
       </Toolbar>
@@ -141,17 +175,23 @@ const Header = ({ user, onLogin, onLogout }) => {
             justifyContent="space-between"
             style={{ display: "flex", marginLeft: "auto" }}
           >
-            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
-              (day) => (
-                <Grid item key={day} style={{ margin: "0 10px" }}>
-                  <span
-                    className={day === currentDayOfWeek ? "text-red-500" : ""}
-                  >
-                    {day}
-                  </span>
-                </Grid>
-              )
-            )}
+            {[
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ].map((day) => (
+              <Grid item key={day} style={{ margin: "0 10px" }}>
+                <span
+                  className={day === currentDayOfWeek ? "text-red-500" : ""}
+                >
+                  {day}
+                </span>
+              </Grid>
+            ))}
           </Grid>
         </div>
       </Toolbar>

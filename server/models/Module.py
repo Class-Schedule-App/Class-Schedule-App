@@ -1,5 +1,6 @@
 from .Config import db
 from .Modules_TechnicalMentors import ModuleTechnicalMentorAssociation
+from .Session import Session
 
 class Module(db.Model):
     __tablename__ = 'modules'
@@ -15,9 +16,8 @@ class Module(db.Model):
         'students.id', name='fk_student_id'))
     sessions = db.relationship('Session', backref='module')
 
-    # Many to Many
-    technical_mentors_associated = db.relationship(
-        'TechnicalMentor', secondary=ModuleTechnicalMentorAssociation, back_populates='modules_associated')
+    #Many to Many
+    # technical_mentors_associated = db.relationship('TechnicalMentor', secondary=ModuleTechnicalMentorAssociation, back_populates='modules_associated')
 
     def __init__(self, module_name, date, time, invite_link):
         self.module_name = module_name
@@ -27,3 +27,12 @@ class Module(db.Model):
 
     def __repr__(self):
         return f"<Module(id={self.id}, module_name='{self.module_name}')>"
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'module_name': self.module_name,
+            'date': self.date,
+            'time': self.time,
+            'invite_link': self.invite_link,
+            # Add other fields as needed
+        }

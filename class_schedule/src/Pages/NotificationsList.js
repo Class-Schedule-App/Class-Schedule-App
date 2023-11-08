@@ -39,10 +39,10 @@ const NotificationsList = () => {
           <AnnouncementList announcements={announcements} />
         )}
       </div>
-      <div className=" flex space-x-2 mt-5">
+      <div className=" flex flex-row items-center space-x-1 mt-5">
         <h3 className="font-semibold">Change your Notifications settings?</h3>
         <Link to="/notificationsettings">
-          <button className="text-blue-300 hover:text-blue-600 focus:text-blue-700 duration-150">
+          <button className="text-blue-300 hover:text-blue-600 focus:text-blue-700 duration-150 font-bold pl-1">
             click here
           </button>
         </Link>

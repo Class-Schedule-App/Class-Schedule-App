@@ -47,6 +47,10 @@ const formData = {
   phone_number: dataObject.phone_number,
 };
 
+dispatch(updateUserField({ field: 'firstname', value: dataObject.firstname }));
+dispatch(updateUserField({ field: 'lastname', value: dataObject.lastname }));
+dispatch(updateUserField({ field: 'user_type', value: dataObject.user_type }));
+
 fetch('https://class-schedule-pp4h.onrender.com/signup', {
   method: 'POST',
   headers: {
@@ -108,11 +112,14 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
             value={dataObject.email}
             onChange={handleChange}
           />
-          <input
+          {/* <input
             placeholder="Confirm Email"
             className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
             type="email"
-          />
+            required
+            value={dataObject.email}
+            onChange={handleChange}
+          /> */}
            <label className="relative">
             <input
               placeholder="Password"
@@ -138,10 +145,10 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
               placeholder="Confirm Password"
               className="w-full bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               required
-              minLength={8}
-              type={showConfPassword ? 'text' : 'password'}
               name="confirmPassword"
-              value={dataObject.username}
+              type={showConfPassword ? 'text' : 'password'}
+              value={dataObject.confirmPassword}
+              minLength={8}
               onChange={handleChange}    
             />
            {/* <span>Confirm password</span> */}
@@ -168,8 +175,8 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
             onChange={handleChange}
           >
             <option  value="">Select User Type</option>
-            <option  value="student">Student</option>
-            <option  value="technical_mentor">TechnicalMentors</option>
+            <option  value="student">student</option>
+            <option  value="technical_mentor">technical_mentor</option>
             <option  value="other">Other</option>
           </select>
           <label className="text-sm mb-2 text-gray-200 cursor-pointer" htmlFor="tel">
@@ -186,7 +193,7 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
           />
           <p className="text-white mt-4">
             Already have an account?
-            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/">
+            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/login">
               Login
             </a>
           </p>

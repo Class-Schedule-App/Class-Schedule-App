@@ -6,6 +6,7 @@ const SessionList = () => {
   // State to store the list of sessions
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedSession, setSelectedSession] = useState(null);
 
   useEffect(() => {
     // Define the URL of your API
@@ -44,7 +45,24 @@ const SessionList = () => {
               <li key={session.session_id}>
                 <strong>{session.name}</strong>
                 <br />
-                {session.announcements}
+                {selectedSession === session.session_id ? (
+                  <div>
+                    <p>{session.announcements}</p>
+                    <button
+                      onClick={() => setSelectedSession(null)}
+                      className="text-blue-600 underline"
+                    >
+                      Close Details
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setSelectedSession(session.session_id)}
+                    className="text-blue-600 underline"
+                  >
+                    View Session Details
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -58,6 +76,7 @@ const SessionList = () => {
           Go Back to Dashboard?
         </Link>
       </p>
+      t{" "}
     </div>
   );
 };

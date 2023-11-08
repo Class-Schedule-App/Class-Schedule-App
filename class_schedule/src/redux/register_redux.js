@@ -12,6 +12,7 @@ const initialState = {
   showConfPassword: false,
   passwordsMatch: true,
   error: null,
+  profileImg: '', 
 };
 
 const userSlice = createSlice({

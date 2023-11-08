@@ -1,6 +1,7 @@
 from sqlalchemy import DateTime
 from .Config import db
 from .Student_Session import student_session_association
+from .Comment import Comment
 
 class Session(db.Model):
     __tablename__ = 'sessions'

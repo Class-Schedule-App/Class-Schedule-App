@@ -1,33 +1,38 @@
 // Develop the main dashboard page where users can see the list of sessions, announcements, and navigate to their profile.
 import React from "react";
-import SessionList from "../Components/SessionList";
-import AnnouncementList from "../Components/AnnouncementList";
-import ModuleListPage from "../Pages/ModuleListPage";
-
+import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
-import AccountCircleIcon from "@mui/icons-material/AccountCircleRounded";
-import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
-import { useState } from "react";
-import SessionDetailPage from "./SessionDetailPage";
-import ModuleDetailPage from "./ModuleDetailPage";
+import { logoutUser } from "../redux/authActions";
+
 
 function Dashboard() {
-  const userRole = useSelector((state) => state.userType.userType);
-  const [user, setUser] = useState(null);
-  // const [userRole, setUserRole] = useState("student");
-
-  // a function to handle user login
-  const handleLogin = (user, userType) => {
-    setUser(user);
-    //setUserRole(userType);
-  };
+  //const userRole = useSelector((state) => state.user.user_type);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setUser(null);
+    dispatch(logoutUser());
+    navigate('/login')
+    
+  };
+
+  // State for search query and results
+  
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Function to update search results
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+    
+  };
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
   };
 
   // Check the notification settings in localStorage
@@ -43,7 +48,31 @@ function Dashboard() {
   return (
     <div className="flex flex-col h-screen relative">
       <div className="mb-4 p-2">
-        <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
+        <Header
+          user={user}
+          onLogout={handleLogout}
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+          searchResults={searchResults}
+          setSearchResults={handleSearchResults}
+        />
+      </div>
+      <div >
+        {/* Display search results */}
+        {searchResults.length > 0 && (
+          <div className="flex mt-20 p-6 flex-grow">
+            <ul>
+              {searchResults.map((result, index) => (
+                <li key={index}>
+                  <strong>{result.name}</strong>
+                  <br />
+                  {/* Display session announcements */}
+                  {result.announcements}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <div className="flex mt-20 p-6 flex-grow">
         <div className="text-right top-0 right-0 mt-24 p-12 z-15 absolute">
@@ -56,7 +85,7 @@ function Dashboard() {
             </IconButton>
           </Link>
         </div>
-        <div className="w-1/2 pr-2 border rounded border-gray-400 p-4">
+        <div className="w-1/2 pr-6 border rounded border-gray-400 p-4">
           <h2 className="text-xl font-semibold ">Sessions</h2>
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/session">
@@ -67,12 +96,13 @@ function Dashboard() {
               />
             </Link>
           </div>
-
-          <h2 className="text-xl font-semibold">Session Description:</h2>
-          <SessionDetailPage />
+          <p>Click the image to view sessions </p>
+          {/* <h2 className="text-xl font-semibold">Session Description:</h2>
+          <SessionDetailPage /> */}
         </div>
-        <div className="w-1/2 pl-2 border rounded border-gray-400 p-4 ml-2">
+        <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
+          <h1>Welcome, {user.firstname}!</h1>
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/modules">
               <img
@@ -82,10 +112,11 @@ function Dashboard() {
               />
             </Link>
           </div>
-          <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
-          <ModuleDetailPage />
+          <p>Click the image to view Modules </p>
+          {/* <h2 className="text-xl font-semibold mt-5 mb-5">Module Details</h2>
+          <ModuleDetailPage /> */}
 
-          <h3 className="text-sm font-semibold">
+          {/* <h3 className="text-sm font-semibold">
             Manage Modules?{" "}
             <span className="text-sm text-red-300"> for mentors </span>{" "}
           </h3>
@@ -93,7 +124,7 @@ function Dashboard() {
             <Button variant="outlined" color="primary">
               Manage Modules
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="bg-red-400 h-20 flex items-center mt-0">

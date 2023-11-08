@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_restful import Api, Resource
+# from flask_jwt_extended import jwt_required
 from ..models.Session import Session
 from ..models.Config import db
 
@@ -7,17 +8,16 @@ session = Blueprint('session', __name__)
 api = Api(session)
 
 class Sessions(Resource):
+    # @jwt_required()
     def get(self):
         sessions = Session.query.all()
         sessions_list = []
 
-        for session in sessions:
+        for sess in sessions:
             session_data = {
-                'session_id': session.id,
-                'name': session.name,
-                'announcements': session.announcements,
-                'created_at': session.created_at.strftime('%Y-%m-%d %H:%M:%S') if session.created_at else None,
-                'updated_at': session.updated_at.strftime('%Y-%m-%d %H:%M:%S') if session.updated_at else None
+                'session_id': sess.id,
+                'name': sess.name,
+                'announcements': sess.announcements,                
             }
             sessions_list.append(session_data)
 
@@ -34,9 +34,10 @@ class Sessions(Resource):
         return jsonify(message="Session created successfully"), 201
 
 class SessionsId(Resource):
-    def get(self, session_id):
-        session = Session.query.get(session_id)
-        if session:
+    # @jwt_required()
+    def get(self, id):
+        sessionx = Session.query.get(id)
+        if sessionx:
             session_data = {
                 'session_id': session.session_id,
                 'name': session.name,
@@ -46,11 +47,11 @@ class SessionsId(Resource):
             }
             return jsonify(session_data)
         else:
-            return jsonify(message="Session not found"), 404
+            return {'message': 'Session not found'}, 404
 
-    def put(self, session_id):
-        session = Session.query.get(session_id)
-        if not session:
+    def put(self, id):
+        sessionx = Session.query.get(id)
+        if not sessionx:
             return jsonify(message="Session not found"), 404
 
         data = request.get_json()
@@ -60,14 +61,17 @@ class SessionsId(Resource):
         return jsonify(message="Session updated successfully")
 
 # Create a route to delete a session by ID using a DELETE request
-    def delete(self, session_id):
-        session = Session.query.get(session_id)
-        if not session:
+    def delete(self, id):
+        sessionx = Session.query.get(id)
+        if not sessionx:
             return jsonify(message="Session not found"), 404
+        data = request.get_json()
+        if 'id' in data:
+            sessionx.id = data['id']
 
-        db.session.delete(session)
+        db.session.delete(sessionx)
         db.session.commit()
         return jsonify(message="Session deleted successfully")
 
 api.add_resource(Sessions, '/sessions')
-api.add_resource(SessionsId, '/sessions/<int:session_id>')
+api.add_resource(SessionsId, '/sessions/<int:id>')
