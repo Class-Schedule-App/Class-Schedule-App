@@ -57,7 +57,6 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify(formData),
-})
   .then((r) => {
     // Log the response body content
     return r.json().then((responseData) => {
@@ -71,11 +70,19 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
   })
   .catch((error) => {
     setError(error.message);
+    });
+    .catch((error) => {
+    setError(error.message);
+    // dispatch(setError(error.message));
+    })
+    .finally(() => {
+  // Clear the form fields regardless of success or failure
+  
   });
-}
+  }
   return (
     <div className="flex flex-col items-center justify-center h-screen dark">
-      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+      <div className="some w-full max-w-md rounded-lg shadow-md p-6">
         <p className="title hover:scale-110 transition-all duration-500">Register</p>
         <p className="message">Signup now and get full access to our app.</p>
         <form className="flex flex-col" onSubmit={handleSubmit}>
@@ -193,12 +200,13 @@ fetch('https://class-schedule-pp4h.onrender.com/signup', {
           />
           <p className="text-white mt-4">
             Already have an account?
-            <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="/login">
-              Login
+            <a className="text-sm text-blue-400 -200 hover:underline mt-4" href="/login">
+              Login 
             </a>
           </p>
+          {dataObject.error && <p className="text-red-500">{dataObject.error}</p>} {/* Display error message */}
           <button
-            className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
+            className="bg-blue-400 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
             type="submit"
           >
             Sign Up

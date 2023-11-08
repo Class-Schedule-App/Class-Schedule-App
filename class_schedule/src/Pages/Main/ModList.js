@@ -1,13 +1,16 @@
-import ModCard from "./ModCard";
+import ModuleCard from "./ModCard";
 
 function ModList({ displayedModules }) {
   
   return (
-    <ul className="cards">
-      {displayedModules.map((module) => {
-        return <ModCard key={module.id} module={module} />;
-      })}
-    </ul>
+    <div className="">
+        <ul className="cards">
+          {displayedModules.map((module) => {
+            return <ModuleCard key={module.id} module={module} />;
+          })}
+        </ul>
+    </div>
+   
   );
 }
 

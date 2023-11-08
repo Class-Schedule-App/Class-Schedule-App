@@ -1,165 +1,148 @@
-// Design a user profile component where students and TMs can view and update their profile information.
-import React, { useState } from "react";
-import { Paper, Typography, TextField, Button, Avatar } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUserField } from "../redux/register_redux";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react';
+import {
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Avatar,
+  Switch,
+  FormControlLabel,
+} from '@mui/material';
+import UploadFileForm from './Upload';
 
 const UserProfile = () => {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const [student, setStudent] = useState(null);
   const [editing, setEditing] = useState(false);
-  const navigate = useNavigate(); 
+  const [notificationEnabled, setNotificationEnabled] = useState(true);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5555/students/1')
+      .then((response) => response.json())
+      .then((data) => setStudent(data))
+      .catch((error) => console.error('Error fetching user profile:', error));
+  }, []);
 
   const handleUpdateField = () => {
-    dispatch(updateUserField(user));
-
-    fetch("https://class-schedule-pp4h.onrender.com/users/", {
-      method: "PUT",
+    const { profileImg, ...sent_user } = student;
+    fetch('http://127.0.0.1:5555/students/1', {
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(sent_user),
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(updateUserField(data));
+        console.log(sent_user);
+        setStudent(data);
         setEditing(false);
-        navigate("/profile");
       })
-      .catch((error) => console.error("Error updating user profile:", error));
+      .catch((error) => console.error('Error updating user profile:', error));
+    };
+  
+  const handleNotificationToggle = () => {
+    setNotificationEnabled(!notificationEnabled);
   };
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
 
-    if (!file) return;
-
-    // Construct the URL based on user's user_type and ID
-    const uploadUrl = `https://class-schedule-pp4h.onrender.com/${
-      user.user_type === "student"
-        ? `students/upload-profile-picture/${user.id}`
-        : `mentors/upload-mentor-picture/${user.id}`
-    }`;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the user's profile image in Redux state
-        dispatch(
-          updateUserField({ field: "profileImg", value: data.profileImg })
-        );
-      })
-      .catch((error) =>
-        console.error("Error uploading profile picture:", error)
-      );
+  const containerStyle = {
+    padding: '20px',
+    maxWidth: '800px',
+    margin: '0 auto',
+    backgroundColor: 'white',
+    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)',
+    borderRadius: '10px',
   };
 
   return (
-    <Paper
-      elevation={3}
-      style={{ padding: "20px", maxWidth: "400px", margin: "0 auto" }}
-    >
-      <Typography variant="h4" gutterBottom>
-        Profile
-      </Typography>
-      {user ? (
-        <div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography variant="subtitle1">Username:</Typography>
+    <Paper elevation={3} style={containerStyle}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h4" style={{ fontWeight: 'bold' }}>
+          User Profile
+        </Typography>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={notificationEnabled}
+              onChange={handleNotificationToggle}
+              color="primary"
+            />
+          }
+          label="Enable Notifications"
+        />
+      </div>
+      {student ? (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Avatar
+            src={student.profile_img}
+            alt="Profile"
+            sx={{ width: 100, height: 100, marginTop: '20px', marginBottom: '10px' }}
+          />
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Username:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
-                value={user.username}
-                onChange={(e) => handleUpdateField("username", e.target.value)}
+                value={student.name || ''}
+                onChange={(e) => setStudent({ ...student, name: e.target.value })}
                 fullWidth
               />
             ) : (
-              <Typography variant="body1">{user.username}</Typography>
+              <Typography variant="body1">{student.name}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography variant="subtitle1">Email:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Email:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
                 type="email"
-                value={user.email}
-                onChange={(e) => handleUpdateField("email", e.target.value)}
+                value={student.email || ''}
+                onChange={(e) => setStudent({ ...student, email: e.target.value })}
                 fullWidth
               />
             ) : (
-              <Typography variant="body1">{user.email}</Typography>
+              <Typography variant="body1">{student.email}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography variant="subtitle1">Phone Number:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
+            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+              Phone Number:
+            </Typography>
             {editing ? (
               <TextField
                 variant="outlined"
                 type="tel"
-                value={user.phone}
-                onChange={(e) => handleUpdateField("phone", e.target.value)}
+                value={student.phone_number || ''}
+                onChange={(e) => setStudent({ ...student, phone_number: e.target.value })}
                 fullWidth
               />
             ) : (
-              <Typography variant="body1">{user.phone}</Typography>
+              <Typography variant="body1">{student.phone_number}</Typography>
             )}
           </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography variant="subtitle1">Profile Picture:</Typography>
-            {editing ? (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
-            ) : (
-              <div>
-                <Avatar
-                  src={user.profileImg}
-                  alt="Profile"
-                  sx={{ width: 100, height: 100 }}
-                />
-              </div>
-            )}
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography variant="subtitle1">Password:</Typography>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
             {editing ? (
               <div>
-                <TextField
-                  variant="outlined"
-                  type="password"
-                  value={user.password}
-                  onChange={(e) =>
-                    handleUpdateField("password", e.target.value)
-                  }
-                  fullWidth
-                />
                 <Button
                   variant="contained"
-                  color="success"
+                  color="primary"
                   onClick={handleUpdateField}
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: '10px' }}
                 >
                   Save
                 </Button>
               </div>
             ) : (
               <div>
-                <Typography variant="body1">********</Typography>
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={() => setEditing(true)}
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: '10px' }}
                 >
                   Edit
                 </Button>
@@ -168,8 +151,9 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <div>Loading user profile...</div>
+        <div>Loading student profile...</div>
       )}
+      <UploadFileForm/>
     </Paper>
   );
 };

@@ -42,7 +42,7 @@ class StudentRoute(Resource):
         schema = StudentSchema(many=True)
         return schema.dump(students)
 
-    def post(self):
+    def patch(self):
         schema = StudentSchema()
         validated_data = schema.load(request.json)
         # Upload the image to Cloudinary
@@ -60,7 +60,7 @@ class StudentRoute(Resource):
             return (e.messages), 400
 
 class Upload(Resource):
-    def post(self, id): 
+    def patch(self, id): 
         # Retrieve the user
         student = Student.query.get(id)
         if student is None:
@@ -93,6 +93,34 @@ class Upload(Resource):
             return response_data, 201
         except Exception as e:
             return {'message': f'Error uploading image: {str(e)}'}, 500
-    
+        
+class StudentId(Resource):
+    # @jwt_required()
+    def get(self, id):
+        studentx = Student.query.get_or_404(id)
+        schema = StudentSchema()
+        return schema.dump(studentx)
+    def put(self, id):
+        studentx = Student.query.get_or_404(id)
+        schema = StudentSchema(partial=True)
+        validated_data = schema.load(request.json, instance=studentx)
+
+        try:
+            for key, value in validated_data.items():
+                setattr(studentx, key, value)
+
+            db.session.commit()
+            return {"Message": "Student information updated successfully"}, 200
+        except ValidationError as e:
+            return {"error": e.messages}, 400
+
+# Create a route to delete a session by ID using a DELETE request
+    def delete(self, id):
+        studentx = Student.query.get_or_404(id)
+
+        db.session.delete(studentx)
+        db.session.commit()
+        return jsonify(message="Session deleted successfully")
 api.add_resource(Upload, '/upload-profile-picture/<int:id>')  # Make sure to specify the type of the ID
 api.add_resource(StudentRoute, '/students')
+api.add_resource(StudentId, '/students/<int:id>')

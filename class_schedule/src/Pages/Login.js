@@ -48,8 +48,7 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-
+        alert(`Logged in ${data.username} successfully!`); 
         // Assuming the token is included in the response body after successful authentication
         const token = data.token;
 
@@ -79,77 +78,63 @@ function Login() {
   };  
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark">
-      <div className="form text-white">
-        <form action="#" onSubmit={handleSubmit}>
-          <div className="title">Welcome</div>
-          <div className="subtitle">Let's Login!</div>
-          <div className="input-container ic2">
-            <input
-              name="username"
-              id="email"
-              type="text"
-              required=""
-              placeholder=""
-              className="input"
-              value={email}
-              onChange={handleChangeEmail}
-            />
-            <div className="cut cut-short"></div>
-            <label className="iLabel" htmlFor="email">
-              Email
-            </label>
-          </div>
-          <div className="input-container ic1">
-            <input
-              required=""
-              autoComplete="off"
-              placeholder=""
-              value={password}
-              type={showPassword ? "text" : "password"}
-              className="input"
-              id="password"
-              onChange={handleChangePassword}
-            />
-            <span
-              onClick={toggleVisibility}
-              className={`absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-xl ${
+  <div className="flex flex-col items-center justify-center h-screen dark">
+    <div className="form text-white">
+    <form action="#" onSubmit={handleSubmit}>
+      <div className="title">Welcome</div>
+      <div className="subtitle">Let's Login!</div>
+
+      <div className="input-container ic2">
+        <input 
+        name="username"
+        id="email"
+        type="text"
+        required =""
+        placeholder="Email"      
+        className="input" 
+        value={email}
+        onChange={handleChangeEmail} 
+         />
+        <div className="cut cut-short"></div>
+        {/* <label className="iLabel" htmlFor="email"></label> */}
+      </div>
+
+      <div className="input-container ic1">
+        <input 
+        required =""
+        autoComplete="off"
+        placeholder="Password" 
+        value={password}
+        type={showPassword ? 'text' : 'password'}
+        className="input" 
+        id="password" 
+        onChange={handleChangePassword}      
+        />
+        <span 
+            onClick={toggleVisibility} 
+            className={`absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-xl ${
                 showPassword ? "" : "text-gray-400"
               }`}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
-            <div className="cut"></div>
-            <label className="iLabel" htmlFor="firstname">
-              Password
-            </label>
-          </div>
-          <button className="submit" type="text">
-            Submit
-          </button>
-          <div className="forgot-pass m-2">
-            <a href="/resetpassword" className="text-blue-500">
-              {" "}
-              Forgot Password?
-            </a>
-          </div>
-          {error && <p className="text-red-500">{error}</p>}{" "}
-          {/* Display error message */}
-          <div className="sign-up m-2">
-            Not a member?{" "}
-            <a href="/signup" className="text-blue-500">
-              Signup now
-            </a>
-          </div>
-          <div className=" m-2">
-            <a href="/confirm_email/<token>" className="text-blue-500">
-              {" "}
-              Confirm Email
-            </a>
-          </div>
-        </form>
+        <div className="cut"></div>
+        <label className="iLabel" htmlFor="firstname">Password</label>
       </div>
+      <button className="submit" type="text">Submit</button>
+      <div className="forgot-pass m-2">
+          <a href="/resetpassword" className="text-blue-500"> Forgot Password?</a>
+      </div>
+      {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+      <div className="sign-up m-2">
+        Not a member? <a href="/signup" className="text-blue-500">Signup now</a>
+      </div>
+      <div className=" m-2">
+          <a href="/confirm_email/<token>" className="text-blue-500"> Confirm Email</a>
+      </div>
+      </form>
     </div>
+  </div>
   );
 }
 

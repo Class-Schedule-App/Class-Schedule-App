@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Header from "./Header";
 
 function ModuleDetails() {
   let { modId } = useParams();
@@ -24,21 +23,16 @@ function ModuleDetails() {
 
   return (
     <div className="details">
-      {/* <img src={image} alt={name} /> */}
-      <Header />
       <h1>{modId}</h1>
       <h4>{module_name}</h4>
       <p>Time: {time}</p>
-      <p>invite_link: {invite_link}</p>
-      <p>date: {date}</p>
-      {live ? (
-        <button className="primary" onClick={handleToggleStock}>
-          In Session
-        </button>
-      ) : (
-        <button onClick={handleToggleStock}>Postponed</button>
-      )}
-      <Link to='/mod'>back to Modules Page</Link>
+      <p>Invite Link: {invite_link}</p>
+      <p>Date: {date}</p>
+      <button className={`toggle-button ${live ? 'in-session' : 'postponed'}`} onClick={handleToggleStock}>
+        {live ? "In Session" : "Postponed"}
+      </button>
+      <Link to="/mod" className="nav-link">Back to Modules Page</Link>
+      <Link to={`/userlist/${modId}`} className="nav-link">Student List</Link>
     </div>
   );
 }

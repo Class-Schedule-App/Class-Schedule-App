@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import NewModForm from "./NewModForm";
+import AnnouncementForm from "./AnnouncementForm";
 import ModList from "./ModList";
 import Search from "./Search";
 import Header from "./Header";
-
+import AnnouncementList from "./AnnouncementList";
 
 function ModPage() {
   const [modules, setModules] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [announcements, setAnnouncements] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeComponent, setActiveComponent] = useState('newMod'); // Setting 'newMod' as the default component
 
   useEffect(() => {
-    fetch("/modules")
+    fetch('/modules')
       .then((response) => response.json())
-      .then((data) => setModules(data)) // Update the state with fetched data
-      .catch((error) => console.error("Error fetching data:", error));
+      .then((data) => setModules(data))
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   function handleAddBird(newBird) {
@@ -21,18 +24,66 @@ function ModPage() {
     setModules(updatedArray);
   }
 
+  useEffect(() => {
+    fetch('/sessions')
+      .then((response) => response.json())
+      .then((data) => setAnnouncements(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  function handleAnnouncement(newAnnouncement) {
+    const updatedArray = [...announcements, newAnnouncement];
+    setAnnouncements(updatedArray);
+  }
+
   const displayedModules = modules.filter((mod) => {
     return mod.module_name.toLowerCase().includes(searchTerm.toLowerCase());
   });
+  
+  useEffect(() => {
+    const lastActivePage = localStorage.getItem('activeComponent');
+    if (lastActivePage) {
+      setActiveComponent(lastActivePage);
+    }
+  }, []);
 
-  if (!modules) return <h1>...loading</h1>;
+  const changeActiveComponent = (component) => {
+    setActiveComponent(component);
+    localStorage.setItem('activeComponent', component);
+  };
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case 'newMod':
+        return <NewModForm onAddBird={handleAddBird} />;
+      case 'A-List':
+        return <AnnouncementList announcements={announcements} setAnnouncements={setAnnouncements}/>;
+      case 'announcement':
+        return <AnnouncementForm handleAnnouncement={handleAnnouncement} />;
+      case 'search':
+        return (
+          <>
+            <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+            <ModList displayedModules={displayedModules} />
+          </>
+        );
+      case 'viewSchedules':
+        return (
+          <>
+            <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+            <ModList displayedModules={displayedModules} />
+          </>
+        );
+      default:
+        return <NewModForm onAddBird={handleAddBird} />;
+    }
+  };
+  
 
   return (
     <main>
-      <Header />
-      <NewModForm onAddBird={handleAddBird} />
-      <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-      <ModList displayedModules={displayedModules} />
+      <Header activeComponent={activeComponent} setActiveComponent={changeActiveComponent} />
+      {renderComponent()}
     </main>
   );
 }
