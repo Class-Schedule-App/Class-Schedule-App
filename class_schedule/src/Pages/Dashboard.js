@@ -2,18 +2,23 @@
 import React from "react";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
 import { logoutUser } from "../redux/authActions";
+
+
 function Dashboard() {
   //const userRole = useSelector((state) => state.user.user_type);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logoutUser());
+    navigate('/login')
+    
   };
 
   // State for search query and results
