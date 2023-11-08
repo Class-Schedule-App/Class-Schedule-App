@@ -1,24 +1,34 @@
 // Create a component for displaying module information.
 // This component can include the module name, description, 
 //list of sessions within the module, and the option to invite students.
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserList from './UserList';
+import {
+  Paper,
+  Typography,
+  TextField,
+  List,
+  ListItem,
+  Button,
+  Avatar,
+} from '@mui/material';
 
-const Module = ({ moduleId }) => {
+const Module = () => {
   const [module, setModule] = useState(null);
   const [sessions, setSessions] = useState([]);
   const [inviteLink, setInviteLink] = useState('');
 
+  const moduleId = 1; // Set the module ID here
+
   useEffect(() => {
-    // Fetch module details and sessions 
+    // Fetch module details and sessions
     const fetchModuleDetails = async () => {
       try {
-        const moduleResponse = await axios.get(` http://127.0.0.1:5555/modules/${moduleId}`);
+        const moduleResponse = await axios.get(``);
         setModule(moduleResponse.data);
 
-        //  fetching sessions within the module
-        const sessionsResponse = await axios.get(` http://127.0.0.1:5555/modules/${moduleId}/sessions`);
+        const sessionsResponse = await axios.get(``);
         setSessions(sessionsResponse.data);
       } catch (error) {
         console.error('Error fetching module details:', error);
@@ -30,9 +40,7 @@ const Module = ({ moduleId }) => {
 
   const handleInviteStudents = async () => {
     try {
-      // endpoint for inviting students to the module
-      await axios.post(` http://127.0.0.1:5555/modules/${moduleId}/invite`, { inviteLink });
-      // Handle success or show a confirmation message
+      await axios.post(``, { inviteLink });
       console.log('Students invited successfully!');
     } catch (error) {
       console.error('Error inviting students:', error);
@@ -49,7 +57,7 @@ const Module = ({ moduleId }) => {
       <Typography variant="body1">Description: {module.description}</Typography>
       <Typography variant="body1">Invite Link: {module.invite_link}</Typography>
 
-      <Typography variant="h4">Sessions</Typography>
+      {/* <Typography variant="h4">Sessions</Typography> */}
       <List>
         {sessions.map((session) => (
           <ListItem key={session.id}>
@@ -72,6 +80,11 @@ const Module = ({ moduleId }) => {
           Invite Students
         </Button>
       </div>
+
+
+
+      {/* Pass the moduleId to UserList component */}
+      <UserList moduleId={moduleId} />
     </div>
   );
 };
