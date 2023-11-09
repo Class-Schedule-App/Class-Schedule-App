@@ -54,3 +54,4 @@ The first version of work that is expected must meet the following metrics:
 3.Timothy Baraka 
 4.Roy Kirorei
 5.James Mutio
+6.Grace Kungu
