@@ -15,7 +15,7 @@ class Session(db.Model):
     updated_at = db.Column(
         DateTime, server_default=db.func.now(), onupdate=db.func.now())
     
-    attendees = db.relationship('Student', secondary=student_session_association, back_populates='following')
+    
     
 
     # One-to-Many relationship
@@ -24,7 +24,7 @@ class Session(db.Model):
     comments = db.relationship('Comment', backref='session')
     # Many-to-Many relationship
     followers = db.relationship(
-        'Student', secondary=student_session_association, back_populates='following', overlaps="attendees")
+        'Student', secondary=student_session_association, back_populates='following')
 
     def __init__(self, name, announcements, location, invite_link):
         self.name = name
