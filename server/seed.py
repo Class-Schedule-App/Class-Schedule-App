@@ -40,8 +40,8 @@ def seed_data():
 
         # Sample data for Modules
         modules = [
-            Module(module_name="Module A", date="2023-10-27", time="10:00 AM", invite_link="link_a"),
-            Module(module_name="Module B", date="2023-10-28", time="11:00 AM", invite_link="link_b"),
+            Module(module_name="Phase 5", date="2023-10-27", time="10:00 AM", invite_link="link_a"),
+            Module(module_name="Phase 4", date="2023-10-28", time="11:00 AM", invite_link="link_b"),
             # Add more modules as needed
         ]
         db.session.add_all(modules)
@@ -49,8 +49,8 @@ def seed_data():
 
         # Sample data for Sessions
         sessions = [
-            Session(name="Session 1", announcements="Announcement 1", ),
-            Session(name="Session 2", announcements="Announcement 2", ),
+            Session(name="Morning Session", announcements="Class Starts at 9am", ),
+            Session(name="Evening Session", announcements="Class Starts at 3pm", ),
             # Add more sessions as needed
         ]
         db.session.add_all(sessions)

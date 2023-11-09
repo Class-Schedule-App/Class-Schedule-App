@@ -38,9 +38,17 @@ class SessionsId(Resource):
                 'session_id': session.session_id,
                 'name': session.name,
                 'announcements': session.announcements,
+                'invite_link': sessionx.invite_link,
+                'location': sessionx.location, 
                 'created_at': session.created_at.strftime('%Y-%m-%d %H:%M:%S') if session.created_at else None,
                 'updated_at': session.updated_at.strftime('%Y-%m-%d %H:%M:%S') if session.updated_at else None
             }
+
+            # Attendees
+            attendees = [student.id for student in sessionx.attendees]
+            session_data['attendees'] = attendees
+
+
             return jsonify(session_data)
         else:
             return {'message': 'Session not found'}, 404
@@ -53,6 +61,8 @@ class SessionsId(Resource):
         data = request.get_json()
         session.name = data['name']
         session.announcements = data['announcements']
+        sessionx.invite_link = data.get('invite_link', sessionx.invite_link)  # Updated for invite_link
+        sessionx.location = data.get('location', sessionx.location)
         db.session.commit()
         return jsonify(message="Session updated successfully")
 

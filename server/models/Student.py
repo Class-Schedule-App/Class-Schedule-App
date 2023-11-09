@@ -26,7 +26,11 @@ class Student(db.Model):
     # Many-to-Many relationship
     following = db.relationship('Session', secondary=student_session_association, back_populates='followers') 
 
-    def __init__(self, name, email, phone_number=phone_number):
+    def __init__(self, name, email, phone_number, user_id, profile_img=None, tm_id=None):
         self.name = name
         self.email = email
         self.phone_number = phone_number
+        self.user_id = user_id
+        self.profile_img = profile_img
+        self.tm_id = tm_id
+        
