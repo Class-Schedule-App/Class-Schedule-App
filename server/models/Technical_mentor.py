@@ -12,8 +12,10 @@ class TechnicalMentor(db.Model):
     profile_img = db.Column(db.String)  # Assuming it's a db.String representing the image file path
     created_at = db.Column(DateTime, server_default=db.func.now())
     # One-to-One relationship
-    tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
-
+    # tm_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_tm_id'))
+    user = db.relationship('User', back_populates='technical_mentor', uselist=False)  # One-to-One relationship
+    
     # One-to-Many relationship
     students = db.relationship('Student', backref='technical_mentors')
     # Many-to-Many relationship

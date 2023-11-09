@@ -13,17 +13,6 @@ class Session(db.Model):
     updated_at = db.Column(
         DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-# <<<<<<<< HEAD:server/Models/session_model.py
-#     comments = db.relationship('Comment', back_populates='session', lazy='dynamic')  # One-to-Many relationship
-#     students = db.relationship('Student', secondary=session_student_association, back_populates='sessions')  # Many-to-Many relationship
-
-#     def to_dict(self):
-#         return {
-#             "id": self.id,
-#             "name": self.name,
-#             "announcements": self.announcements,
-#         }
-# ========
     # One-to-Many relationship
     module_id = db.Column(db.Integer, db.ForeignKey(
         'modules.id', name='fk_module_id'))

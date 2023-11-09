@@ -1,6 +1,9 @@
 import enum
 from sqlalchemy import DateTime, Enum  # Import Enum from SQLAlchemy
 from .Config import db
+from .Student import Student
+from .Technical_mentor import TechnicalMentor
+
 
 class UserType(enum.Enum):
     student = "student"
