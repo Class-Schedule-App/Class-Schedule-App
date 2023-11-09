@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Box, Typography, TextField, Button } from "@mui/material";
 
 function NewBirdForm({ onAddBird }) {
   const [time, setTime] = useState("");
@@ -17,50 +18,71 @@ function NewBirdForm({ onAddBird }) {
         time: time,
         date: date,
         module_name: module_name,
-        invite_link: invite_link
+        invite_link: invite_link,
       }),
     })
       .then((r) => r.json())
       .then((module) => onAddBird(module));
-      setDate('');setLink('');setTime('');setModule('');
+    setDate("");
+    setLink("");
+    setTime("");
+    setModule("");
   }
 
   return (
-    <div className="new-bird-form">
-      <h2>New Module</h2>
+    <Box className="new-bird-form" p={1}>
+      <Typography variant="h5">New Module</Typography>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          label="Module Name"
           name="module_name"
-          placeholder="Module name"
           value={module_name}
           onChange={(e) => setModule(e.target.value)}
         />
-        <input
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          label="Time"
           type="time"
           name="time"
-          placeholder="Time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
         />
-        <input
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          label="Date"
           type="date"
           name="date"
-          placeholder="Date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-         <input
-          type="text"
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          label="Invite Link"
           name="invite_link"
-          placeholder="invite_link"
           value={invite_link}
           onChange={(e) => setLink(e.target.value)}
         />
-        <button type="submit">Add Module</button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          fullWidth
+        >
+          Add Module
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 }
 
 export default NewBirdForm;
+

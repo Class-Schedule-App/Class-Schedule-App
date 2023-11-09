@@ -1,13 +1,19 @@
+import React from 'react';
+import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { School } from '@mui/icons-material';
+
 function Header() {
   return (
-    <header>
-      <h1>
-        Class Schedule app
-        <span className="logo" role="img">
-          📚
-        </span>
-      </h1>
-    </header>
+    <AppBar position="static" color="primary">
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu">
+          <School fontSize="large" />
+        </IconButton>
+        <Typography variant="h4">
+          Class Schedule App
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 }
 

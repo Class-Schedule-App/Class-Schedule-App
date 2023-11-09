@@ -1,15 +1,27 @@
+import React from "react";
+import { TextField, InputAdornment, Paper, IconButton } from "@mui/material";
+import { Search as SearchIcon } from "@mui/icons-material";
+
 function Search({ searchTerm, onSearchChange }) {
   return (
-    <div className="searchbar">
-      <label htmlFor="search">Search Module:</label>
-      <input
-        type="text"
-        id="search"
-        placeholder="Type a module name to search..."
+    <Paper elevation={3} className="searchbar">
+      <TextField
+        label="Search Module"
+        variant="outlined"
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
+        fullWidth
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
-    </div>
+    </Paper>
   );
 }
 
