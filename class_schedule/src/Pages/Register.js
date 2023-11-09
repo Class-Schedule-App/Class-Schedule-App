@@ -16,6 +16,8 @@ function Register() {
   const dispatch = useDispatch();
   const dataObject = useSelector((state) => state.user);
   const { showPassword, showConfPassword, passwordsMatch, error } = dataObject;
+  
+  console.log('Redux User State:', dataObject);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -76,7 +78,7 @@ function Register() {
         // Check the user_type and navigate accordingly
         if (dataObject.user_type === "student") {
           navigate("/");
-        } else if (dataObject.user_type === "mentor") {
+        } else {
           navigate("/mod");
         }
       })

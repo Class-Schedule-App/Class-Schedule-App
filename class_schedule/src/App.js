@@ -21,6 +21,7 @@ import AnnouncementPage from "./Pages/AnnouncementPage";
 import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
 import SessionList from "./Components/SessionList";
 import UserProfile from "./Components/UserProfile";
+import SessionDetailPage from "./Pages/SessionDetailPage";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/announcementpage" element={<AnnouncementPage />} />
         <Route path="/announcementform" element={<AnnouncementFormPage />} />
         <Route path="/session" element={<SessionList />} />
+        <Route path="/sessiondetails/:sessionId" element={<SessionDetailPage />}/>
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/mod" element={<ModPage />} />
         <Route path="/mod/:modId" element={<ModuleDetails />} />

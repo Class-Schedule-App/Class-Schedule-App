@@ -103,6 +103,7 @@ function Dashboard() {
         <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
           <h1>Welcome, {user.firstname}!</h1>
+          {console.log(user.firstname)}
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/modules">
               <img

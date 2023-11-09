@@ -1,12 +1,11 @@
-// Create a component to display a list of available sessions. Each session can be a card with details like date, time, title, and description.
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SessionList = () => {
   // State to store the list of sessions
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedSession, setSelectedSession] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Define the URL of your API
@@ -15,13 +14,15 @@ const SessionList = () => {
     // Fetch the list of sessions
     fetch(apiUrl)
       .then((response) => {
+        console.log("Response:", response);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
-        setSessions(data.sessions);
+        setSessions(data);
+
         setLoading(false);
       })
       .catch((error) => {
@@ -30,6 +31,11 @@ const SessionList = () => {
       });
   }, []);
 
+  const handleOnClick = (session) => {
+    // Navigate to the session details page, passing the session ID as a param
+    navigate(`/sessiondetails/${session.id}`);
+  };
+
   return (
     <div className="bg-blue-100 min-h-screen flex items-center justify-center mx-auto ">
       <div className="bg-white p-8 rounded-lg">
@@ -37,35 +43,27 @@ const SessionList = () => {
 
         {loading ? (
           <p>Loading sessions...</p>
-        ) : sessions.length === 0 ? (
+        ) : !Array.isArray(sessions) || sessions.length === 0 ? (
           <p>No sessions available.</p>
         ) : (
-          <ul>
+          <div className="flex flex-wrap justify-between">
             {sessions.map((session) => (
-              <li key={session.session_id}>
-                <strong>{session.name}</strong>
-                <br />
-                {selectedSession === session.session_id ? (
-                  <div>
-                    <p>{session.announcements}</p>
-                    <button
-                      onClick={() => setSelectedSession(null)}
-                      className="text-blue-600 underline"
-                    >
-                      Close Details
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setSelectedSession(session.session_id)}
-                    className="text-blue-600 underline"
-                  >
-                    View Session Details
-                  </button>
-                )}
-              </li>
+              <div
+                className="m-2 p-4 border rounded-md"
+                key={session.id}
+                onClick={() => handleOnClick(session)}
+              >
+                <h3>{session.name}</h3>
+                <p>Date: {session.date}</p>
+                <Link
+                  to={`/sessiondetails/${session.id}`}
+                  className="text-blue-600 underline"
+                >
+                  Show More
+                </Link>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
       <p className="text-sm font-semibold absolute top-0 right-0 m-4">
@@ -75,8 +73,7 @@ const SessionList = () => {
         >
           Go Back to Dashboard?
         </Link>
-      </p>
-      t{" "}
+      </p>{" "}
     </div>
   );
 };
