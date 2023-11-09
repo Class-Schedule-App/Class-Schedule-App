@@ -7,4 +7,4 @@ cloudconfig = cloudinary.config(
 )
 
 # DATABASE_URL ='postgresql://austine:0ypd6XocLkp7X2mEJc6LVZlde382o9QX@dpg-cka02mtdrqvc739q0u1g-a.ohio-postgres.render.com/class_schedule_app'
-DATABASE_URL ='sqlite:///mydatabase.db'
+DATABASE_URL ='sqlite:///class.db'
