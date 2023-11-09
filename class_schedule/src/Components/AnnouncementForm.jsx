@@ -10,7 +10,7 @@ const AnnouncementForm = ({ onAnnouncementSubmit }) => {
   const handleInputChange = (e) => {
     setAnnouncementText(e.target.value);
   };
-
+// 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim() !== '' && announcementText.trim() !== '') {

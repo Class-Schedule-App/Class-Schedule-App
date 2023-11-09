@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import AnnouncementList from '../Components/AnnouncementList';
-import MuiNavbar from '../Components/MuiNavbar';
+// import MuiNavbar from '../Components/MuiNavbar';
 // import { Link } from 'react-router-dom';
 
 const AnnouncementPage = () => {
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
-    // BACKEND
+    // BACKEND.
     fetch('https://class-schedule-pp4h.onrender.com/sessions') 
       .then((response) => response.json())
       .then((data) => {
@@ -34,7 +34,7 @@ const AnnouncementPage = () => {
 
   return (
     <div>
-      <MuiNavbar />
+      {/* <MuiNavbar /> */}
       {/* <h2>Announcements</h2> */}
       <AnnouncementList
         announcements={announcements}

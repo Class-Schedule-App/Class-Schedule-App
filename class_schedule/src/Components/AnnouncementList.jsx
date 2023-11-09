@@ -9,6 +9,7 @@ const AnnouncementList = ({ announcements, onDelete }) => {
   return (
     <div>
       {/* <h2>Announcements</h2> */}
+      {/*  */}
       <Grid container spacing={2}>
         {announcements.map((announcement) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={announcement.id}>

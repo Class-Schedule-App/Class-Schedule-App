@@ -1,5 +1,4 @@
 import "./App.css";
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, {useState } from "react";
 import LoginPage from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
@@ -7,6 +6,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import { Routes, Route } from 'react-router-dom';
 import AnnouncementFormPage from './Pages/AnnouncementFormPage';
 import AnnouncementPage from "./Pages/AnnouncementPage";
+import Comments from "./Pages/Comments";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,10 +26,11 @@ function App() {
   return (
     <>
     {/* <Router> */}
-      <div>
+      {/* <div> */}
+        <Comments />
         {/*header will be displayed here */}
         {/* handleLout and user will be passed as props to the header */}
-        <Routes>
+        {/* <Routes>
           {user ? (
             <>
             <Route path="/dashboard" component={< Dashboard />} />
@@ -44,7 +45,7 @@ function App() {
           <Route path="/post" element={<AnnouncementFormPage />} />
           <Route path="/display" element={<AnnouncementPage />} />
         </Routes>
-      </div>
+      </div> */}
     {/* </Router> */}
 
     </>
