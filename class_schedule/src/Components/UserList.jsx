@@ -7,7 +7,8 @@ const UserList = () => {
   let { id } = useParams();
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  
+  const [addedUsers, setAddedUsers] = useState([]); // State to track added users
+
 
   useEffect(() => {
     fetch('http://localhost:5555/students')
@@ -28,24 +29,26 @@ const UserList = () => {
       },
       body: JSON.stringify(postData),
     })
-      .then((response) => {
-        if (response.ok) {
-          alert(`Added ${user.name} to the module!`);
-          console.log(postData) 
-          // Perform any other action upon successful association
-        } else {
-          throw new Error('Failed to add user to the module');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
+    .then((response) => {
+      if (response.ok) {
+        alert(`Added ${user.name} to the module!`);
+        setAddedUsers([...addedUsers, user.id]); // Add user to the addedUsers state
+      } else {
+        throw new Error('Failed to add user to the module');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+};
+
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-
+  const isUserAdded = (userId) => {
+    return addedUsers.includes(userId); // Check if user is already added to the module
+  };
   const filteredUserList = userList.filter((user) => {
     const username = user.name.toLowerCase();
     const email = user.email.toLowerCase();
@@ -86,8 +89,13 @@ const UserList = () => {
             </div>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="primary" onClick={() => handleAddToModule(user)}>
-              Add to Module
+          <Button
+              variant="contained"
+              color={isUserAdded(user.id) ? "secondary" : "primary"} // Change color based on user added state
+              disabled={isUserAdded(user.id)} // Disable button if user is already added
+              onClick={() => handleAddToModule(user)}
+            >
+              {isUserAdded(user.id) ? "Already Added" : "Add to Module"}
             </Button>
           </CardActions>
         </Card>

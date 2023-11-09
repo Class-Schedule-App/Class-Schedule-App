@@ -118,16 +118,17 @@ class StudentId(Resource):
         db.session.add(new_student)
         db.session.commit()
         return {"message": "Student created successfully"}, 201
-    @jwt_required
+    # @jwt_required
     def put(self, id):
-        user_id = get_jwt_identity()
-        studentx = Student.query.get_or_404(id)
+        # user_id = get_jwt_identity()
+        # Access the student_id parameter as an argument to the put method
+        student = Student.query.get_or_404(id)
         schema = StudentSchema(partial=True)
-        validated_data = schema.load(request.json, instance=studentx)
+        validated_data = schema.load(request.json, instance=student)
 
         try:
             for key, value in validated_data.items():
-                setattr(studentx, key, value)
+                setattr(student, key, value)
 
             db.session.commit()
             return {"Message": "Student information updated successfully"}, 200

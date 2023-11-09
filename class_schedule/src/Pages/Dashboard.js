@@ -1,6 +1,6 @@
 // Develop the main dashboard page where users can see the list of sessions, announcements, and navigate to their profile.
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,14 +8,42 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
 import { logoutUser } from "../redux/authActions";
 
-
 function Dashboard() {
   //const userRole = useSelector((state) => state.user.user_type);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.userID.user_id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [array, setArray] = useState([]);
 
+  useEffect(() => {
+    // Check if the user ID is defined to avoid unnecessary API calls.
+    if (user) {
+      // Get the user ID from the Redux state.
+      const userId = user;
+  
+      // Make a GET request to the `/user/userId` endpoint, passing the user ID.
+      fetch(`/users/${userId}`)
+        .then((response) => {
+          // Check if the response is OK before converting to JSON.
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Network response was not ok.');
+        })
+        .then((data) => {
+          // Update the state with the retrieved data.
+          setArray(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+          // Handle the error if needed.
+        });
+    }
+  }, [user]);
+  
   const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
     dispatch(logoutUser());
     navigate('/login')
     
@@ -102,7 +130,8 @@ function Dashboard() {
         </div>
         <div className="w-1/2 pl-6 border rounded border-gray-400 p-4 ml-2">
           <h2 className="text-xl font-semibold">Modules</h2>
-          <h1>Welcome, {user.firstname}!</h1>
+          <h1>Welcome, {array.username}!</h1>
+          {console.log(array)}
           <div className="mt-5 mb-5 items-center w-50%">
             <Link to="/modules">
               <img

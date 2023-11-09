@@ -40,7 +40,7 @@ function ModuleCard({ module }) {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 mb-4">
-    <h1 className="text-lg text-blue-400 font-bold mb-2">Phase: {module.name}</h1>
+    <h1 className="text-lg text-blue-400 font-bold mb-2">{module.name}</h1>
     <p className="text-md font-semibold mb-2">Date: {module.date}</p>
     <p className="text-md font-semibold mb-2">Start Time: {module.start_time}</p>
     <h4 className="text-md font-semibold mb-2">End Time: {module.end_time}</h4>

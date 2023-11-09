@@ -37,8 +37,8 @@ function Table() {
         <tbody>
             {attendeesData.map((attendee, index) => (
             <tr key={index}>
-                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{attendee.student_id}</td>
-                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{attendee.module_id}</td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{attendee.module_name}</td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{attendee.student_name}</td>
             </tr>
             ))}
         </tbody>

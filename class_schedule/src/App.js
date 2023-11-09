@@ -14,6 +14,7 @@ import SessionList from "./Components/SessionList";
 import NotificationSettingsPage from "./Pages/NotificationSettingsPage";
 import ModuleDetailPage from "./Pages/ModuleDetailPage";
 import ModuleListPage from "./Pages/ModuleListPage";
+import SessionDetailPage from "./Pages/SessionDetailPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
             <Route path="/modules" element={<ModuleListPage />} />
             <Route path="/session" element={<SessionList />} />
+            <Route path="/sessiondetails/:sessionId" element={<SessionDetailPage />}/>
             <Route
             path="/notificationsettings"
             element={<NotificationSettingsPage />}

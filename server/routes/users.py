@@ -19,8 +19,16 @@ class UserResource(Resource):
 
         # Return the JSON string directly
         return {"results": json_string}
-        
+class UserId(Resource):
+    # @jwt_required()
+    def get(self, id):
+        user = User.query.get_or_404(id)
+        schema = UserSchema()
+
+        return schema.dump(user)
+    
 api.add_resource(UserResource, '/users')
+api.add_resource(UserId, "/users/<int:id>")
 
 @user_blue.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
