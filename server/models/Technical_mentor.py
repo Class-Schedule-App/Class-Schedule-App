@@ -19,10 +19,6 @@ class TechnicalMentor(db.Model):
     # Many-to-Many relationship
     # modules_associated = db.relationship('Module', secondary=ModuleTechnicalMentorAssociation, back_populates='technical_mentors_associated')
 
-    def __init__(self, name, email, phone_number):
-        self.name = name
-        self.email = email
-        self.phone_number = phone_number
 
     def __repr__(self):
         return f"<TechnicalMentors(tm_id={self.tm_id}, name='{self.name}')>"

@@ -29,41 +29,33 @@ class Sessions(Resource):
         except ValidationError as e:
             return handle_marshmallow_error(e), 400
 
+
 class SessionsId(Resource):
     # @jwt_required()
     def get(self, id):
         sessionx = Session.query.get(id)
         if sessionx:
-            session_data = {
-                'session_id': sessionx.id,  # Correct variable name and attribute access
-                'name': sessionx.name,
-                'announcements': sessionx.announcements,
-            }
-            return jsonify(session_data)
+            schema = SessionSchema()
+            return schema.dump(sessionx)
         else:
-            return {'message': 'Session not found'}, 404
+            return {'message': 'Module not found'}, 404
 
-    def put(self, id):
-        sessionx = Session.query.get(id)
-        if not sessionx:
-            return jsonify(message="Session not found"), 404
-
-        data = request.get_json()
-        if 'name' in data:
-            sessionx.name = data['name']
-        if 'announcements' in data:
-            sessionx.announcements = data['announcements']
-
+    def patch(self, id):
         try:
-            db.session.add(sessionx)
+            schema = SessionSchema(partial=True)
+            sessionX = Session.query.get_or_404(id)
+            session_data = schema.load(request.json)  # Load the request data
+
+            for key, value in session_data.items():
+                setattr(sessionX, key, value)  # Update the sessionX instance attributes
+
             db.session.commit()
-            return jsonify(message="Session updated successfully")
-        except Exception as e:
-            db.session.rollback()
-            return jsonify(message=f"Error updating session: {str(e)}"), 500
 
+            return {"msg": "Session updated", "user": schema.dump(sessionX)}
+        except ValidationError as e:
+            return handle_marshmallow_error(e), 400
 
-# Create a route to delete a session by ID using a DELETE request
+    # Create a route to delete a session by ID using a DELETE request
     def delete(self, id):
         sessionx = Session.query.get(id)
         if not sessionx:
@@ -78,4 +70,4 @@ api.add_resource(SessionsId, '/sessions/<int:id>')
 
 @session.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
-    return (e.messages), 400
+    return (e.messages, 400)

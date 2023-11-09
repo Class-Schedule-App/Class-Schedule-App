@@ -6,7 +6,6 @@ const UserList = () => {
   const [userList, setUserList] = useState([]);
   const [newList, setList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [buttonColor, setButtonColor] = useState('primary'); // Initial color
 
   useEffect(() => {
     fetch('http://localhost:5555/students')
@@ -16,11 +15,29 @@ const UserList = () => {
   }, []);
 
   const handleAddToModule = (user) => {
-    // Add user to the module userList array
-    const updatedList = [...userList, { username: user.name, email: user.email }];
-    setList(updatedList);
-    console.log(`Added ${user.name} to a module.`);
-    setButtonColor('secondary'); // Change to a different color
+    // Assuming 'user' object contains an 'id' property
+    const studentId = user.id;
+    const moduleId = 1; // Replace '1' with the actual module ID
+
+    fetch('/add-student-to-module', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ student_id: studentId, module_id: moduleId }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert(`Added ${user.username} to the module!`);
+          // Perform any other action upon successful association
+        } else {
+          throw new Error('Failed to add user to the module');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Handle the error, show a message to the user, etc.
+      });
   };
 
   // const handleAddToSession = (user) => {
@@ -74,10 +91,11 @@ const UserList = () => {
             </div>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color={buttonColor} onClick={() => handleAddToModule(user)}>
+            <Button variant="contained" color="primary" onClick={() => handleAddToModule(user)}>
               Add to Module
             </Button>
-            <Button variant="contained" color="secondary" //onClick={() => handleAddToSession(user)}
+            <Button variant="contained" color="secondary" 
+            // onClick={() => handleAddToSession(user)}
             >
               Add to Session
             </Button>

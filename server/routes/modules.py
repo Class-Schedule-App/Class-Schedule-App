@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_restful import Resource, Api, reqparse
 # from flask_jwt_extended import jwt_required
 from ..models.Module import Module
@@ -10,6 +10,7 @@ module = Blueprint('module', __name__)
 api = Api(module)
 
 class ModulesResource(Resource):
+    # @jwt_required
     def get(self):
         modules = Module.query.all()
         schema = ModuleSchema(many=True)
@@ -31,30 +32,35 @@ class ModuleId(Resource):
         modulex = Module.query.get(id)
         if modulex:
             schema = ModuleSchema()
-            return schema.dump(module)
+            return schema.dump(modulex)  # Changed 'module' to 'modulex'
         else:
             return {'message': 'Module not found'}, 404
 
-    def patch(self, module_id):
-        modulex = Module.query.get(module_id)
-        if not modulex:
-            return {'message': 'Module not found'}, 404
-
+    def patch(self, id):
         try:
-            module_schema = ModuleSchema()
-            data = module_schema.load(request.json)
-            module.module_name = data['module_name']
-            module.date = data['date']
-            module.time = data['time']
-            module.invite_link = data['invite_link']
+            schema = ModuleSchema(partial=True)
+            modulex = Module.query.get_or_404(id)
+            modulex = schema.load(request.json, instance=modulex)
 
+            db.session.add(modulex)
             db.session.commit()
-            return module.to_dict()
+
+            return {"msg": "Module updated", "user": schema.dump(modulex)}
         except ValidationError as e:
             return handle_marshmallow_error(e), 400
+        
+    def delete(self, id):
+        mod = Module.query.get(id)
+        if not mod:
+            return jsonify(message="Session not found"), 404
+      
+        db.session.delete(mod)
+        db.session.commit()
+        return jsonify(message="Session deleted successfully")
+
 
 api.add_resource(ModulesResource, '/modules')
-api.add_resource(ModuleId, '/modules/<int:module_id>')
+api.add_resource(ModuleId, '/modules/<int:id>')
 
 @module.errorhandler(ValidationError)
 def handle_marshmallow_error(e):
