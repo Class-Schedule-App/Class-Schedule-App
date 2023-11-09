@@ -16,30 +16,37 @@ function Dashboard() {
   const [array, setArray] = useState([]);
 
   useEffect(() => {
-    // Check if the user ID is defined to avoid unnecessary API calls.
-    if (user) {
-      // Get the user ID from the Redux state.
-      const userId = user;
+    // Check if the user ID is defined.
+    if (!user) {
+      // Navigate to the login page if the user is not logged in.
+      navigate('/login');
   
-      // Make a GET request to the `/user/userId` endpoint, passing the user ID.
-      fetch(`/users/${userId}`)
-        .then((response) => {
-          // Check if the response is OK before converting to JSON.
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error('Network response was not ok.');
-        })
-        .then((data) => {
-          // Update the state with the retrieved data.
-          setArray(data);
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-          // Handle the error if needed.
-        });
+      // Add a message to the user informing them that they need to log in to access the dashboard.
+      alert('You need to log in to access the dashboard.');
     }
+  
+    // Get the user ID from the Redux state.
+    const userId = user;
+  
+    // Make a GET request to the `/user/userId` endpoint, passing the user ID.
+    fetch(`/users/${userId}`)
+      .then((response) => {
+        // Check if the response is OK before converting to JSON.
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        // Update the state with the retrieved data.
+        setArray(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+        // Handle the error if needed.
+      });
   }, [user]);
+  
   
   const handleLogout = () => {
     localStorage.removeItem('token');

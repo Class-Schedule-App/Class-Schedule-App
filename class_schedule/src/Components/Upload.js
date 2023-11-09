@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const UploadFileForm = () => {
   const [file, setFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
+  const userId = useSelector(state => state.userID.user_id);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -13,7 +15,7 @@ const UploadFileForm = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://127.0.0.1:5555//upload-profile-picture/1', {
+      const response = await fetch(`http://127.0.0.1:5555//upload-profile-picture/${userId}`, {
         method: 'PATCH',
         body: formData,
       });

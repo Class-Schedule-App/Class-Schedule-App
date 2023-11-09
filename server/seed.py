@@ -29,9 +29,16 @@ def seed_data():
 
         # Sample data for Students
         students = [
-            Student(name="Alice Student", email="alice@student.com", profile_img="alice.jpg", student_id=1,phone_number="722577344"),
-            Student(name="Bob Student", email="bob@student.com", profile_img="bob.jpg", student_id=2, phone_number="722577344"),
-            Student(name="Charlie Student", email="charlie@student.com", profile_img="charlie.jpg", student_id=3, phone_number="722577344"),
+            Student(name="Alice Student", email="alice@student.com", student_id=1,phone_number="722577344"),
+            Student(name="Bob Student", email="bob@student.com",  student_id=2, phone_number="722577344"),
+            Student(name="Charlie Student", email="charlie@student.com",  student_id=3, phone_number="722577344"),
+            Student(name="David Student", email="david@student.com",  student_id=4),
+            Student(name="Eva Student", email="eva@student.com",  student_id=5),
+            Student(name="Frank Student", email="frank@student.com",  student_id=6),
+            Student(name="Grace Student", email="grace@student.com", student_id=7),
+            Student(name="Henry Student", email="henry@student.com",student_id=8),
+            Student(name="Ivy Student", email="ivy@student.com", student_id=9),
+            Student(name="Jack Student", email="jack@student.com", student_id=10),
         ]
         db.session.add_all(students)
         db.session.commit()
@@ -94,7 +101,9 @@ def seed_data():
             # Sample data for Sessions
         announces = [
             Announcement(name="Session 1", announcements="Announcement 1", ),
-            Announcement(name="Session 2", announcements="Announcement 2", ),
+            Announcement(name="lorem ipsum", announcements="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original." ),
+            Announcement(name="Session 3", announcements="Tangazo tangazo!", ),
+
             # Add more sessions as needed
         ]
         db.session.add_all(announces)
