@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import DateTime
 from .Config import db
 from .Student_Session import student_session_association
-from .Module import Module, ModuleAttendee
+from .Module import Module
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -24,4 +24,4 @@ class Student(db.Model):
     following = db.relationship('Session', secondary=student_session_association, back_populates='followers') 
 
     # Relationship to module_attendees table
-    module_attendees_student = db.relationship('ModuleAttendee', backref='student')
+    # module_attendees_student = db.relationship('ModuleAttendee', backref='student')

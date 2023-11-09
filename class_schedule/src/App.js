@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
-import './styles/ModCard.css'
-import './styles/ModuleDetails.css'
+// import './styles/ModCard.css'
+// import './styles/ModuleDetails.css'
 import Register from './Pages/Register';
 import Login from "./Pages/Login";
 import ResetPassword from "./Pages/ResetPassword";
@@ -26,7 +26,7 @@ function App() {
             <Route path="/mod" element={ <ModPage /> }/>
             <Route path="/mod/:modId" element={ <ModuleDetails /> }/>
             <Route path="/userprofile" element={ <UserProfile /> }/>
-            <Route path="/userlist/:studentId" element={ <UserList /> }/>
+            <Route path="/userlist/:id" element={ <UserList /> }/>
             <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
             <Route path="/modules" element={<ModuleListPage />} />
             <Route path="/session" element={<SessionList />} />

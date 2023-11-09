@@ -100,9 +100,27 @@ class StudentId(Resource):
         schema = StudentSchema()
         return schema.dump(studentx)
     
-    # @jwt_required
+    # @jwt_required()
+    def post(self):
+        user_id = get_jwt_identity()  # Get the user ID from the JWT token
+        schema = StudentSchema()
+        request_data = request.get_json()
+        student_data = schema.load(request_data)
+        
+        new_student = Student(
+            name=student_data['name'],
+            email=student_data['email'],
+            phone_number=student_data['phone_number'],
+            profile_img=student_data.get('profile_img'),
+            user_id=user_id  # Populate the user_id column
+        )
+
+        db.session.add(new_student)
+        db.session.commit()
+        return {"message": "Student created successfully"}, 201
+    @jwt_required
     def put(self, id):
-        # user_id = get_jwt_identity()
+        user_id = get_jwt_identity()
         studentx = Student.query.get_or_404(id)
         schema = StudentSchema(partial=True)
         validated_data = schema.load(request.json, instance=studentx)

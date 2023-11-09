@@ -12,7 +12,7 @@ class StudentSchema(ma.SQLAlchemyAutoSchema):
 
     class Meta:
         model = Student
-        exclude = ["id", "created_at" ]
+        exclude = ["created_at" ]
 
     @validates_schema
     def validate_email(self, data, **kwargs):
