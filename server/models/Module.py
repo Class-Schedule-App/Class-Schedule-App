@@ -26,12 +26,4 @@ class Module(db.Model):
             'invite_link': self.invite_link,
             # Add other fields as needed
         }
-    
-class ModuleAttendee(db.Model):
-    __tablename__ = 'module_attendees'
 
-    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'), primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), primary_key=True)
-
-    module_associated_with = db.relationship('Module', backref='module_attendees')
-    studentx = db.relationship('Student', backref='module_attendees')

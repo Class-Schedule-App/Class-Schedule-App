@@ -12,7 +12,7 @@ function ModuleCard({ module }) {
 
   const handleSave = () => {
     // Perform PATCH request to update the module
-    fetch(`/modules/${moduleDetails.id}`, {
+    fetch(`/sessions/${module.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -24,11 +24,12 @@ function ModuleCard({ module }) {
           setEditing(false);
           // Additional logic on successful save
         } else {
-          // Handle error in updating the module
+          throw new Error( response.text());
         }
       })
       .catch((error) => {
         console.error('Error updating module:', error);
+        // Inform the user about the error or perform relevant error handling
       });
   };
 
@@ -39,19 +40,22 @@ function ModuleCard({ module }) {
 
   return (
       <div className="card card-content">
-        <h1>Schedule {module.id}</h1>
-        <h4>{module.module_name}</h4>
+        <h1>Phase: {module.name}</h1>
         <p>Date: {module.date}</p>
-        <p>Time: {module.time}</p>
+        <p>Start Time: {module.start_time}</p>
+        <h4>End Time: {module.end_time}</h4>
+        <h4>Location: {module.location}</h4>
         <p>Invite Link: {module.invite_link}</p>
         <Link to={`/mod/${module.id}`}>
           <button>Details</button>
         </Link>
         {editing ? (
           <div>
-            <input type="text" name="module_name" value={moduleDetails.module_name} onChange={handleChange} />
+            <input type="text" name="name" value={moduleDetails.name} onChange={handleChange} />
             <input type="date" name="date" value={moduleDetails.date} onChange={handleChange} />
-            <input type="time" name="time" value={moduleDetails.time} onChange={handleChange} />
+            <input type="text" name="start_time" value={moduleDetails.start_time} onChange={handleChange} />
+            <input type="text" name="end_time" value={moduleDetails.end_time} onChange={handleChange} />
+            <input type="text" name="location" value={moduleDetails.location} onChange={handleChange} />
             <input type="text" name="invite_link" value={moduleDetails.invite_link} onChange={handleChange} />
             <button onClick={handleSave}>Save</button>
           </div>

@@ -11,7 +11,7 @@ class Session(db.Model):
     announcements = db.Column(db.String)
     invite_link = db.Column(db.String)
     location = db.Column(db.String)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String)
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     created_at = db.Column(DateTime, server_default=db.func.now())

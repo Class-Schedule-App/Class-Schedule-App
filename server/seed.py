@@ -9,6 +9,8 @@ from .models.User import User
 from .models.Module import Module
 from .models.Session import Session
 from .models.Comment import Comment
+from .models.Announcement import Announcement
+
 
 def seed_data():
     with app.app_context():
@@ -62,11 +64,11 @@ def seed_data():
 
         print("🌱 Data seeding completed!")
         sessions = [
-            Session(name="Session 1", announcements="Announcement 1", module_id=1, start_time="10:00 AM", end_time="12:00 PM", invite_link="https://example.com/session1", location="Webinar",   date=datetime(2023, 11, 8, 10, 0)),
-            Session(name="Session 2", announcements="Announcement 2", module_id=2,start_time="1:00 PM", end_time="3:00 PM", invite_link="https://example.com/session2", location="Virtual Classroom",   date=datetime(2023, 11, 8, 10, 0)),
-            Session(name="Session 3", announcements="Announcement 3", module_id=3, start_time="2:00 PM", end_time="4:00 PM", invite_link="https://example.com/session3", location="Conference Room B",   date=datetime(2023, 11, 8, 10, 0)),
-            Session(name="Session 4", announcements="Announcement 4", module_id=4, start_time="3:00 PM", end_time="5:00 PM", invite_link="https://example.com/session4", location="Training Hall",  date=datetime(2023, 11, 8, 10, 0)),
-            Session(name="Session 5", announcements="Announcement 5", module_id=5,start_time="10:00 AM", end_time="12:00 PM", invite_link="https://example.com/session5", location="Meeting Room A",  date=datetime(2023, 11, 9, 14, 0)),
+            Session(name="Session 1", announcements="Announcement 1", module_id=1, start_time="10:00 AM", end_time="12:00 PM", invite_link="https://example.com/session1", location="Webinar",   date="2023-10-27"),
+            Session(name="Session 2", announcements="Announcement 2", module_id=2,start_time="1:00 PM", end_time="3:00 PM", invite_link="https://example.com/session2", location="Virtual Classroom",   date="2023-10-27"),
+            Session(name="Session 3", announcements="Announcement 3", module_id=3, start_time="2:00 PM", end_time="4:00 PM", invite_link="https://example.com/session3", location="Conference Room B",   date="2023-10-27"),
+            Session(name="Session 4", announcements="Announcement 4", module_id=4, start_time="3:00 PM", end_time="5:00 PM", invite_link="https://example.com/session4", location="Training Hall",  date="2023-10-27"),
+            Session(name="Session 5", announcements="Announcement 5", module_id=5,start_time="10:00 AM", end_time="12:00 PM", invite_link="https://example.com/session5", location="Meeting Room A",  date="2023-10-27"),
         ]
         db.session.add_all(sessions)
         db.session.commit()  
@@ -88,6 +90,14 @@ def seed_data():
         db.session.add_all(comments)
         db.session.commit()
         print("🌱 Data seeding completed!")
+            # Sample data for Sessions
+        announces = [
+            Announcement(name="Session 1", announcements="Announcement 1", ),
+            Announcement(name="Session 2", announcements="Announcement 2", ),
+            # Add more sessions as needed
+        ]
+        db.session.add_all(announces)
+        db.session.commit()
 
 if __name__ == '__main__':
     with app.app_context():

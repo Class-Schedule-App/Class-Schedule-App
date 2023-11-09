@@ -21,7 +21,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     // Wait for the userId to be loaded before making the fetch request
-    userId && fetch(`/students/${userId}`)
+    userId && fetch(`/users/${userId}`)
       .then((response) => response.json())
       .then((data) => setStudent(data))
       .catch((error) => console.error('Error fetching user profile:', error));

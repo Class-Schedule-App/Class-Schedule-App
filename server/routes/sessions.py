@@ -16,19 +16,17 @@ class Sessions(Resource):
         schema = SessionSchema(many=True)
         return schema.dump(sessions)
 
-    def post(self):
+    def post(self):   
+        sessions_schema = SessionSchema()
+        validated_data = sessions_schema.load(request.json)
         try:
-            sessions_schema = SessionSchema()
-            validated_data = sessions_schema.load(request.json)
-
             new_session = Session( **validated_data )
             db.session.add(new_session)
             db.session.commit()
             return {"Message": "Session created successfully"}, 201
 
         except ValidationError as e:
-            return handle_marshmallow_error(e), 400
-
+            return (e.messages, 400)
 
 class SessionsId(Resource):
     # @jwt_required()

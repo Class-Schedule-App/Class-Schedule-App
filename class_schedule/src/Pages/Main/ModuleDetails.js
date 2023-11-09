@@ -3,17 +3,17 @@ import { Link, useParams } from "react-router-dom";
 
 function ModuleDetails() {
   let { modId } = useParams();
-  const [module, setModule] = useState({});
+  const [sess, setSession] = useState({});
 
   useEffect(() => {
-    fetch(`/modules/${modId}`)
+    fetch(`/sessions/${modId}`)
       .then((r) => r.json())
-      .then((module) => {setModule(module); console.log(module)});
+      .then((sess) => {setSession(sess); console.log(sess)});
 
-    return () => setModule({});
+    return () => setSession({});
   }, [modId]);
 
-  const { module_name, date, time, invite_link } = module;
+  const { name, date, start_time, end_time, invite_link, location } = sess;
 
   const [live, setlive] = useState(true);
 
@@ -23,15 +23,16 @@ function ModuleDetails() {
 
   return (
     <div className="details">
-      <h1>{modId}</h1>
-      <h4>{module_name}</h4>
-      <p>Time: {time}</p>
-      <p>Invite Link: {invite_link}</p>
+      <h1>Phase: {name}</h1>
       <p>Date: {date}</p>
+      <p>Start Time: {start_time}</p>
+      <h4>End Time: {end_time}</h4>
+      <h4>Location: {location}</h4>
+      <p>Invite Link: {invite_link}</p>
       <button className={`toggle-button ${live ? 'in-session' : 'postponed'}`} onClick={handleToggleStock}>
         {live ? "In Session" : "Postponed"}
       </button>
-      <Link to="/mod" className="nav-link">Back to Modules Page</Link>
+      <Link to="/mod" className="nav-link">Back to Sessions Page</Link>
       <Link to={`/userlist/${modId}`} className="nav-link">Session attendees</Link>
     </div>
   );

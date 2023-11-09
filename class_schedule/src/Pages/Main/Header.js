@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { faHome, faBullhorn, faListAlt, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 function Header({ activeComponent, setActiveComponent }) {
   const navigate = useNavigate();
@@ -52,14 +53,14 @@ function Header({ activeComponent, setActiveComponent }) {
               >
                   <FontAwesomeIcon icon={faListAlt} className="beat" size="1x" />
                   <span>View Announcement</span>
+              </li>             
+              <li>
+                  <FontAwesomeIcon icon={faUser} beat size="1x" className="faThrob d-lg-none" />
+                  < Link to={`/userprofile`}><span>TM-Profile</span></Link>
               </li>
               <li onClick={() => handleLogout()}>
                   <FontAwesomeIcon icon={faSignOutAlt} className="d-lg-none" />
                   <span>Log-Out</span>
-              </li>
-              <li>
-                  <FontAwesomeIcon icon={faUser} beat size="1x" className="faThrob d-lg-none" />
-                  <span>TM-Profile</span>
               </li>
             </ul>
           </div>

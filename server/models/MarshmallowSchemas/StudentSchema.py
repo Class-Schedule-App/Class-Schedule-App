@@ -8,6 +8,7 @@ class StudentSchema(ma.SQLAlchemyAutoSchema):
     email = fields.String(required=True, validate=[validate.Email()])
     phone_number = fields.Integer(required=True)
     profile_img = fields.String(required=False)
+    user_id = fields.Integer(required=False)
 
     class Meta:
         model = Student

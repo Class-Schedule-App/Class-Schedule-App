@@ -13,6 +13,7 @@ from .routes.sessions import session
 from .routes.users import user_blue
 from .routes.modules import module
 from .routes.attendee import attendee
+from .routes.announce import announce
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -48,7 +49,7 @@ app.config['JWT_SECRET_KEY'] = secret_key
 jwt = JWTManager(app)
 
 # Register the blueprints for different routes in the app
-blueprints = [auth, cloud, comment, ment, session, user_blue, module, attendee]
+blueprints = [auth, cloud, comment, ment, session, user_blue, module, attendee, announce]
 
 for blueprint in blueprints:
     app.register_blueprint(blueprint)

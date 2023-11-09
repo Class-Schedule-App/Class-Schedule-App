@@ -10,7 +10,7 @@ const AnnouncementList = ({ announcements, setAnnouncements}) => {
   const deleteAnnouncement = (selectedAnnouncement) => {
     const announcementId = selectedAnnouncement.id;
 
-    fetch(`http://127.0.0.1:5555/sessions/${announcementId}`, {
+    fetch(`http://127.0.0.1:5555/announce/${announcementId}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'

@@ -7,25 +7,25 @@ import Header from "./Header";
 import AnnouncementList from "./AnnouncementList";
 
 function ModPage() {
-  const [modules, setModules] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeComponent, setActiveComponent] = useState('newMod'); // Setting 'newMod' as the default component
 
   useEffect(() => {
-    fetch('/modules')
+    fetch('/sessions')
       .then((response) => response.json())
-      .then((data) => setModules(data))
+      .then((data) => setSessions(data))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   function handleAddBird(newBird) {
-    const updatedArray = [...modules, newBird];
-    setModules(updatedArray);
+    const updatedArray = [...sessions, newBird];
+    setSessions(updatedArray);
   }
 
   useEffect(() => {
-    fetch('/sessions')
+    fetch('/announce')
       .then((response) => response.json())
       .then((data) => setAnnouncements(data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -36,9 +36,13 @@ function ModPage() {
     setAnnouncements(updatedArray);
   }
 
-  const displayedModules = modules.filter((mod) => {
-    return mod.module_name.toLowerCase().includes(searchTerm.toLowerCase());
+  const displayedModules = sessions.filter((ses) => {
+    if (ses && ses.name) {
+      return ses.name.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    return false;
   });
+  
   
   useEffect(() => {
     const lastActivePage = localStorage.getItem('activeComponent');

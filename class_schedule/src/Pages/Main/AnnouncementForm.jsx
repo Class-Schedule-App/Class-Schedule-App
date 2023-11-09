@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
 
-const AnnouncementForm = ({ onAnnouncementSubmit }) => {
+const AnnouncementForm = ({handleAnnouncement}) => {
   const [announcementText, setAnnouncementText] = useState('');
   const [title, setTitle] = useState('');
 
@@ -14,7 +14,7 @@ const AnnouncementForm = ({ onAnnouncementSubmit }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("/sessions", {
+    fetch("/announce", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
