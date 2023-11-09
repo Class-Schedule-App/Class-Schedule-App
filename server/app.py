@@ -1,4 +1,4 @@
-# import os
+import os
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
@@ -18,7 +18,7 @@ from .routes.attendee import attendee
 app = Flask(__name__)
 
 # Configure application settings
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000", "methods": ["GET", "POST", "DELETE", "PATCH"]}}, supports_credentials=True)
