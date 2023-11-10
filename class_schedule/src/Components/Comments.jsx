@@ -32,62 +32,64 @@ function Comments() {
   const handleSubmitComment = async (e) => {
     e.preventDefault();
 
-if (commentText.trim() === '') {
-  return;
-}
+    if (commentText.trim() === '') {
+      return;
+    }
 
-try {
-  const response = await fetch('https://class-schedule-pp4h.onrender.com/comments', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ comment: commentText }),
-  });
+    try {
+      const response = await fetch('https://class-schedule-pp4h.onrender.com/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ comment: commentText }),
+      });
 
-  if (response.status === 201) {
-    console.log('Comment submitted successfully');
-    fetchComments();
-  } else {
-    console.error('Failed to create comment:', response.statusText);
-  }
-} catch (error) {
-  console.error('Error creating comment:', error);
-}
-setCommentText('');
+      if (response.status === 201) {
+        console.log('Comment submitted successfully');
+        fetchComments();
+      } else {
+        console.error('Failed to create comment:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error creating comment:', error);
+    }
+    setCommentText('');
   };
 
-  const handleSubmitReply = async (e, parentId) => {
+  const handleSubmitReply = async (e, comment) => {
     e.preventDefault();
 
-if (replyTexts[parentId] && replyTexts[parentId].trim() === '') {
-  return;
-}
+    const parentId = comment.id;
 
-try {
-  const response = await fetch('https://class-schedule-pp4h.onrender.com/comments', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ comment: replyTexts[parentId], parentId }),
-  });
+    if (replyTexts[parentId] && replyTexts[parentId].trim() === '') {
+      return;
+    }
 
-  if (response.status === 201) {
-    console.log('Reply submitted successfully');
-    fetchComments();
-  } else {
-    console.error('Failed to create reply:', response.statusText);
-  }
-} catch (error) {
-  console.error('Error creating reply:', error);
-}
-setReplyTexts({ ...replyTexts, [parentId]: '' });
+    try {
+      const response = await fetch('https://class-schedule-pp4h.onrender.com/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ comment: replyTexts[parentId], parentId }),
+      });
+
+      if (response.status === 201) {
+        console.log('Reply submitted successfully');
+        fetchComments();
+      } else {
+        console.error('Failed to create reply:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error creating reply:', error);
+    }
+    setReplyTexts({ ...replyTexts, [parentId]: '' });
   };
 
   const handleLike = async (comment_id, currentLikes) => {
     try {
-      const response = await fetch(https://class-schedule-pp4h.onrender.com/comments/${comment_id}/like, {
+      const response = await fetch(`https://class-schedule-pp4h.onrender.com/comments/${comment_id}/like`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +106,6 @@ setReplyTexts({ ...replyTexts, [parentId]: '' });
       console.error('Error liking comment:', error);
     }
   };
-  
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
@@ -137,7 +138,7 @@ setReplyTexts({ ...replyTexts, [parentId]: '' });
                 </Button>
               </ListItem>
               {/* Reply Form */}
-              <form onSubmit={(e) => handleSubmitReply(e, comment.id)}>
+              <form onSubmit={(e) => handleSubmitReply(e, comment)}>
                 <TextField
                   fullWidth
                   label="Reply to this comment"

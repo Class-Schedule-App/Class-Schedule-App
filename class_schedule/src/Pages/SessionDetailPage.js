@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SessionDetailPage = () => {
   const { sessionId } = useParams();
@@ -40,7 +40,9 @@ const SessionDetailPage = () => {
           <p>Error fetching session details.</p>
         ) : (
           <div>
-            <h3 className="text-xl font-bold mb-2 p-2">{sessionDetails.name}</h3>
+            <h3 className="text-xl font-bold mb-2 p-2">
+              {sessionDetails.name}
+            </h3>
             <p className="text-sm font-normal">
               Announcement: {sessionDetails.announcements}
             </p>
@@ -65,9 +67,13 @@ const SessionDetailPage = () => {
           </div>
         )}
       </div>
-      {/* <div>
-        <p>Comments Section</p>
-      </div> */}
+      <div className="flex justify-center ">
+        <Link to={`/comments/${sessionId}`}>
+          <button className="text-red-300 hover:text-red-600 focus:text-red-900">
+            Load Comment Section
+          </button>
+        </Link>
+      </div>
       <p className="text-sm font-semibold absolute top-0 right-0 m-4">
         <a
           href="/sessionlist"

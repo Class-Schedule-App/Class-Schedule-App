@@ -22,6 +22,7 @@ import AnnouncementFormPage from "./Pages/AnnouncementFormPage";
 import SessionList from "./Components/SessionList";
 import UserProfile from "./Components/UserProfile";
 import SessionDetailPage from "./Pages/SessionDetailPage";
+import Comments from "./Components/Comments";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/announcementform" element={<AnnouncementFormPage />} />
         <Route path="/session" element={<SessionList />} />
         <Route path="/sessiondetails/:sessionId" element={<SessionDetailPage />}/>
+        <Route path="/comments/:sessionId" element={<Comments/>} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/mod" element={<ModPage />} />
         <Route path="/mod/:modId" element={<ModuleDetails />} />
