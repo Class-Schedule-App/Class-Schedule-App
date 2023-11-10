@@ -22,21 +22,21 @@ def seed_data():
         db.session.add_all(users)
         db.session.commit()
 
-        # Sample data for Students
-        students = [
-            Student(name="Alice Student", email="alice@student.com", profile_img="alice.jpg", student_id=1),
-            # Add more students as needed
-        ]
-        db.session.add_all(students)
-        db.session.commit()
+        # # Sample data for Students
+        # students = [
+        #     Student(name="Alice Student", email="alice@student.com", profile_img="alice.jpg", student_id=1),
+        #     # Add more students as needed
+        # ]
+        # db.session.add_all(students)
+        # db.session.commit()
 
         # Sample data for Technical Mentors
-        mentors = [
-            TechnicalMentor(name="Bob Mentor", email="bob@mentor.com", profile_img="bob.jpg"),
-            # Add more mentors as needed
-        ]
-        db.session.add_all(mentors)
-        db.session.commit()
+        # mentors = [
+        #     TechnicalMentor(name="Bob Mentor", email="bob@mentor.com", profile_img="bob.jpg"),
+        #     # Add more mentors as needed
+        # ]
+        # db.session.add_all(mentors)
+        # db.session.commit()
 
         # Sample data for Modules
         modules = [
