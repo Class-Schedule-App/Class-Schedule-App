@@ -51,7 +51,7 @@ const ModuleListPage = () => {
                    {module.module_name}
                 </Typography>
                 <Typography variant="body1" style={{ marginBottom: '5px' }}>
-                  Date: Replace with your data
+                  Date: {module.module_date}
                 </Typography>
                 {/* Add other details in a similar manner */}
               </div>
