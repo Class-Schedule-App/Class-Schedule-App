@@ -8,7 +8,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Header from "../Components/Header";
 import { logoutUser } from "../redux/authActions";
 
-
 function Dashboard() {
   //const userRole = useSelector((state) => state.user.user_type);
   const user = useSelector((state) => state.user);
@@ -17,19 +16,17 @@ function Dashboard() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate('/login')
-    
+    navigate("/login");
   };
 
   // State for search query and results
-  
+
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Function to update search results
   const handleSearchChange = (query) => {
     setSearchQuery(query);
-    
   };
   const handleSearchResults = (results) => {
     setSearchResults(results);
@@ -57,20 +54,34 @@ function Dashboard() {
           setSearchResults={handleSearchResults}
         />
       </div>
-      <div >
+      <div>
         {/* Display search results */}
         {searchResults.length > 0 && (
           <div className="flex mt-20 p-6 flex-grow">
-            <ul>
+            <h3 className="justify-center items-center mb-2 p-2 font-semibold">
+              Search Results:{" "}
+            </h3>
+            <ul className="list-none p-0 m-0">
               {searchResults.map((result, index) => (
                 <li key={index}>
-                  <strong>{result.name}</strong>
+                  <Link to={`/sessiondetails/${result.id}`}>
+                    <strong>{result.name}</strong>
+                  </Link>
                   <br />
-                  {/* Display session announcements */}
-                  {result.announcements}
+                  {/* Display session invite link */}
+                  {result.invite_link}
                 </li>
               ))}
             </ul>
+            <p>
+              <button
+                type="button"
+                className="mt-4 mx-auto bg-red-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setSearchResults([])}
+              >
+                Clear Search
+              </button>
+            </p>
           </div>
         )}
       </div>

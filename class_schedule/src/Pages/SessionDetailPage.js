@@ -40,7 +40,7 @@ const SessionDetailPage = () => {
           <p>Error fetching session details.</p>
         ) : (
           <div>
-            <h3 className="text-xl font-bold">{sessionDetails.name}</h3>
+            <h3 className="text-xl font-bold mb-2 p-2">{sessionDetails.name}</h3>
             <p className="text-sm font-normal">
               Announcement: {sessionDetails.announcements}
             </p>
@@ -65,6 +65,9 @@ const SessionDetailPage = () => {
           </div>
         )}
       </div>
+      {/* <div>
+        <p>Comments Section</p>
+      </div> */}
       <p className="text-sm font-semibold absolute top-0 right-0 m-4">
         <a
           href="/sessionlist"
