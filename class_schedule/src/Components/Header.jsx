@@ -66,8 +66,8 @@ const Header = ({ user, onLogout, searchQuery, onSearchChange, setSearchResults 
     const query = event.target.value;
     onSearchChange(query);
 
-    if (Array.isArray(data.sessions)) {
-      const filteredResults = data.sessions.filter((session) =>
+    if (Array.isArray(data)) {
+      const filteredResults = data.filter((session) =>
         session.name.toLowerCase().includes(query.toLowerCase())
       );
       setSearchResults(filteredResults);

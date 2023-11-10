@@ -18,9 +18,9 @@ def seed_data():
 
        # Sample data for Users with hashed passwords
         users = [
-            User(username="Alice", email="alice@example.com", phone_number="1234567890", user_type="student", password=generate_password_hash("password1")),
+            User(username="Alice", email="alice@example.com", phone_number="722577344", user_type="student", password=generate_password_hash("password1")),
             User(username="Bob", email="bob@example.com", phone_number="0744556688", user_type="technical_mentor", password=generate_password_hash("password2")),
-            User(username="Charlie", email="charlie@example.com", phone_number="7335555555", user_type="student", password=generate_password_hash("password3")),
+            User(username="Charlie", email="charlie@example.com", phone_number="722577344", user_type="student", password=generate_password_hash("password3")),
             User(username="David", email="david@example.com", phone_number="4444444444", user_type="technical_mentor", password=generate_password_hash("password4")),
         ]
         db.session.add_all(users)
