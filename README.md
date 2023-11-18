@@ -35,6 +35,7 @@ The first version of work that is expected must meet the following metrics:
 - cd into the server directory.
 - Run pipenv install to get the flask dependencies installed
 - Run pipenv shell to get into the virtual env
+- cd into the server directory and run export FLASK_RUN_PORT=5555
 - Run flask run to start your backend server
 ### Frontend Setup
 - To setup your frontend,cd into class_shedule directory
